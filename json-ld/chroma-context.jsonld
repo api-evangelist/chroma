@@ -1,0 +1,106 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "chroma": "https://trychroma.com/ns/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "Tenant": {
+      "@id": "chroma:Tenant",
+      "@context": {
+        "name": "schema:name"
+      }
+    },
+
+    "Database": {
+      "@id": "chroma:Database",
+      "@context": {
+        "id": "schema:identifier",
+        "name": "schema:name",
+        "tenant": {
+          "@id": "chroma:tenant",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Collection": {
+      "@id": "chroma:Collection",
+      "@context": {
+        "id": "schema:identifier",
+        "name": "schema:name",
+        "metadata": "chroma:metadata",
+        "tenant": {
+          "@id": "chroma:tenant",
+          "@type": "@id"
+        },
+        "database": {
+          "@id": "chroma:database",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Record": {
+      "@id": "chroma:Record",
+      "@context": {
+        "id": "schema:identifier",
+        "embedding": "chroma:embedding",
+        "document": {
+          "@id": "schema:text",
+          "@type": "xsd:string"
+        },
+        "metadata": "chroma:metadata",
+        "uri": {
+          "@id": "schema:url",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Embedding": {
+      "@id": "chroma:Embedding",
+      "@context": {
+        "values": {
+          "@id": "chroma:values",
+          "@container": "@list"
+        },
+        "dimension": {
+          "@id": "chroma:dimension",
+          "@type": "xsd:integer"
+        }
+      }
+    },
+
+    "QueryResult": {
+      "@id": "chroma:QueryResult",
+      "@context": {
+        "ids": {
+          "@id": "chroma:ids",
+          "@container": "@set"
+        },
+        "embeddings": {
+          "@id": "chroma:embeddings",
+          "@container": "@set"
+        },
+        "documents": {
+          "@id": "chroma:documents",
+          "@container": "@set"
+        },
+        "metadatas": {
+          "@id": "chroma:metadatas",
+          "@container": "@set"
+        },
+        "distances": {
+          "@id": "chroma:distances",
+          "@container": "@list"
+        },
+        "uris": {
+          "@id": "chroma:uris",
+          "@container": "@set"
+        }
+      }
+    }
+  }
+}

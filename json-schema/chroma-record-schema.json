@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trychroma.com/schemas/chroma/record.json",
+  "title": "Chroma Record",
+  "description": "A Chroma record represents a single item stored in a collection, consisting of an embedding vector, optional document text, optional metadata, and an optional URI reference.",
+  "type": "object",
+  "required": ["id"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A unique identifier for the record within the collection. Must be unique across all records in the collection."
+    },
+    "embedding": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "number",
+        "format": "float"
+      },
+      "description": "The vector embedding for this record. Each element is a floating point number representing a dimension of the embedding space."
+    },
+    "document": {
+      "type": ["string", "null"],
+      "description": "The text document associated with this record. If provided without an embedding, the server will automatically generate an embedding from the document text."
+    },
+    "metadata": {
+      "type": ["object", "null"],
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "number" },
+          { "type": "integer" },
+          { "type": "boolean" }
+        ]
+      },
+      "description": "Key-value metadata associated with the record. Values can be strings, numbers, integers, or booleans. Metadata is searchable using where filters."
+    },
+    "uri": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "An optional URI reference associated with the record, typically pointing to the source content or an external resource."
+    }
+  },
+  "$defs": {
+    "Embedding": {
+      "type": "array",
+      "items": {
+        "type": "number",
+        "format": "float"
+      },
+      "description": "A vector embedding represented as an array of floating point numbers"
+    },
+    "WhereFilter": {
+      "type": "object",
+      "description": "A metadata filter expression used to narrow search results based on record metadata values. Supports comparison operators ($eq, $ne, $gt, $gte, $lt, $lte, $in, $nin) and logical operators ($and, $or).",
+      "additionalProperties": true
+    },
+    "WhereDocumentFilter": {
+      "type": "object",
+      "description": "A document content filter expression used to filter records by their document text. Supports $contains, $not_contains for substring matching and $regex, $not_regex for pattern matching.",
+      "additionalProperties": true
+    },
+    "IncludeField": {
+      "type": "string",
+      "enum": ["embeddings", "documents", "metadatas", "distances", "uris"],
+      "description": "A field that can be included in query and get responses"
+    },
+    "QueryResult": {
+      "type": "object",
+      "description": "The result of a vector similarity query, containing matched record IDs and optionally their embeddings, documents, metadatas, distances, and URIs",
+      "required": ["ids"],
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": "Nested arrays of record IDs, one array per query"
+        },
+        "embeddings": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Embedding"
+            }
+          },
+          "description": "Nested arrays of embedding vectors, one array per query"
+        },
+        "documents": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "array",
+            "items": {
+              "type": ["string", "null"]
+            }
+          },
+          "description": "Nested arrays of documents, one array per query"
+        },
+        "metadatas": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "array",
+            "items": {
+              "type": ["object", "null"],
+              "additionalProperties": true
+            }
+          },
+          "description": "Nested arrays of metadata objects, one array per query"
+        },
+        "distances": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          "description": "Nested arrays of distance scores, one array per query"
+        },
+        "uris": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "array",
+            "items": {
+              "type": ["string", "null"]
+            }
+          },
+          "description": "Nested arrays of URIs, one array per query"
+        }
+      }
+    }
+  }
+}
