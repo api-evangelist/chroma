@@ -1,5 +1,6 @@
 aid: chroma
-url: https://raw.githubusercontent.com/api-evangelist/chroma/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/chroma/refs/heads/main/apis.yml
 apis:
   - aid: chroma:server-api
     name: Chroma Server API
@@ -9,7 +10,8 @@ apis:
       - Search
       - AI
       - Machine Learning
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.trychroma.com
     humanURL: https://docs.trychroma.com/reference/chroma-reference
     properties:
@@ -33,7 +35,8 @@ apis:
       - Embeddings
       - Serverless
       - AI
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.trychroma.com
     humanURL: https://docs.trychroma.com/cloud/pricing
     properties:
@@ -55,7 +58,8 @@ apis:
       - SDK
       - Vector Database
       - Embeddings
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://docs.trychroma.com/reference/python/client
     properties:
@@ -77,7 +81,8 @@ apis:
       - SDK
       - Vector Database
       - Embeddings
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://docs.trychroma.com/reference/js/client
     properties:
@@ -99,3 +104,7 @@ common:
     url: json-schema/chroma-collection-schema.json
   - type: JSONSchema
     url: json-schema/chroma-record-schema.json
+description: >-
+  Chroma is an open-source AI-native embedding database designed to make it easy to
+  build LLM applications by providing storage, retrieval, and management for vector
+  embeddings.
