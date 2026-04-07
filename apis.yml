@@ -1,17 +1,15 @@
 aid: chroma
-url: 
-  https://raw.githubusercontent.com/api-evangelist/chroma/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/chroma/refs/heads/main/apis.yml
 apis:
   - aid: chroma:server-api
     name: Chroma Server API
     tags:
-      - Vector Database
-      - Embeddings
-      - Search
       - AI
+      - Embeddings
       - Machine Learning
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Search
+      - Vector Database
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.trychroma.com
     humanURL: https://docs.trychroma.com/reference/chroma-reference
     properties:
@@ -30,13 +28,12 @@ apis:
   - aid: chroma:cloud-api
     name: Chroma Cloud API
     tags:
-      - Vector Database
+      - AI
       - Cloud
       - Embeddings
       - Serverless
-      - AI
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Vector Database
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.trychroma.com
     humanURL: https://docs.trychroma.com/cloud/pricing
     properties:
@@ -54,12 +51,11 @@ apis:
   - aid: chroma:python-client
     name: Chroma Python Client
     tags:
+      - Embeddings
       - Python
       - SDK
       - Vector Database
-      - Embeddings
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://docs.trychroma.com/reference/python/client
     properties:
@@ -76,13 +72,12 @@ apis:
   - aid: chroma:javascript-client
     name: Chroma JavaScript Client
     tags:
-      - JavaScript
-      - TypeScript
-      - SDK
-      - Vector Database
       - Embeddings
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - JavaScript
+      - SDK
+      - TypeScript
+      - Vector Database
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://docs.trychroma.com/reference/js/client
     properties:

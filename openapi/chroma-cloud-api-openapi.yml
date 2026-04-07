@@ -24,21 +24,14 @@ servers:
   - url: https://api.trychroma.com
     description: Chroma Cloud Production
 tags:
-  - name: System
-    description: >-
-      System-level endpoints for health checks, version information, and
-      server diagnostics.
-  - name: Tenants
-    description: >-
-      Tenant management endpoints for creating and retrieving tenants.
-  - name: Databases
-    description: >-
-      Database management endpoints for creating, listing, retrieving, and
-      deleting databases within a tenant.
   - name: Collections
     description: >-
       Collection management endpoints for creating, listing, retrieving,
       updating, and deleting collections within a database.
+  - name: Databases
+    description: >-
+      Database management endpoints for creating, listing, retrieving, and
+      deleting databases within a tenant.
   - name: Records
     description: >-
       Record management endpoints for adding, getting, updating, upserting,
@@ -49,6 +42,13 @@ tags:
       Provides a unified interface for hybrid search operations combining
       vector similarity search with metadata filtering and custom ranking
       expressions.
+  - name: System
+    description: >-
+      System-level endpoints for health checks, version information, and
+      server diagnostics.
+  - name: Tenants
+    description: >-
+      Tenant management endpoints for creating and retrieving tenants.
 security:
   - bearerAuth: []
 paths:

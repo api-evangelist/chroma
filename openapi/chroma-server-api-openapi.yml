@@ -26,6 +26,18 @@ servers:
   - url: https://api.trychroma.com
     description: Chroma Cloud
 tags:
+  - name: Collections
+    description: >-
+      Collection management endpoints for creating, listing, retrieving,
+      updating, and deleting collections within a database.
+  - name: Databases
+    description: >-
+      Database management endpoints for creating, listing, retrieving, and
+      deleting databases within a tenant.
+  - name: Records
+    description: >-
+      Record management endpoints for adding, getting, updating, upserting,
+      deleting, and querying records within a collection.
   - name: System
     description: >-
       System-level endpoints for health checks, version information, and
@@ -34,18 +46,6 @@ tags:
     description: >-
       Tenant management endpoints for creating and retrieving tenants.
       Tenants are the top-level organizational unit in Chroma.
-  - name: Databases
-    description: >-
-      Database management endpoints for creating, listing, retrieving, and
-      deleting databases within a tenant.
-  - name: Collections
-    description: >-
-      Collection management endpoints for creating, listing, retrieving,
-      updating, and deleting collections within a database.
-  - name: Records
-    description: >-
-      Record management endpoints for adding, getting, updating, upserting,
-      deleting, and querying records within a collection.
 security:
   - bearerAuth: []
   - tokenAuth: []
