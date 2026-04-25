@@ -1,0 +1,47 @@
+extends:
+  - spectral:oas
+rules:
+  chroma-https-only:
+    description: Chroma Cloud APIs must use HTTPS.
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: '^https://'
+  chroma-info-contact:
+    description: Definitions must declare contact information.
+    severity: warn
+    given: $.info
+    then:
+      field: contact
+      function: truthy
+  chroma-tenancy-paths:
+    description: Operations should be scoped under a tenant/database/collection hierarchy.
+    severity: warn
+    given: $.paths[*]
+    then:
+      field: '@key'
+      function: pattern
+      functionOptions:
+        match: '/(tenants|databases|collections|api/v1|api/v2)'
+  chroma-collection-tagging:
+    description: Operations on collections should declare a 'collections' tag.
+    severity: warn
+    given: $.paths[*][get,post,put,delete]
+    then:
+      field: tags
+      function: truthy
+  chroma-embedding-dimension:
+    description: Embedding payloads should declare a vector dimension or embedding function.
+    severity: info
+    given: $..properties.embedding
+    then:
+      field: items
+      function: truthy
+  chroma-bearer-or-token:
+    description: Chroma Cloud APIs should declare bearer or API key auth.
+    severity: warn
+    given: $.components.securitySchemes
+    then:
+      function: truthy

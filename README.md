@@ -1,95 +1,71 @@
 # Chroma (chroma)
-Chroma is an open-source vector database platform designed for AI applications. It provides both a self-hosted server and a managed cloud service for storing, managing, and querying embeddings, with developer-friendly SDKs for Python and JavaScript.
+
+Chroma is an open-source AI-native embedding database designed to make it easy to build LLM applications by providing storage, retrieval, and management for vector embeddings, full-text search, regex search, and multi-modal retrieval (text, image, audio). Distributed under the Apache 2.0 license, Chroma can be self-hosted (single-node Python or distributed Rust-based deployment) or consumed via Chroma Cloud, a managed serverless vector database service.
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/chroma/refs/heads/main/apis.yml)
 
 ## Scope
 
-- **Type:** Contract
-- **Position:** Consuming
+- **Type:** Index
+- **Position:** Consumer
 - **Access:** 3rd-Party
 
-## Tags:
+## Tags
 
- - Vector Database, Embeddings, Search, AI, Machine Learning, Cloud, Serverless, Python, JavaScript, SDK
+- AI, AI Native, Apache 2.0, Cloud, Embeddings, Hybrid Search, JavaScript, LLM, Machine Learning, Multi-Modal, Open Source, Python, RAG, Retrieval, SDK, Search, Serverless, TypeScript, Vector Database
 
 ## Timestamps
 
 - **Created:** 2025-03-07
-- **Modified:** 2026-03-20
+- **Modified:** 2026-04-23
 
 ## APIs
 
 ### Chroma Server API
-The Chroma Server API is a REST API that provides access to the Chroma open-source vector database. It enables developers to create and manage collections of embeddings, add documents with automatic tokenization and embedding, and perform vector similarity searches. The API supports metadata filtering, full-text search, and collection management operations. An OpenAPI specification is available at the server endpoint for client generation in various programming languages.
 
-**Human URL:** [https://docs.trychroma.com/reference/chroma-reference](https://docs.trychroma.com/reference/chroma-reference)
+REST API for the open-source Chroma vector database. Manages collections, ingests documents with auto-embedding, and runs vector similarity, metadata, and full-text searches.
 
-
-#### Tags:
-
- - Vector Database, Embeddings, Search, AI, Machine Learning
-
-#### Properties
-
-- [Documentation](https://docs.trychroma.com/reference/chroma-reference)
-- [OpenAPI](openapi/chroma-server-api-openapi.yml)
+- **Human URL:** [https://docs.trychroma.com/reference/chroma-reference](https://docs.trychroma.com/reference/chroma-reference)
+- **OpenAPI:** [openapi/chroma-server-api-openapi.yml](openapi/chroma-server-api-openapi.yml)
 
 ### Chroma Cloud API
-Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text, and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based pricing with starter and team plans. Developers can connect to Chroma Cloud using the Python or JavaScript client SDKs without needing to manage infrastructure.
 
-**Human URL:** [https://docs.trychroma.com/cloud/pricing](https://docs.trychroma.com/cloud/pricing)
+Managed, serverless vector database service backed by Chroma's Apache 2.0 distributed database. Usage-based pricing with starter and team plans.
 
-
-#### Tags:
-
- - Vector Database, Cloud, Embeddings, Serverless, AI
-
-#### Properties
-
-- [Documentation](https://docs.trychroma.com/cloud/sync/overview)
-- [OpenAPI](openapi/chroma-cloud-api-openapi.yml)
+- **Human URL:** [https://docs.trychroma.com/cloud/pricing](https://docs.trychroma.com/cloud/pricing)
+- **OpenAPI:** [openapi/chroma-cloud-api-openapi.yml](openapi/chroma-cloud-api-openapi.yml)
 
 ### Chroma Python Client
-The Chroma Python Client is a first-party SDK for interacting with both self-hosted Chroma servers and Chroma Cloud. It provides a simple, developer-friendly interface with a core API of just four functions for managing collections, adding documents, and querying embeddings. The client handles automatic tokenization, embedding, and indexing of documents, making it straightforward to build AI applications that require vector similarity search.
 
-**Human URL:** [https://docs.trychroma.com/reference/python/client](https://docs.trychroma.com/reference/python/client)
+First-party Python SDK for interacting with self-hosted Chroma servers and Chroma Cloud.
 
-
-#### Tags:
-
- - Python, SDK, Vector Database, Embeddings
-
-#### Properties
-
-- [Documentation](https://docs.trychroma.com/reference/python/client)
+- **Human URL:** [https://docs.trychroma.com/reference/python/client](https://docs.trychroma.com/reference/python/client)
 
 ### Chroma JavaScript Client
-The Chroma JavaScript and TypeScript Client is a first-party SDK for interacting with Chroma from JavaScript or TypeScript applications. The v3 rewrite focused on reducing bundle size and improving developer experience, making it well-suited for deployment on serverless platforms like Vercel. It supports both self-hosted Chroma instances and Chroma Cloud via the CloudClient class, providing collection management, document ingestion, and vector similarity search capabilities.
 
-**Human URL:** [https://docs.trychroma.com/reference/js/client](https://docs.trychroma.com/reference/js/client)
+First-party JavaScript and TypeScript SDK with a v3 rewrite focused on smaller bundle size and serverless deployment (e.g., Vercel).
 
-
-#### Tags:
-
- - JavaScript, TypeScript, SDK, Vector Database, Embeddings
-
-#### Properties
-
-- [Documentation](https://docs.trychroma.com/reference/js/client)
+- **Human URL:** [https://docs.trychroma.com/reference/js/client](https://docs.trychroma.com/reference/js/client)
 
 ## Common Properties
 
-- [Portal](https://docs.trychroma.com/)
-- [Documentation](https://docs.trychroma.com/docs/overview/introduction)
 - [Website](https://www.trychroma.com/)
-- [PrivacyPolicy](https://www.trychroma.com/privacy)
-- [TermsOfService](https://www.trychroma.com/tos)
+- [Documentation](https://docs.trychroma.com/docs/overview/introduction)
+- [Portal](https://docs.trychroma.com/)
+- [Cloud Login](https://cloud.trychroma.com/)
+- [Pricing](https://docs.trychroma.com/cloud/pricing)
 - [Blog](https://www.trychroma.com/blog)
-- [Login](https://cloud.trychroma.com/)
+- [GitHub Org](https://github.com/chroma-core)
+- [Discord](https://discord.gg/MMeYNTmh3x)
+- [License: Apache 2.0](https://github.com/chroma-core/chroma/blob/main/LICENSE)
+- [JSON-LD Context](json-ld/chroma-context.jsonld)
+- [Collection JSON Schema](json-schema/chroma-collection-schema.json)
+- [Record JSON Schema](json-schema/chroma-record-schema.json)
+- [Spectral Rules](spectral/chroma-spectral.yml)
+- [Naftiko Capabilities](naftiko/chroma-capabilities.yml)
 
 ## Maintainers
 
-**FN:** API Evangelist
+**FN:** Kin Lane
 
-**Email:** info@apievangelist.com
+**Email:** kin@apievangelist.com
