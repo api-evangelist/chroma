@@ -1,0 +1,674 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Chroma Cloud API
+  description: Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text,
+    and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based
+    pricing with starter and team plans. The Cloud API extends the Chroma Server API with additional search capabilities including
+    hybrid search with reciprocal rank fusion, custom ranking expressions, and batch search operations.
+  tags:
+  - Chroma
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: chroma
+    baseUri: https://api.trychroma.com
+    description: Chroma Cloud API HTTP API.
+    authentication:
+      type: bearer
+      token: '{{CHROMA_TOKEN}}'
+    resources:
+    - name: api-v2-heartbeat
+      path: /api/v2/heartbeat
+      operations:
+      - name: heartbeat
+        method: GET
+        description: Check server heartbeat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-version
+      path: /api/v2/version
+      operations:
+      - name: getversion
+        method: GET
+        description: Get server version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants
+      path: /api/v2/tenants
+      operations:
+      - name: createtenant
+        method: POST
+        description: Create a tenant
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantname
+      path: /api/v2/tenants/{tenantName}
+      operations:
+      - name: gettenant
+        method: GET
+        description: Get a tenant
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantname-databases
+      path: /api/v2/tenants/{tenantName}/databases
+      operations:
+      - name: listdatabases
+        method: GET
+        description: List databases
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createdatabase
+        method: POST
+        description: Create a database
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantname-databases-databasename
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}
+      operations:
+      - name: getdatabase
+        method: GET
+        description: Get a database
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletedatabase
+        method: DELETE
+        description: Delete a database
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantname-databases-databasename
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections
+      operations:
+      - name: listcollections
+        method: GET
+        description: List collections
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcollection
+        method: POST
+        description: Create a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantname-databases-databasename
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}
+      operations:
+      - name: getcollection
+        method: GET
+        description: Get a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecollection
+        method: PUT
+        description: Update a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletecollection
+        method: DELETE
+        description: Delete a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantname-databases-databasename
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/count
+      operations:
+      - name: countrecords
+        method: GET
+        description: Count records in a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantname-databases-databasename
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/add
+      operations:
+      - name: addrecords
+        method: POST
+        description: Add records to a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantname-databases-databasename
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/get
+      operations:
+      - name: getrecords
+        method: POST
+        description: Get records from a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantname-databases-databasename
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/update
+      operations:
+      - name: updaterecords
+        method: POST
+        description: Update records in a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantname-databases-databasename
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/upsert
+      operations:
+      - name: upsertrecords
+        method: POST
+        description: Upsert records in a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantname-databases-databasename
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/delete
+      operations:
+      - name: deleterecords
+        method: POST
+        description: Delete records from a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantname-databases-databasename
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/query
+      operations:
+      - name: queryrecords
+        method: POST
+        description: Query records in a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantname-databases-databasename
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/search
+      operations:
+      - name: searchrecords
+        method: POST
+        description: Search records in a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: chroma-rest
+    description: REST adapter for Chroma Cloud API.
+    resources:
+    - path: /api/v2/heartbeat
+      name: heartbeat
+      operations:
+      - method: GET
+        name: heartbeat
+        description: Check server heartbeat
+        call: chroma.heartbeat
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/version
+      name: getversion
+      operations:
+      - method: GET
+        name: getversion
+        description: Get server version
+        call: chroma.getversion
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants
+      name: createtenant
+      operations:
+      - method: POST
+        name: createtenant
+        description: Create a tenant
+        call: chroma.createtenant
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}
+      name: gettenant
+      operations:
+      - method: GET
+        name: gettenant
+        description: Get a tenant
+        call: chroma.gettenant
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases
+      name: listdatabases
+      operations:
+      - method: GET
+        name: listdatabases
+        description: List databases
+        call: chroma.listdatabases
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases
+      name: createdatabase
+      operations:
+      - method: POST
+        name: createdatabase
+        description: Create a database
+        call: chroma.createdatabase
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}
+      name: getdatabase
+      operations:
+      - method: GET
+        name: getdatabase
+        description: Get a database
+        call: chroma.getdatabase
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}
+      name: deletedatabase
+      operations:
+      - method: DELETE
+        name: deletedatabase
+        description: Delete a database
+        call: chroma.deletedatabase
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections
+      name: listcollections
+      operations:
+      - method: GET
+        name: listcollections
+        description: List collections
+        call: chroma.listcollections
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections
+      name: createcollection
+      operations:
+      - method: POST
+        name: createcollection
+        description: Create a collection
+        call: chroma.createcollection
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}
+      name: getcollection
+      operations:
+      - method: GET
+        name: getcollection
+        description: Get a collection
+        call: chroma.getcollection
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}
+      name: updatecollection
+      operations:
+      - method: PUT
+        name: updatecollection
+        description: Update a collection
+        call: chroma.updatecollection
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}
+      name: deletecollection
+      operations:
+      - method: DELETE
+        name: deletecollection
+        description: Delete a collection
+        call: chroma.deletecollection
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/count
+      name: countrecords
+      operations:
+      - method: GET
+        name: countrecords
+        description: Count records in a collection
+        call: chroma.countrecords
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/add
+      name: addrecords
+      operations:
+      - method: POST
+        name: addrecords
+        description: Add records to a collection
+        call: chroma.addrecords
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/get
+      name: getrecords
+      operations:
+      - method: POST
+        name: getrecords
+        description: Get records from a collection
+        call: chroma.getrecords
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/update
+      name: updaterecords
+      operations:
+      - method: POST
+        name: updaterecords
+        description: Update records in a collection
+        call: chroma.updaterecords
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/upsert
+      name: upsertrecords
+      operations:
+      - method: POST
+        name: upsertrecords
+        description: Upsert records in a collection
+        call: chroma.upsertrecords
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/delete
+      name: deleterecords
+      operations:
+      - method: POST
+        name: deleterecords
+        description: Delete records from a collection
+        call: chroma.deleterecords
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/query
+      name: queryrecords
+      operations:
+      - method: POST
+        name: queryrecords
+        description: Query records in a collection
+        call: chroma.queryrecords
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/search
+      name: searchrecords
+      operations:
+      - method: POST
+        name: searchrecords
+        description: Search records in a collection
+        call: chroma.searchrecords
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: chroma-mcp
+    transport: http
+    description: MCP adapter for Chroma Cloud API for AI agent use.
+    tools:
+    - name: heartbeat
+      description: Check server heartbeat
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: chroma.heartbeat
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getversion
+      description: Get server version
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: chroma.getversion
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createtenant
+      description: Create a tenant
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: chroma.createtenant
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gettenant
+      description: Get a tenant
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: chroma.gettenant
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listdatabases
+      description: List databases
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: chroma.listdatabases
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createdatabase
+      description: Create a database
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: chroma.createdatabase
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getdatabase
+      description: Get a database
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: chroma.getdatabase
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletedatabase
+      description: Delete a database
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: chroma.deletedatabase
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listcollections
+      description: List collections
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: chroma.listcollections
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createcollection
+      description: Create a collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: chroma.createcollection
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcollection
+      description: Get a collection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: chroma.getcollection
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updatecollection
+      description: Update a collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: chroma.updatecollection
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletecollection
+      description: Delete a collection
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: chroma.deletecollection
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: countrecords
+      description: Count records in a collection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: chroma.countrecords
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: addrecords
+      description: Add records to a collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: chroma.addrecords
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getrecords
+      description: Get records from a collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: chroma.getrecords
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updaterecords
+      description: Update records in a collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: chroma.updaterecords
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upsertrecords
+      description: Upsert records in a collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: chroma.upsertrecords
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deleterecords
+      description: Delete records from a collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: chroma.deleterecords
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: queryrecords
+      description: Query records in a collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: chroma.queryrecords
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: searchrecords
+      description: Search records in a collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: chroma.searchrecords
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    CHROMA_TOKEN: CHROMA_TOKEN
