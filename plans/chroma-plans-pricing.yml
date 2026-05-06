@@ -4,168 +4,238 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Chroma
 providerId: chroma
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
   - AI
-  - AI Native
-  - Apache 2.0
-  - Cloud
   - Embeddings
-  - Hybrid Search
-  - JavaScript
   - LLM
-  - Machine Learning
-  - Multi-Modal
-  - Open Source
-  - Python
   - RAG
   - Retrieval
-  - SDK
   - Search
   - Serverless
-  - TypeScript
   - Vector Database
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+description: Chroma Cloud is a hybrid plan-plus-usage product. Three plans (Starter, Team, Enterprise)
+  set platform tier features (databases, team members, support, compliance), while four metered
+  primitives (Write, Storage, Query, Network) drive the variable bill. Starter and Team include
+  monthly credits; Team credits do not roll over. Enterprise is custom-priced and supports BYOC.
+sources:
+  - https://www.trychroma.com/pricing
 plans:
-  - id: chroma-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the Chroma API surface. Intended for evaluation, prototyping, and
-      low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
+  - id: chroma-starter
+    name: Starter
+    type: usage-based
+    description: Pay-as-you-go entry plan with $5 in monthly free credits, 10 databases, 10 team
+      members, and community Slack support.
     entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
+      - label: Plan fee
+        name: plan_fee
+        type: subscription
+        metric: month
+        limit: 1
         timeFrame: month
         geo: global
-        domains:
-          - https://api.trychroma.com
         unit: 1
-        price: '0.00'
+        price: '$0/month + usage'
         userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.trychroma.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Chroma Server API
-      - name: Chroma Cloud API
-      - name: Chroma Python Client
-      - name: Chroma JavaScript Client
-  - id: chroma-pro
-    name: Professional
-    type: paid
-    description: Production tier for Chroma. Provides higher quotas, priority support, and access to the
-      broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
+      - label: Free credits
+        name: free_credits
+        type: flat
+        metric: month
+        limit: 1
         timeFrame: month
         geo: global
-        domains:
-          - https://api.trychroma.com
         unit: 1
-        price: TBD
+        price: '$5/month included'
         userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.trychroma.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
+      - label: Write
+        name: write
         type: metered
-        metric: requests
+        metric: GiB
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '$2.50 per GiB written'
+        userMultiplied: false
+      - label: Storage
+        name: storage
+        type: metered
+        metric: GiB
         limit: -1
         timeFrame: month
         geo: global
-        domains:
-          - https://api.trychroma.com
-        unit: 1000
-        price: TBD
+        unit: 1
+        price: '$0.33 per GiB / month'
         userMultiplied: false
+      - label: Query
+        name: query
+        type: metered
+        metric: TiB
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '$0.0075 per TiB queried'
+        userMultiplied: false
+      - label: Network
+        name: network
+        type: metered
+        metric: GiB
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '$0.09 per GiB returned'
+        userMultiplied: false
+      - label: Databases
+        name: databases
+        type: quota
+        metric: database
+        limit: 10
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Team members
+        name: team_members
+        type: quota
+        metric: seat
+        limit: 10
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: true
     elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Chroma Server API
-      - name: Chroma Cloud API
-      - name: Chroma Python Client
-      - name: Chroma JavaScript Client
+      - name: Community Slack support
+      - name: Vector, full-text, and metadata search
+      - name: Serverless infrastructure
+  - id: chroma-team
+    name: Team
+    type: subscription
+    description: Production plan with $250/month flat fee plus usage at the same rates as Starter,
+      higher quotas, $100 monthly credits (do not roll over), volume-based discounts, and SOC 2
+      compliance.
+    entries:
+      - label: Plan fee
+        name: plan_fee
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$250/month + usage'
+        userMultiplied: false
+      - label: Monthly credits
+        name: monthly_credits
+        type: flat
+        metric: month
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$100/month (do not roll over)'
+        userMultiplied: false
+      - label: Write
+        name: write
+        type: metered
+        metric: GiB
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '$2.50 per GiB written'
+        userMultiplied: false
+      - label: Storage
+        name: storage
+        type: metered
+        metric: GiB
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$0.33 per GiB / month'
+        userMultiplied: false
+      - label: Query
+        name: query
+        type: metered
+        metric: TiB
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '$0.0075 per TiB queried'
+        userMultiplied: false
+      - label: Network
+        name: network
+        type: metered
+        metric: GiB
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '$0.09 per GiB returned'
+        userMultiplied: false
+      - label: Databases
+        name: databases
+        type: quota
+        metric: database
+        limit: 100
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Team members
+        name: team_members
+        type: quota
+        metric: seat
+        limit: 30
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: true
+    elements:
+      - name: Slack support
+      - name: SOC 2 compliance
+      - name: Volume-based discounts
   - id: chroma-enterprise
     name: Enterprise
     type: enterprise
-    description: Custom-negotiated tier for Chroma. Includes dedicated capacity, contractual SLAs, security
-      review, data residency options, and named technical account management.
+    description: Custom-priced tier with unlimited databases and team members, single-tenant clusters,
+      BYOC option, dedicated support, and SLAs.
     entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
+      - label: Subscription
+        name: subscription
+        type: subscription
+        metric: varies
         limit: -1
-        timeFrame: month
-        geo: configurable
-        domains:
-          - https://api.trychroma.com
+        timeFrame: year
+        geo: global
         unit: 1
         price: custom
         userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://api.trychroma.com
+      - label: Usage
+        name: usage
+        type: metered
+        metric: varies
+        limit: -1
+        timeFrame: usage
+        geo: global
         unit: 1
-        price: custom
+        price: negotiated (Write / Storage / Query / Network)
         userMultiplied: false
     elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Chroma Server API
-      - name: Chroma Cloud API
-      - name: Chroma Python Client
-      - name: Chroma JavaScript Client
+      - name: Unlimited databases
+      - name: Unlimited team members
+      - name: Single-tenant clusters
+      - name: BYOC (Bring Your Own Cloud)
+      - name: Dedicated support
+      - name: SLAs
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

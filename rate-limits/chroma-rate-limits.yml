@@ -4,115 +4,51 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Chroma
 providerId: chroma
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - AI
-  - AI Native
-  - Apache 2.0
-  - Cloud
-  - Embeddings
-  - Hybrid Search
-  - JavaScript
-  - LLM
-  - Machine Learning
-  - Multi-Modal
-  - Open Source
-  - Python
-  - RAG
-  - Retrieval
-  - SDK
-  - Search
-  - Serverless
-  - TypeScript
   - Vector Database
+  - Retrieval
+  - Serverless
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Chroma API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+description: Chroma Cloud is serverless and meters Write / Storage / Query / Network rather than
+  capping requests per second. Public documentation does not publish a numeric per-second or
+  per-minute API rate-limit policy; tenants that exceed configured spend or per-database scaling
+  envelopes are paused rather than throttled. The open-source Chroma server (self-hosted) has no
+  built-in rate limiter — limits are bounded by the underlying host.
+notes: Chroma does not publish a numeric API rate-limit table. Tenants on Starter / Team are paused
+  if usage exceeds limits; Enterprise can negotiate single-tenant capacity envelopes.
+sources:
+  - https://www.trychroma.com/pricing
+  - https://docs.trychroma.com/
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
+  serverError: 500
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Chroma Server API
-      - Chroma Cloud API
-      - Chroma Python Client
-      - Chroma JavaScript Client
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Chroma Server API
-      - Chroma Cloud API
-      - Chroma Python Client
-      - Chroma JavaScript Client
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Chroma Server API
-      - Chroma Cloud API
-      - Chroma Python Client
-      - Chroma JavaScript Client
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Chroma Server API
-      - Chroma Cloud API
-      - Chroma Python Client
-      - Chroma JavaScript Client
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Chroma Server API
-      - Chroma Cloud API
-      - Chroma Python Client
-      - Chroma JavaScript Client
+  - name: Cloud usage envelope
+    scope: tenant
+    metric: varies
+    limit: 'usage-bounded — Write / Storage / Query / Network are metered, not capped per-second'
+    notes: Service pauses if monthly usage exceeds plan limits (Starter / Team) or contracted ceiling
+      (Enterprise).
+  - name: Self-hosted server
+    scope: deployment
+    metric: varies
+    limit: 'no built-in rate limit — bounded by host CPU / RAM and any front-proxy throttling'
+    notes: Open-source Chroma does not enforce per-client rate limits; operators add a reverse-proxy
+      throttle if needed.
 policies:
   - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    description: On 429 / 5xx, retry with exponential backoff and jitter; honor Retry-After when
+      present.
+  - name: Batch Writes
+    description: Use batched add / upsert calls rather than per-vector writes to keep the Write meter
+      and request count efficient.
+  - name: Pause on Quota
+    description: Cloud tenants are paused (not throttled) when plan usage limits are exceeded; bump
+      plan or raise the Enterprise envelope to resume.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

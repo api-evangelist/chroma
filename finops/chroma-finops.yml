@@ -1,177 +1,107 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Chroma
+providerId: chroma
+created: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
+tags:
+  - AI
+  - Vector Database
+  - Retrieval
+  - Serverless
+  - FinOps
+  - FOCUS
+description: 'FOCUS-aligned FinOps for Chroma Cloud: hybrid Subscription + Pay-As-You-Go on four
+  primitives (Write, Storage, Query, Network) with monthly credits on Starter and Team, and
+  custom-priced Enterprise (including BYOC).'
+sources:
+  - https://www.trychroma.com/pricing
+  - https://docs.trychroma.com/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
   dataSpec: FOCUS
   dataSpecVersion: '1.3'
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
-provider: Chroma
-providerId: chroma
-publisherName: Chroma
-serviceCategory: API
-created: '2026-05-04'
-modified: '2026-05-04'
-tags:
-  - AI
-  - AI Native
-  - Apache 2.0
-  - Cloud
-  - Embeddings
-  - Hybrid Search
-  - JavaScript
-  - LLM
-  - Machine Learning
-  - Multi-Modal
-  - Open Source
-  - Python
-  - RAG
-  - Retrieval
-  - SDK
-  - Search
-  - Serverless
-  - TypeScript
-  - Vector Database
-  - FinOps
-  - Cost Management
-  - FOCUS
-description: FinOps framework definition for the Chroma API surface. Provides a FOCUS-aligned mapping
-  for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+publisherName: Chroma, Inc.
+serviceCategory: AI Infrastructure / Vector Database
 billingModel:
-  pricingCategory: Usage-Based
+  pricingCategory: Subscription + Pay-As-You-Go
   billingFrequency: Monthly
   billingCurrency: USD
   chargeCategories:
     - Usage
     - Purchase
-    - Tax
     - Credit
+    - Tax
     - Adjustment
-  chargeFrequency: Recurring
 focusColumns:
-  ServiceName: Chroma
-  ServiceCategory: Developer Tools / API
+  ServiceName: Chroma Cloud
+  ServiceCategory: AI Infrastructure / Vector Database
   ProviderName: Chroma
-  PublisherName: Chroma
-  InvoiceIssuerName: Chroma
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  PublisherName: Chroma, Inc.
+  InvoiceIssuerName: Chroma, Inc.
   BillingCurrency: USD
   ChargeCategory: Usage
+  PricingCategory: Pay-As-You-Go
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
+  - name: write
+    description: GiB written into Chroma Cloud collections
+    unit: GiB
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
+      - database
+      - collection
+      - tenant
+  - name: storage
+    description: GiB-month of vector and metadata storage
+    unit: GiB-month
     aggregation: sum
     dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
+      - database
+      - tenant
+  - name: query
+    description: TiB scanned by similarity, full-text, and metadata queries
+    unit: TiB
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Chroma Server API
-    baseURL: https://api.trychroma.com
-    tags:
-      - AI
-      - Embeddings
-      - Machine Learning
-      - Search
-      - Vector Database
-    serviceName: Chroma Server API
-    serviceCategory: API
-  - name: Chroma Cloud API
-    baseURL: https://api.trychroma.com
-    tags:
-      - AI
-      - Cloud
-      - Embeddings
-      - Serverless
-      - Vector Database
-    serviceName: Chroma Cloud API
-    serviceCategory: API
-  - name: Chroma Python Client
-    baseURL: ''
-    tags:
-      - Embeddings
-      - Python
-      - SDK
-      - Vector Database
-    serviceName: Chroma Python Client
-    serviceCategory: API
-  - name: Chroma JavaScript Client
-    baseURL: ''
-    tags:
-      - Embeddings
-      - JavaScript
-      - SDK
-      - TypeScript
-      - Vector Database
-    serviceName: Chroma JavaScript Client
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+      - database
+      - collection
+      - tenant
+  - name: network
+    description: GiB of response data returned over the network
+    unit: GiB
+    aggregation: sum
+    dimensions:
+      - database
+      - tenant
+  - name: plan_fee
+    description: Monthly Team / Enterprise plan fee
+    unit: month
+    aggregation: sum
+    dimensions:
+      - plan
+  - name: seats
+    description: Team member seats consumed (Team / Enterprise)
+    unit: seat
+    aggregation: max
+    dimensions:
+      - plan
+principles:
+  - name: Visibility
+    description: Track Chroma Cloud spend through the in-product usage dashboard (Write GiB, Storage
+      GiB-month, Query TiB, Network GiB) and the credit-burn ledger.
+  - name: Allocation
+    description: Tag spend by database and tenant — Chroma's primitives align naturally with
+      database / collection boundaries for showback to AI features.
+  - name: Optimization
+    description: Reduce dimensionality, batch writes, prune stale collections, cache frequent queries
+      upstream, and right-size embeddings to lower Storage and Query meters.
+  - name: Accountability
+    description: AI / ML teams own collection design and recall quality; platform engineering owns
+      Chroma cost dashboards; finance reconciles invoices and credit consumption.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
