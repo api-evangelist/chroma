@@ -1,6 +1,6 @@
 aid: chroma
 name: Chroma
-x-type: company
+kind: company
 description: >-
   Chroma (Chroma DB) is an open-source AI-native embedding database designed
   to make it easy to build LLM applications by providing storage, retrieval,
