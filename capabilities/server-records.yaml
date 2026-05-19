@@ -1,0 +1,322 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Chroma Server API — Records
+  description: 'Chroma Server API — Records. 7 operations. Lead operation: Add records to a collection. Self-contained Naftiko
+    capability covering one Chroma business surface.'
+  tags:
+  - Chroma
+  - Records
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CHROMA_API_KEY: CHROMA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: server-records
+    baseUri: http://localhost:8000
+    description: Chroma Server API — Records business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-add
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/add
+      operations:
+      - name: addrecords
+        method: POST
+        description: Add records to a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-count
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/count
+      operations:
+      - name: countrecords
+        method: GET
+        description: Count records in a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-delete
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/delete
+      operations:
+      - name: deleterecords
+        method: POST
+        description: Delete records from a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-get
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/get
+      operations:
+      - name: getrecords
+        method: POST
+        description: Get records from a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-query
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/query
+      operations:
+      - name: queryrecords
+        method: POST
+        description: Query records in a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-update
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/update
+      operations:
+      - name: updaterecords
+        method: POST
+        description: Update records in a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-upsert
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/upsert
+      operations:
+      - name: upsertrecords
+        method: POST
+        description: Upsert records in a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.CHROMA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: server-records-rest
+    port: 8080
+    description: REST adapter for Chroma Server API — Records. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v2/tenants/{tenantname}/databases/{databasename}/collections/{collectionid}/add
+      name: api-v2-tenants-tenantname-databases-databasename-collections-collectionid-add
+      description: REST surface for api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-add.
+      operations:
+      - method: POST
+        name: addrecords
+        description: Add records to a collection
+        call: server-records.addrecords
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/tenants/{tenantname}/databases/{databasename}/collections/{collectionid}/count
+      name: api-v2-tenants-tenantname-databases-databasename-collections-collectionid-count
+      description: REST surface for api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-count.
+      operations:
+      - method: GET
+        name: countrecords
+        description: Count records in a collection
+        call: server-records.countrecords
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/tenants/{tenantname}/databases/{databasename}/collections/{collectionid}/delete
+      name: api-v2-tenants-tenantname-databases-databasename-collections-collectionid-delete
+      description: REST surface for api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-delete.
+      operations:
+      - method: POST
+        name: deleterecords
+        description: Delete records from a collection
+        call: server-records.deleterecords
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/tenants/{tenantname}/databases/{databasename}/collections/{collectionid}/get
+      name: api-v2-tenants-tenantname-databases-databasename-collections-collectionid-get
+      description: REST surface for api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-get.
+      operations:
+      - method: POST
+        name: getrecords
+        description: Get records from a collection
+        call: server-records.getrecords
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/tenants/{tenantname}/databases/{databasename}/collections/{collectionid}/query
+      name: api-v2-tenants-tenantname-databases-databasename-collections-collectionid-query
+      description: REST surface for api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-query.
+      operations:
+      - method: POST
+        name: queryrecords
+        description: Query records in a collection
+        call: server-records.queryrecords
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/tenants/{tenantname}/databases/{databasename}/collections/{collectionid}/update
+      name: api-v2-tenants-tenantname-databases-databasename-collections-collectionid-update
+      description: REST surface for api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-update.
+      operations:
+      - method: POST
+        name: updaterecords
+        description: Update records in a collection
+        call: server-records.updaterecords
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/tenants/{tenantname}/databases/{databasename}/collections/{collectionid}/upsert
+      name: api-v2-tenants-tenantname-databases-databasename-collections-collectionid-upsert
+      description: REST surface for api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-upsert.
+      operations:
+      - method: POST
+        name: upsertrecords
+        description: Upsert records in a collection
+        call: server-records.upsertrecords
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: server-records-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Chroma Server API — Records. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: add-records-collection
+      description: Add records to a collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: server-records.addrecords
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: count-records-collection
+      description: Count records in a collection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: server-records.countrecords
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-records-collection
+      description: Delete records from a collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: server-records.deleterecords
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-records-collection
+      description: Get records from a collection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: server-records.getrecords
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: query-records-collection
+      description: Query records in a collection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: server-records.queryrecords
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-records-collection
+      description: Update records in a collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: server-records.updaterecords
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upsert-records-collection
+      description: Upsert records in a collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: server-records.upsertrecords
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

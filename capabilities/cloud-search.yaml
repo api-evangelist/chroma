@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Chroma Cloud API — Search
+  description: 'Chroma Cloud API — Search. 1 operations. Lead operation: Search records in a collection. Self-contained Naftiko
+    capability covering one Chroma business surface.'
+  tags:
+  - Chroma
+  - Search
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CHROMA_API_KEY: CHROMA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cloud-search
+    baseUri: https://api.trychroma.com
+    description: Chroma Cloud API — Search business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-search
+      path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/search
+      operations:
+      - name: searchrecords
+        method: POST
+        description: Search records in a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.CHROMA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: cloud-search-rest
+    port: 8080
+    description: REST adapter for Chroma Cloud API — Search. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v2/tenants/{tenantname}/databases/{databasename}/collections/{collectionid}/search
+      name: api-v2-tenants-tenantname-databases-databasename-collections-collectionid-search
+      description: REST surface for api-v2-tenants-tenantName-databases-databaseName-collections-collectionId-search.
+      operations:
+      - method: POST
+        name: searchrecords
+        description: Search records in a collection
+        call: cloud-search.searchrecords
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cloud-search-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Chroma Cloud API — Search. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: search-records-collection
+      description: Search records in a collection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: cloud-search.searchrecords
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
