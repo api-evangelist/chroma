@@ -1,0 +1,710 @@
+"""
+Chroma GraphQL Schema
+Conceptual schema derived from the Chroma REST/gRPC API for the open-source
+AI-native embedding database. Covers collection management, document and
+embedding upsert, querying by embedding or text, metadata filtering, and
+multi-modal data storage.
+"""
+
+# ─────────────────────────────────────────────
+# Scalar types
+# ─────────────────────────────────────────────
+
+"""Arbitrary JSON-serialisable value (metadata, configuration, etc.)."""
+scalar JSON
+
+"""ISO-8601 date-time string."""
+scalar DateTime
+
+"""A 32-bit or 64-bit floating-point number used in embedding vectors."""
+scalar Float32
+
+"""Raw binary blob (base-64 encoded) for image/audio multi-modal data."""
+scalar Bytes
+
+# ─────────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────────
+
+"""Distance functions supported for vector similarity search."""
+enum DistanceFunction {
+  L2
+  COSINE
+  IP
+}
+
+"""Data type of individual embedding dimensions."""
+enum EmbeddingDataType {
+  FLOAT32
+  INT8
+  UINT8
+}
+
+"""Logical operator for combining metadata filter conditions."""
+enum LogicalOperator {
+  AND
+  OR
+}
+
+"""Comparison operators for metadata filtering."""
+enum ComparisonOperator {
+  EQ
+  NE
+  GT
+  GTE
+  LT
+  LTE
+  IN
+  NIN
+}
+
+"""Modality of a stored record."""
+enum RecordModality {
+  TEXT
+  IMAGE
+  AUDIO
+  EMBEDDING_ONLY
+}
+
+"""Current status of a Chroma Cloud tenant."""
+enum TenantStatus {
+  ACTIVE
+  PROVISIONING
+  SUSPENDED
+  DELETED
+}
+
+"""Current status of a database within a tenant."""
+enum DatabaseStatus {
+  ACTIVE
+  MIGRATING
+  DELETING
+  ERROR
+}
+
+"""Sort direction for paginated queries."""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+"""Operator used when combining where-document filters."""
+enum WhereDocumentOperator {
+  CONTAINS
+  NOT_CONTAINS
+}
+
+"""Index type for ANN search."""
+enum IndexType {
+  HNSW
+  BRUTE_FORCE
+}
+
+"""Deployment mode for a Chroma instance."""
+enum DeploymentMode {
+  EPHEMERAL
+  PERSISTENT
+  HTTP_CLIENT
+  CLOUD
+}
+
+"""Status of an async import job."""
+enum ImportJobStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+# ─────────────────────────────────────────────
+# Core entity types
+# ─────────────────────────────────────────────
+
+"""A top-level organisational container (Chroma Cloud)."""
+type Tenant {
+  id: ID!
+  name: String!
+  status: TenantStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  databases: DatabaseConnection!
+}
+
+"""A named database inside a tenant that holds collections."""
+type Database {
+  id: ID!
+  name: String!
+  tenant: Tenant!
+  status: DatabaseStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  collections: CollectionConnection!
+  collectionCount: Int!
+}
+
+"""
+A Chroma collection — the primary organisational unit for embeddings,
+documents, and associated metadata.
+"""
+type Collection {
+  id: ID!
+  name: String!
+  database: Database
+  metadata: JSON
+  dimension: Int
+  distanceFunction: DistanceFunction!
+  indexType: IndexType!
+  embeddingFunction: EmbeddingFunctionConfig
+  count: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  records(filter: RecordFilterInput, page: PaginationInput): RecordConnection!
+}
+
+"""Configuration of the embedding function attached to a collection."""
+type EmbeddingFunctionConfig {
+  name: String!
+  model: String
+  apiKeyEnvVar: String
+  parameters: JSON
+}
+
+"""
+A single record stored in a collection — document text, embedding vector,
+metadata, and optional multi-modal data.
+"""
+type Record {
+  id: ID!
+  collection: Collection!
+  document: String
+  embedding: [Float32!]
+  metadata: JSON
+  modality: RecordModality!
+  uri: String
+  dataBlob: Bytes
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Result returned from a similarity or keyword query."""
+type QueryResult {
+  id: ID!
+  document: String
+  embedding: [Float32!]
+  metadata: JSON
+  distance: Float
+  modality: RecordModality!
+  uri: String
+}
+
+"""Grouped results for a single query in a batch query operation."""
+type BatchQueryResult {
+  queryIndex: Int!
+  results: [QueryResult!]!
+}
+
+"""Response to a batch query request."""
+type QueryResponse {
+  results: [BatchQueryResult!]!
+  totalQueries: Int!
+}
+
+"""Heartbeat / health-check response from the Chroma server."""
+type Heartbeat {
+  nanosecondHeartbeat: String!
+  serverVersion: String!
+}
+
+"""Server version information."""
+type ServerVersion {
+  version: String!
+  gitCommit: String
+  buildDate: DateTime
+}
+
+"""HNSW index configuration parameters."""
+type HnswConfig {
+  space: DistanceFunction!
+  efConstruction: Int!
+  ef: Int!
+  maxConnections: Int!
+  numThreads: Int!
+  batchSize: Int!
+  syncThreshold: Int!
+  resizeFactor: Float!
+}
+
+"""Metadata about a pre-built embedding model available for use."""
+type EmbeddingModel {
+  id: ID!
+  name: String!
+  provider: String!
+  dimensions: Int!
+  maxTokens: Int
+  description: String
+}
+
+"""
+An async data import job — used when bulk-loading records from an external
+source into a collection.
+"""
+type ImportJob {
+  id: ID!
+  collection: Collection!
+  status: ImportJobStatus!
+  totalRecords: Int
+  processedRecords: Int!
+  failedRecords: Int!
+  errorMessage: String
+  createdAt: DateTime!
+  startedAt: DateTime
+  completedAt: DateTime
+}
+
+"""Statistics snapshot for a collection."""
+type CollectionStats {
+  collectionId: ID!
+  recordCount: Int!
+  uniqueDocuments: Int!
+  estimatedSizeBytes: Int!
+  indexBuildPending: Boolean!
+  lastModifiedAt: DateTime!
+}
+
+"""Paginated list of collections."""
+type CollectionConnection {
+  edges: [CollectionEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""Edge wrapper for Collection."""
+type CollectionEdge {
+  node: Collection!
+  cursor: String!
+}
+
+"""Paginated list of records."""
+type RecordConnection {
+  edges: [RecordEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""Edge wrapper for Record."""
+type RecordEdge {
+  node: Record!
+  cursor: String!
+}
+
+"""Paginated list of databases."""
+type DatabaseConnection {
+  edges: [DatabaseEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""Edge wrapper for Database."""
+type DatabaseEdge {
+  node: Database!
+  cursor: String!
+}
+
+"""Paginated list of import jobs."""
+type ImportJobConnection {
+  edges: [ImportJobEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""Edge wrapper for ImportJob."""
+type ImportJobEdge {
+  node: ImportJob!
+  cursor: String!
+}
+
+"""Standard Relay-style pagination information."""
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+"""Payload returned after adding or upserting records."""
+type UpsertRecordsPayload {
+  collection: Collection!
+  addedCount: Int!
+  updatedCount: Int!
+  errors: [RecordError!]!
+}
+
+"""Payload returned after deleting records."""
+type DeleteRecordsPayload {
+  collection: Collection!
+  deletedCount: Int!
+  errors: [RecordError!]!
+}
+
+"""Payload returned after updating collection metadata."""
+type UpdateCollectionPayload {
+  collection: Collection!
+}
+
+"""Payload returned after deleting a collection."""
+type DeleteCollectionPayload {
+  success: Boolean!
+  collectionId: ID!
+  collectionName: String!
+}
+
+"""Payload returned after creating a collection."""
+type CreateCollectionPayload {
+  collection: Collection!
+}
+
+"""Payload returned after creating a database."""
+type CreateDatabasePayload {
+  database: Database!
+}
+
+"""Payload returned after creating a tenant."""
+type CreateTenantPayload {
+  tenant: Tenant!
+}
+
+"""Payload returned after resetting the entire database (dev/test only)."""
+type ResetPayload {
+  success: Boolean!
+}
+
+"""Error details for a single record that failed during an upsert."""
+type RecordError {
+  id: ID
+  index: Int
+  message: String!
+  code: String
+}
+
+"""Real-time event emitted when records are added to a collection."""
+type RecordAddedEvent {
+  collection: Collection!
+  recordIds: [ID!]!
+  count: Int!
+  timestamp: DateTime!
+}
+
+"""Real-time event emitted when records are deleted from a collection."""
+type RecordDeletedEvent {
+  collection: Collection!
+  recordIds: [ID!]!
+  count: Int!
+  timestamp: DateTime!
+}
+
+"""Real-time event emitted when a collection's metadata is updated."""
+type CollectionUpdatedEvent {
+  collection: Collection!
+  timestamp: DateTime!
+}
+
+"""Real-time event emitted when an import job changes status."""
+type ImportJobStatusChangedEvent {
+  importJob: ImportJob!
+  previousStatus: ImportJobStatus!
+  timestamp: DateTime!
+}
+
+# ─────────────────────────────────────────────
+# Input types
+# ─────────────────────────────────────────────
+
+"""Pagination cursor input."""
+input PaginationInput {
+  first: Int
+  after: String
+  last: Int
+  before: String
+}
+
+"""Input for creating a new collection."""
+input CreateCollectionInput {
+  name: String!
+  databaseId: ID
+  tenantId: ID
+  metadata: JSON
+  embeddingFunction: EmbeddingFunctionConfigInput
+  distanceFunction: DistanceFunction
+  hnswConfig: HnswConfigInput
+  getOrCreate: Boolean
+}
+
+"""Input for updating an existing collection's metadata or configuration."""
+input UpdateCollectionInput {
+  collectionId: ID!
+  name: String
+  metadata: JSON
+}
+
+"""Input configuration for an embedding function."""
+input EmbeddingFunctionConfigInput {
+  name: String!
+  model: String
+  parameters: JSON
+}
+
+"""Input for HNSW index tuning parameters."""
+input HnswConfigInput {
+  efConstruction: Int
+  ef: Int
+  maxConnections: Int
+  numThreads: Int
+  batchSize: Int
+  syncThreshold: Int
+  resizeFactor: Float
+}
+
+"""A single record to be added or upserted."""
+input RecordInput {
+  id: ID!
+  document: String
+  embedding: [Float32!]
+  metadata: JSON
+  modality: RecordModality
+  uri: String
+  dataBlob: Bytes
+}
+
+"""Input for adding records to a collection."""
+input AddRecordsInput {
+  collectionId: ID!
+  records: [RecordInput!]!
+}
+
+"""Input for upserting records (insert-or-update) in a collection."""
+input UpsertRecordsInput {
+  collectionId: ID!
+  records: [RecordInput!]!
+}
+
+"""Input for updating the metadata of existing records."""
+input UpdateRecordsInput {
+  collectionId: ID!
+  ids: [ID!]!
+  embeddings: [[Float32!]!]
+  documents: [String!]
+  metadatas: [JSON!]
+  uris: [String!]
+}
+
+"""Input for deleting records from a collection."""
+input DeleteRecordsInput {
+  collectionId: ID!
+  ids: [ID!]
+  where: MetadataFilterInput
+  whereDocument: WhereDocumentInput
+}
+
+"""Input for filtering records by metadata."""
+input MetadataFilterInput {
+  operator: LogicalOperator
+  conditions: [MetadataConditionInput!]
+}
+
+"""A single metadata condition."""
+input MetadataConditionInput {
+  field: String!
+  operator: ComparisonOperator!
+  value: JSON!
+}
+
+"""Filter records by their document text."""
+input WhereDocumentInput {
+  operator: WhereDocumentOperator!
+  value: String!
+}
+
+"""Input for filtering records when fetching from a collection."""
+input RecordFilterInput {
+  ids: [ID!]
+  where: MetadataFilterInput
+  whereDocument: WhereDocumentInput
+  include: [IncludeField!]
+}
+
+"""Fields to include in query / get results."""
+enum IncludeField {
+  EMBEDDINGS
+  DOCUMENTS
+  METADATAS
+  DISTANCES
+  URIS
+  DATA
+}
+
+"""Input for a single embedding query."""
+input EmbeddingQueryInput {
+  queryEmbedding: [Float32!]
+  queryText: String
+  nResults: Int
+  where: MetadataFilterInput
+  whereDocument: WhereDocumentInput
+  include: [IncludeField!]
+}
+
+"""Input for querying a collection."""
+input QueryCollectionInput {
+  collectionId: ID!
+  queries: [EmbeddingQueryInput!]!
+}
+
+"""Input for creating a new database."""
+input CreateDatabaseInput {
+  name: String!
+  tenantId: ID!
+}
+
+"""Input for creating a new tenant."""
+input CreateTenantInput {
+  name: String!
+}
+
+"""Input for starting a bulk import job."""
+input StartImportJobInput {
+  collectionId: ID!
+  sourceUri: String!
+  embeddingFunction: EmbeddingFunctionConfigInput
+  batchSize: Int
+  metadata: JSON
+}
+
+# ─────────────────────────────────────────────
+# Root types
+# ─────────────────────────────────────────────
+
+type Query {
+  """Health-check / heartbeat for the Chroma server."""
+  heartbeat: Heartbeat!
+
+  """Current server version details."""
+  version: ServerVersion!
+
+  """Look up a tenant by ID or name."""
+  tenant(id: ID, name: String): Tenant
+
+  """List all tenants accessible to the caller."""
+  tenants(page: PaginationInput): [Tenant!]!
+
+  """Look up a database by ID or name within a tenant."""
+  database(id: ID, name: String, tenantId: ID): Database
+
+  """List all databases within a tenant."""
+  databases(tenantId: ID!, page: PaginationInput): DatabaseConnection!
+
+  """Look up a collection by ID."""
+  collection(id: ID!): Collection
+
+  """Look up a collection by name (within a database/tenant context)."""
+  collectionByName(name: String!, databaseId: ID, tenantId: ID): Collection
+
+  """List all collections in a database."""
+  collections(
+    databaseId: ID
+    tenantId: ID
+    limit: Int
+    offset: Int
+    page: PaginationInput
+  ): CollectionConnection!
+
+  """Count the total number of records in a collection."""
+  countRecords(collectionId: ID!): Int!
+
+  """Retrieve records from a collection with optional filters."""
+  getRecords(
+    collectionId: ID!
+    filter: RecordFilterInput
+    limit: Int
+    offset: Int
+    page: PaginationInput
+  ): RecordConnection!
+
+  """Query a collection by embedding vectors or text strings."""
+  queryCollection(input: QueryCollectionInput!): QueryResponse!
+
+  """Retrieve statistics for a collection."""
+  collectionStats(collectionId: ID!): CollectionStats!
+
+  """List available built-in embedding models."""
+  embeddingModels(provider: String): [EmbeddingModel!]!
+
+  """Look up an import job by ID."""
+  importJob(id: ID!): ImportJob
+
+  """List import jobs for a collection."""
+  importJobs(
+    collectionId: ID!
+    status: ImportJobStatus
+    page: PaginationInput
+  ): ImportJobConnection!
+}
+
+type Mutation {
+  """Create a new tenant (Chroma Cloud)."""
+  createTenant(input: CreateTenantInput!): CreateTenantPayload!
+
+  """Create a new database within a tenant."""
+  createDatabase(input: CreateDatabaseInput!): CreateDatabasePayload!
+
+  """
+  Create a new collection. Optionally pass getOrCreate: true to return the
+  existing collection if one with the same name already exists.
+  """
+  createCollection(input: CreateCollectionInput!): CreateCollectionPayload!
+
+  """Update a collection's name or metadata."""
+  updateCollection(input: UpdateCollectionInput!): UpdateCollectionPayload!
+
+  """Permanently delete a collection and all its records."""
+  deleteCollection(collectionId: ID!): DeleteCollectionPayload!
+
+  """Add new records to a collection (fails if ID already exists)."""
+  addRecords(input: AddRecordsInput!): UpsertRecordsPayload!
+
+  """
+  Upsert records into a collection (insert new / update existing by ID).
+  """
+  upsertRecords(input: UpsertRecordsInput!): UpsertRecordsPayload!
+
+  """Update the metadata or embeddings of existing records."""
+  updateRecords(input: UpdateRecordsInput!): UpsertRecordsPayload!
+
+  """Delete records from a collection by IDs or metadata filter."""
+  deleteRecords(input: DeleteRecordsInput!): DeleteRecordsPayload!
+
+  """Start a bulk import job to load records from an external source URI."""
+  startImportJob(input: StartImportJobInput!): ImportJob!
+
+  """Cancel a running or pending import job."""
+  cancelImportJob(jobId: ID!): ImportJob!
+
+  """
+  Reset the entire Chroma instance — deletes all data. Intended for
+  development and testing only; disabled in production deployments.
+  """
+  reset: ResetPayload!
+}
+
+type Subscription {
+  """Stream events whenever records are added to a collection."""
+  recordAdded(collectionId: ID!): RecordAddedEvent!
+
+  """Stream events whenever records are deleted from a collection."""
+  recordDeleted(collectionId: ID!): RecordDeletedEvent!
+
+  """Stream events whenever a collection's metadata is updated."""
+  collectionUpdated(collectionId: ID!): CollectionUpdatedEvent!
+
+  """Stream status changes for an import job."""
+  importJobStatusChanged(jobId: ID!): ImportJobStatusChangedEvent!
+}
