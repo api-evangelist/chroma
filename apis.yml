@@ -15,7 +15,7 @@ url: https://raw.githubusercontent.com/api-evangelist/chroma/refs/heads/main/api
 type: Index
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - AI
 - AI Native
@@ -48,7 +48,7 @@ apis:
     vector similarity searches. The API supports metadata filtering, full-text search,
     and collection management operations. An OpenAPI specification is available at
     the server endpoint for client generation in various programming languages.
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.trychroma.com
   humanURL: https://docs.trychroma.com/reference/chroma-reference
   tags:
@@ -71,7 +71,7 @@ apis:
     of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based
     pricing with starter and team plans. Developers can connect to Chroma Cloud using
     the Python or JavaScript client SDKs without needing to manage infrastructure.
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.trychroma.com
   humanURL: https://docs.trychroma.com/cloud/pricing
   tags:
@@ -93,7 +93,7 @@ apis:
     documents, and querying embeddings. The client handles automatic tokenization,
     embedding, and indexing of documents, making it straightforward to build AI applications
     that require vector similarity search.
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.trychroma.com/reference/python/client
   tags:
   - Embeddings
@@ -113,7 +113,7 @@ apis:
     well-suited for deployment on serverless platforms like Vercel. It supports both
     self-hosted Chroma instances and Chroma Cloud via the CloudClient class, providing
     collection management, document ingestion, and vector similarity search capabilities.
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.trychroma.com/reference/js/client
   tags:
   - Embeddings
