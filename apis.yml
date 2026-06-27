@@ -203,7 +203,7 @@ common:
   - name: OpenAPI Specification
   - name: REST/HTTP
   - name: Apache License 2.0
-- type: LLMsTxt
+- type: LlmsText
   url: https://docs.trychroma.com/llms.txt
 maintainers:
 - FN: Kin Lane
