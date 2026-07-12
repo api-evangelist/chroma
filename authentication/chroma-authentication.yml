@@ -1,0 +1,32 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/chroma-cloud-api-openapi.yml, openapi/chroma-server-api-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Bearer token authentication for Chroma Cloud. Obtain tokens from the Chroma Cloud
+    dashboard.
+  sources:
+  - openapi/chroma-cloud-api-openapi.yml
+  - openapi/chroma-server-api-openapi.yml
+- name: tokenAuth
+  type: apiKey
+  in: header
+  parameter: X-Chroma-Token
+  description: Static token authentication via the X-Chroma-Token header.
+  sources:
+  - openapi/chroma-server-api-openapi.yml
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: HTTP Basic authentication using RFC 7617 with a user:password base64-encoded
+    Authorization header.
+  sources:
+  - openapi/chroma-server-api-openapi.yml

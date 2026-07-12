@@ -127,6 +127,14 @@ apis:
   - type: SourceCode
     url: https://github.com/chroma-core/chroma-js
 common:
+- type: TrustCenter
+  url: security/chroma-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/chroma-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/chroma-domain-security.yml
+- type: Authentication
+  url: authentication/chroma-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/trychroma
 - type: Website
