@@ -127,6 +127,8 @@ apis:
   - type: SourceCode
     url: https://github.com/chroma-core/chroma-js
 common:
+- type: AgenticAccess
+  url: agentic-access/chroma-agentic-access.yml
 - type: TrustCenter
   url: security/chroma-trust-center.yml
 - type: VulnerabilityDisclosure
