@@ -1,0 +1,512 @@
+openapi: 3.1.0
+info:
+  title: Chroma Cloud Collections Records API
+  description: Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text, and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based pricing with starter and team plans. The Cloud API extends the Chroma Server API with additional search capabilities including hybrid search with reciprocal rank fusion, custom ranking expressions, and batch search operations.
+  version: 2.0.0
+  contact:
+    name: Chroma Support
+    url: https://docs.trychroma.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://www.trychroma.com/terms
+servers:
+- url: https://api.trychroma.com
+  description: Chroma Cloud Production
+security:
+- bearerAuth: []
+tags:
+- name: Records
+  description: Record management endpoints for adding, getting, updating, upserting, deleting, and querying records within a collection.
+paths:
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/count:
+    get:
+      operationId: countRecords
+      summary: Count records in a collection
+      description: Returns the number of records stored in the specified collection.
+      tags:
+      - Records
+      parameters:
+      - $ref: '#/components/parameters/tenantName'
+      - $ref: '#/components/parameters/databaseName'
+      - $ref: '#/components/parameters/collectionId'
+      responses:
+        '200':
+          description: Record count
+          content:
+            application/json:
+              schema:
+                type: integer
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/add:
+    post:
+      operationId: addRecords
+      summary: Add records to a collection
+      description: Adds new records to the specified collection. Supports batch operations of up to 100,000 or more items at once.
+      tags:
+      - Records
+      parameters:
+      - $ref: '#/components/parameters/tenantName'
+      - $ref: '#/components/parameters/databaseName'
+      - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRecordsRequest'
+      responses:
+        '201':
+          description: Records added successfully
+        '400':
+          description: Invalid request or duplicate IDs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/get:
+    post:
+      operationId: getRecords
+      summary: Get records from a collection
+      description: Retrieves records from the specified collection by their IDs or by a metadata filter.
+      tags:
+      - Records
+      parameters:
+      - $ref: '#/components/parameters/tenantName'
+      - $ref: '#/components/parameters/databaseName'
+      - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetRecordsRequest'
+      responses:
+        '200':
+          description: Records retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRecordsResponse'
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/update:
+    post:
+      operationId: updateRecords
+      summary: Update records in a collection
+      description: Updates existing records in the specified collection.
+      tags:
+      - Records
+      parameters:
+      - $ref: '#/components/parameters/tenantName'
+      - $ref: '#/components/parameters/databaseName'
+      - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRecordsRequest'
+      responses:
+        '200':
+          description: Records updated successfully
+        '404':
+          description: Records not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/upsert:
+    post:
+      operationId: upsertRecords
+      summary: Upsert records in a collection
+      description: Upserts records in the specified collection. If a record with the given ID already exists, it will be updated. If it does not exist, it will be created.
+      tags:
+      - Records
+      parameters:
+      - $ref: '#/components/parameters/tenantName'
+      - $ref: '#/components/parameters/databaseName'
+      - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRecordsRequest'
+      responses:
+        '200':
+          description: Records upserted successfully
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/delete:
+    post:
+      operationId: deleteRecords
+      summary: Delete records from a collection
+      description: Deletes records from the specified collection by IDs or metadata filter.
+      tags:
+      - Records
+      parameters:
+      - $ref: '#/components/parameters/tenantName'
+      - $ref: '#/components/parameters/databaseName'
+      - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteRecordsRequest'
+      responses:
+        '200':
+          description: Records deleted successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/query:
+    post:
+      operationId: queryRecords
+      summary: Query records in a collection
+      description: Performs a vector similarity search on the specified collection. Returns the nearest neighbors to the provided query embeddings or query texts.
+      tags:
+      - Records
+      parameters:
+      - $ref: '#/components/parameters/tenantName'
+      - $ref: '#/components/parameters/databaseName'
+      - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRecordsRequest'
+      responses:
+        '200':
+          description: Query results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryRecordsResponse'
+components:
+  parameters:
+    tenantName:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+    collectionId:
+      name: collectionId
+      in: path
+      required: true
+      description: The unique identifier of the collection
+      schema:
+        type: string
+        format: uuid
+    databaseName:
+      name: databaseName
+      in: path
+      required: true
+      description: The name of the database
+      schema:
+        type: string
+  schemas:
+    WhereFilter:
+      type: object
+      nullable: true
+      additionalProperties: true
+      description: Metadata filter expression. Supports operators including $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin for field comparisons, and $and, $or for combining multiple conditions.
+    QueryRecordsRequest:
+      type: object
+      properties:
+        query_embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Query embedding vectors to find nearest neighbors for
+        query_texts:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: Query texts to be embedded by the server
+        n_results:
+          type: integer
+          default: 10
+          minimum: 1
+          description: Number of nearest neighbor results to return per query
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+        include:
+          type: array
+          items:
+            type: string
+            enum:
+            - embeddings
+            - documents
+            - metadatas
+            - distances
+            - uris
+          description: Fields to include in the response
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+        message:
+          type: string
+          description: Detailed error message
+      required:
+      - error
+    GetRecordsResponse:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+          description: Record IDs
+        embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Embedding vectors if requested via include
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: Documents if requested via include
+        metadatas:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            additionalProperties: true
+          description: Metadata objects if requested via include
+        uris:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: URIs if requested via include
+      required:
+      - ids
+    AddRecordsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+          description: Unique identifiers for each record
+        embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Vector embeddings for each record
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: Text documents for each record
+        metadatas:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            additionalProperties: true
+          description: Metadata objects for each record
+        uris:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: URI references for each record
+      required:
+      - ids
+    QueryRecordsResponse:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+          description: Record IDs for each query result set
+        embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: array
+              items:
+                type: number
+                format: float
+          description: Embedding vectors if requested via include
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: string
+              nullable: true
+          description: Documents if requested via include
+        metadatas:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: object
+              nullable: true
+              additionalProperties: true
+          description: Metadata objects if requested via include
+        distances:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Distance scores if requested via include
+        uris:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: string
+              nullable: true
+          description: URIs if requested via include
+      required:
+      - ids
+    GetRecordsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: List of record IDs to retrieve
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+        include:
+          type: array
+          items:
+            type: string
+            enum:
+            - embeddings
+            - documents
+            - metadatas
+            - uris
+          description: Fields to include in the response
+        limit:
+          type: integer
+          nullable: true
+          minimum: 1
+          description: Maximum number of records to return
+        offset:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Number of records to skip
+    DeleteRecordsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: IDs of the records to delete
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+    WhereDocumentFilter:
+      type: object
+      nullable: true
+      additionalProperties: true
+      description: Document content filter expression. Supports $contains and $not_contains operators for full-text search, and $regex and $not_regex operators for regular expression pattern matching.
+    UpdateRecordsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+          description: IDs of the records to update
+        embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Updated embedding vectors
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: Updated documents
+        metadatas:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            additionalProperties: true
+          description: Updated metadata objects
+        uris:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: Updated URIs
+      required:
+      - ids
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token authentication for Chroma Cloud. Obtain tokens from the Chroma Cloud dashboard.
+externalDocs:
+  description: Chroma Cloud Documentation
+  url: https://docs.trychroma.com/cloud/sync/overview

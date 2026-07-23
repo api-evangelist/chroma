@@ -1,0 +1,114 @@
+openapi: 3.1.0
+info:
+  title: Chroma Cloud Collections Tenants API
+  description: Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text, and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based pricing with starter and team plans. The Cloud API extends the Chroma Server API with additional search capabilities including hybrid search with reciprocal rank fusion, custom ranking expressions, and batch search operations.
+  version: 2.0.0
+  contact:
+    name: Chroma Support
+    url: https://docs.trychroma.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://www.trychroma.com/terms
+servers:
+- url: https://api.trychroma.com
+  description: Chroma Cloud Production
+security:
+- bearerAuth: []
+tags:
+- name: Tenants
+  description: Tenant management endpoints for creating and retrieving tenants.
+paths:
+  /api/v2/tenants:
+    post:
+      operationId: createTenant
+      summary: Create a tenant
+      description: Creates a new tenant in Chroma Cloud. Tenants are the top-level organizational unit and contain databases.
+      tags:
+      - Tenants
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTenantRequest'
+      responses:
+        '200':
+          description: Tenant created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '409':
+          description: Tenant already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/tenants/{tenantName}:
+    get:
+      operationId: getTenant
+      summary: Get a tenant
+      description: Returns an existing tenant by name.
+      tags:
+      - Tenants
+      parameters:
+      - $ref: '#/components/parameters/tenantName'
+      responses:
+        '200':
+          description: Tenant details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '404':
+          description: Tenant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    CreateTenantRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name for the new tenant
+      required:
+      - name
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+        message:
+          type: string
+          description: Detailed error message
+      required:
+      - error
+    Tenant:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the tenant
+      required:
+      - name
+  parameters:
+    tenantName:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token authentication for Chroma Cloud. Obtain tokens from the Chroma Cloud dashboard.
+externalDocs:
+  description: Chroma Cloud Documentation
+  url: https://docs.trychroma.com/cloud/sync/overview

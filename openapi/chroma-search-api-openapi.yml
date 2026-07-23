@@ -1,0 +1,173 @@
+openapi: 3.1.0
+info:
+  title: Chroma Cloud Collections Search API
+  description: Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text, and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based pricing with starter and team plans. The Cloud API extends the Chroma Server API with additional search capabilities including hybrid search with reciprocal rank fusion, custom ranking expressions, and batch search operations.
+  version: 2.0.0
+  contact:
+    name: Chroma Support
+    url: https://docs.trychroma.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://www.trychroma.com/terms
+servers:
+- url: https://api.trychroma.com
+  description: Chroma Cloud Production
+security:
+- bearerAuth: []
+tags:
+- name: Search
+  description: Advanced search endpoints available exclusively in Chroma Cloud. Provides a unified interface for hybrid search operations combining vector similarity search with metadata filtering and custom ranking expressions.
+paths:
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/search:
+    post:
+      operationId: searchRecords
+      summary: Search records in a collection
+      description: Performs an advanced hybrid search on the specified collection. This endpoint is available exclusively in Chroma Cloud and provides a unified interface that replaces both query and get methods. Supports vector similarity search with Knn expressions, metadata filtering with composable Key expressions, full-text search, custom ranking expressions, and reciprocal rank fusion for combining multiple search strategies.
+      tags:
+      - Search
+      parameters:
+      - $ref: '#/components/parameters/tenantName'
+      - $ref: '#/components/parameters/databaseName'
+      - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '400':
+          description: Invalid search expression
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  parameters:
+    tenantName:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+    collectionId:
+      name: collectionId
+      in: path
+      required: true
+      description: The unique identifier of the collection
+      schema:
+        type: string
+        format: uuid
+    databaseName:
+      name: databaseName
+      in: path
+      required: true
+      description: The name of the database
+      schema:
+        type: string
+  schemas:
+    WhereFilter:
+      type: object
+      nullable: true
+      additionalProperties: true
+      description: Metadata filter expression. Supports operators including $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin for field comparisons, and $and, $or for combining multiple conditions.
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+        message:
+          type: string
+          description: Detailed error message
+      required:
+      - error
+    SearchResponse:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+          description: Record IDs matching the search criteria
+        embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Embedding vectors if requested via select
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: Documents if requested via select
+        metadatas:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            additionalProperties: true
+          description: Metadata objects if requested via select
+        distances:
+          type: array
+          nullable: true
+          items:
+            type: number
+            format: float
+          description: Distance scores if requested via select
+        uris:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: URIs if requested via select
+      required:
+      - ids
+    SearchRequest:
+      type: object
+      properties:
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        rank:
+          type: object
+          nullable: true
+          additionalProperties: true
+          description: Ranking expression for ordering results. Supports Knn for vector similarity, RRF for reciprocal rank fusion combining multiple ranking strategies, and custom ranking expressions.
+        limit:
+          type: integer
+          minimum: 1
+          description: Maximum number of results to return
+        select:
+          type: array
+          items:
+            type: string
+          description: Fields to include in the response such as embeddings, documents, metadatas, uris, and distances.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token authentication for Chroma Cloud. Obtain tokens from the Chroma Cloud dashboard.
+externalDocs:
+  description: Chroma Cloud Documentation
+  url: https://docs.trychroma.com/cloud/sync/overview
