@@ -13,9 +13,22 @@ description: Chroma (Chroma DB) is an open-source AI-native embedding database d
   sentence-transformers).
 url: https://raw.githubusercontent.com/api-evangelist/chroma/refs/heads/main/apis.yml
 type: Index
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/chroma.png
 tags:
 - AI
 - AI Native
@@ -40,59 +53,14 @@ created: '2025-03-07'
 modified: '2026-05-19'
 specificationVersion: '0.20'
 apis:
-- aid: chroma:server-api
-  name: Chroma Server API
-  description: The Chroma Server API is a REST API that provides access to the Chroma
-    open-source vector database. It enables developers to create and manage collections
-    of embeddings, add documents with automatic tokenization and embedding, and perform
-    vector similarity searches. The API supports metadata filtering, full-text search,
-    and collection management operations. An OpenAPI specification is available at
-    the server endpoint for client generation in various programming languages.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://api.trychroma.com
-  humanURL: https://docs.trychroma.com/reference/chroma-reference
-  tags:
-  - AI
-  - Embeddings
-  - Machine Learning
-  - Search
-  - Vector Database
-  properties:
-  - type: Documentation
-    url: https://docs.trychroma.com/reference/chroma-reference
-  - type: OpenAPI
-    url: openapi/chroma-server-api-openapi.yml
-  - url: graphql/chroma-graphql.md
-    type: GraphQL
-- aid: chroma:cloud-api
-  name: Chroma Cloud API
-  description: Chroma Cloud is a managed, serverless vector database service that
-    provides fast and scalable vector, full-text, and metadata search across terabytes
-    of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based
-    pricing with starter and team plans. Developers can connect to Chroma Cloud using
-    the Python or JavaScript client SDKs without needing to manage infrastructure.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://api.trychroma.com
-  humanURL: https://docs.trychroma.com/cloud/pricing
-  tags:
-  - AI
-  - Cloud
-  - Embeddings
-  - Serverless
-  - Vector Database
-  properties:
-  - type: Documentation
-    url: https://docs.trychroma.com/cloud/sync/overview
-  - type: OpenAPI
-    url: openapi/chroma-cloud-api-openapi.yml
 - aid: chroma:python-client
   name: Chroma Python Client
-  description: The Chroma Python Client is a first-party SDK for interacting with
-    both self-hosted Chroma servers and Chroma Cloud. It provides a simple, developer-friendly
-    interface with a core API of just four functions for managing collections, adding
-    documents, and querying embeddings. The client handles automatic tokenization,
-    embedding, and indexing of documents, making it straightforward to build AI applications
-    that require vector similarity search.
+  description: >-
+    The Chroma Python Client is a first-party SDK for interacting with both self-hosted Chroma servers
+    and Chroma Cloud. It provides a simple, developer-friendly interface with a core API of just four
+    functions for managing collections, adding documents, and querying embeddings. The client handles
+    automatic tokenization, embedding, and indexing of documents, making it straightforward to build AI
+    applications that require vector similarity search.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.trychroma.com/reference/python/client
   tags:
@@ -107,12 +75,12 @@ apis:
     url: https://github.com/chroma-core/chroma
 - aid: chroma:javascript-client
   name: Chroma JavaScript Client
-  description: The Chroma JavaScript and TypeScript Client is a first-party SDK for
-    interacting with Chroma from JavaScript or TypeScript applications. The v3 rewrite
-    focused on reducing bundle size and improving developer experience, making it
-    well-suited for deployment on serverless platforms like Vercel. It supports both
-    self-hosted Chroma instances and Chroma Cloud via the CloudClient class, providing
-    collection management, document ingestion, and vector similarity search capabilities.
+  description: >-
+    The Chroma JavaScript and TypeScript Client is a first-party SDK for interacting with Chroma from
+    JavaScript or TypeScript applications. The v3 rewrite focused on reducing bundle size and improving
+    developer experience, making it well-suited for deployment on serverless platforms like Vercel. It
+    supports both self-hosted Chroma instances and Chroma Cloud via the CloudClient class, providing collection
+    management, document ingestion, and vector similarity search capabilities.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.trychroma.com/reference/js/client
   tags:
@@ -126,7 +94,113 @@ apis:
     url: https://docs.trychroma.com/reference/js/client
   - type: SourceCode
     url: https://github.com/chroma-core/chroma-js
+- aid: chroma:chroma-collections-api
+  name: Chroma Collections API
+  description: >-
+    Collection management endpoints for creating, listing, retrieving, updating, and deleting collections
+    within a database.
+  humanURL: https://docs.trychroma.com/reference/chroma-reference
+  baseURL: https://api.trychroma.com
+  tags:
+  - Collections
+  properties:
+  - type: OpenAPI
+    url: openapi/chroma-collections-api-openapi.yml
+  - type: Documentation
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: GraphQL
+    url: graphql/chroma-graphql.md
+  - type: Documentation
+    url: https://docs.trychroma.com/cloud/sync/overview
+- aid: chroma:chroma-databases-api
+  name: Chroma Databases API
+  description: >-
+    Database management endpoints for creating, listing, retrieving, and deleting databases within a tenant.
+  humanURL: https://docs.trychroma.com/reference/chroma-reference
+  baseURL: https://api.trychroma.com
+  tags:
+  - Databases
+  properties:
+  - type: OpenAPI
+    url: openapi/chroma-databases-api-openapi.yml
+  - type: Documentation
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: GraphQL
+    url: graphql/chroma-graphql.md
+  - type: Documentation
+    url: https://docs.trychroma.com/cloud/sync/overview
+- aid: chroma:chroma-records-api
+  name: Chroma Records API
+  description: >-
+    Record management endpoints for adding, getting, updating, upserting, deleting, and querying records
+    within a collection.
+  humanURL: https://docs.trychroma.com/reference/chroma-reference
+  baseURL: https://api.trychroma.com
+  tags:
+  - Records
+  properties:
+  - type: OpenAPI
+    url: openapi/chroma-records-api-openapi.yml
+  - type: Documentation
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: GraphQL
+    url: graphql/chroma-graphql.md
+  - type: Documentation
+    url: https://docs.trychroma.com/cloud/sync/overview
+- aid: chroma:chroma-search-api
+  name: Chroma Search API
+  description: >-
+    Advanced search endpoints available exclusively in Chroma Cloud. Provides a unified interface for
+    hybrid search operations combining vector similarity search with metadata filtering and custom ranking
+    expressions.
+  humanURL: https://docs.trychroma.com/reference/chroma-reference
+  baseURL: https://api.trychroma.com
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/chroma-search-api-openapi.yml
+  - type: Documentation
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: GraphQL
+    url: graphql/chroma-graphql.md
+  - type: Documentation
+    url: https://docs.trychroma.com/cloud/sync/overview
+- aid: chroma:chroma-system-api
+  name: Chroma System API
+  description: System-level endpoints for health checks, version information, and server diagnostics.
+  humanURL: https://docs.trychroma.com/reference/chroma-reference
+  baseURL: https://api.trychroma.com
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/chroma-system-api-openapi.yml
+  - type: Documentation
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: GraphQL
+    url: graphql/chroma-graphql.md
+  - type: Documentation
+    url: https://docs.trychroma.com/cloud/sync/overview
+- aid: chroma:chroma-tenants-api
+  name: Chroma Tenants API
+  description: Tenant management endpoints for creating and retrieving tenants.
+  humanURL: https://docs.trychroma.com/reference/chroma-reference
+  baseURL: https://api.trychroma.com
+  tags:
+  - Tenants
+  properties:
+  - type: OpenAPI
+    url: openapi/chroma-tenants-api-openapi.yml
+  - type: Documentation
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: GraphQL
+    url: graphql/chroma-graphql.md
+  - type: Documentation
+    url: https://docs.trychroma.com/cloud/sync/overview
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/chroma/overview
 - type: AgenticAccess
   url: agentic-access/chroma-agentic-access.yml
 - type: TrustCenter
