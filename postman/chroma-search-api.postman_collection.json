@@ -1,0 +1,409 @@
+{
+  "info": {
+    "_postman_id": "ecc8ac90-6fd4-4dc9-acad-24c40bed57e7",
+    "name": "Chroma Cloud Collections Search API",
+    "description": "Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text, and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based pricing with starter and team plans. The Cloud API extends the Chroma Server API with additional search capabilities including hybrid search with reciprocal rank fusion, custom ranking expressions, and batch search operations.\n\nContact Support:\n Name: Chroma Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:20:54.000Z",
+    "updatedAt": "2026-07-28T01:20:54.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ecc8ac90-6fd4-4dc9-acad-24c40bed57e7"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "v2",
+          "item": [
+            {
+              "name": "tenants",
+              "item": [
+                {
+                  "name": "{tenantName}",
+                  "item": [
+                    {
+                      "name": "databases",
+                      "item": [
+                        {
+                          "name": "{databaseName}",
+                          "item": [
+                            {
+                              "name": "collections",
+                              "item": [
+                                {
+                                  "name": "{collectionId}",
+                                  "item": [
+                                    {
+                                      "name": "search",
+                                      "item": [
+                                        {
+                                          "name": "Search records in a collection",
+                                          "id": "3e9bcbf2-31a6-4107-922b-186c1644aab6",
+                                          "protocolProfileBehavior": {
+                                            "disableBodyPruning": true
+                                          },
+                                          "request": {
+                                            "method": "POST",
+                                            "header": [
+                                              {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              }
+                                            ],
+                                            "body": {
+                                              "mode": "raw",
+                                              "raw": "{\n  \"where\": {\n    \"Lorem_6fe\": true,\n    \"cupidatataa\": \"Lorem aliqua deserunt\",\n    \"officia_3\": 22548468\n  },\n  \"rank\": {\n    \"esse_c32\": 25412268.09552759,\n    \"aute02_\": -25804999,\n    \"aliqua7d9\": 91895591.6872347\n  },\n  \"limit\": \"<integer>\",\n  \"select\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                                              "options": {
+                                                "raw": {
+                                                  "headerFamily": "json",
+                                                  "language": "json"
+                                                }
+                                              }
+                                            },
+                                            "url": {
+                                              "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId/search",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "api",
+                                                "v2",
+                                                "tenants",
+                                                ":tenantName",
+                                                "databases",
+                                                ":databaseName",
+                                                "collections",
+                                                ":collectionId",
+                                                "search"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "id": "b51163fc-fd9f-4069-835a-c83e1a12a87e",
+                                                  "key": "tenantName",
+                                                  "value": "<string>",
+                                                  "description": "(Required) The name of the tenant"
+                                                },
+                                                {
+                                                  "id": "611b06cb-8882-43ea-a2a2-99046e52aaff",
+                                                  "key": "databaseName",
+                                                  "value": "<string>",
+                                                  "description": "(Required) The name of the database"
+                                                },
+                                                {
+                                                  "id": "79557cdc-c8a8-4197-bd73-bd5c7e0b4367",
+                                                  "key": "collectionId",
+                                                  "value": "<uuid>",
+                                                  "description": "(Required) The unique identifier of the collection"
+                                                }
+                                              ]
+                                            },
+                                            "description": "Performs an advanced hybrid search on the specified collection. This endpoint is available exclusively in Chroma Cloud and provides a unified interface that replaces both query and get methods. Supports vector similarity search with Knn expressions, metadata filtering with composable Key expressions, full-text search, custom ranking expressions, and reciprocal rank fusion for combining multiple search strategies."
+                                          },
+                                          "response": [
+                                            {
+                                              "id": "39169ee4-87a1-463d-b362-428d248f11c7",
+                                              "name": "Search results",
+                                              "originalRequest": {
+                                                "method": "POST",
+                                                "header": [
+                                                  {
+                                                    "key": "Content-Type",
+                                                    "value": "application/json"
+                                                  },
+                                                  {
+                                                    "key": "Accept",
+                                                    "value": "application/json"
+                                                  },
+                                                  {
+                                                    "description": "Added as a part of security scheme: bearer",
+                                                    "key": "Authorization",
+                                                    "value": "Bearer <token>"
+                                                  }
+                                                ],
+                                                "body": {
+                                                  "mode": "raw",
+                                                  "raw": "{\n  \"where\": {\n    \"Lorem_6fe\": true,\n    \"cupidatataa\": \"Lorem aliqua deserunt\",\n    \"officia_3\": 22548468\n  },\n  \"rank\": {\n    \"esse_c32\": 25412268.09552759,\n    \"aute02_\": -25804999,\n    \"aliqua7d9\": 91895591.6872347\n  },\n  \"limit\": \"<integer>\",\n  \"select\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                                                  "options": {
+                                                    "raw": {
+                                                      "headerFamily": "json",
+                                                      "language": "json"
+                                                    }
+                                                  }
+                                                },
+                                                "url": {
+                                                  "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId/search",
+                                                  "host": [
+                                                    "{{baseUrl}}"
+                                                  ],
+                                                  "path": [
+                                                    "api",
+                                                    "v2",
+                                                    "tenants",
+                                                    ":tenantName",
+                                                    "databases",
+                                                    ":databaseName",
+                                                    "collections",
+                                                    ":collectionId",
+                                                    "search"
+                                                  ],
+                                                  "variable": [
+                                                    {
+                                                      "key": "tenantName"
+                                                    },
+                                                    {
+                                                      "key": "databaseName"
+                                                    },
+                                                    {
+                                                      "key": "collectionId"
+                                                    }
+                                                  ]
+                                                }
+                                              },
+                                              "status": "OK",
+                                              "code": 200,
+                                              "_postman_previewlanguage": "json",
+                                              "header": [
+                                                {
+                                                  "key": "Content-Type",
+                                                  "value": "application/json"
+                                                }
+                                              ],
+                                              "cookie": [],
+                                              "responseTime": null,
+                                              "body": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"embeddings\": [\n    [\n      \"<float>\",\n      \"<float>\"\n    ],\n    [\n      \"<float>\",\n      \"<float>\"\n    ]\n  ],\n  \"documents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadatas\": [\n    {\n      \"mollit_a\": -77728944.56672135,\n      \"incididunt4d\": \"Duis cupidatat consectetur\"\n    },\n    {\n      \"eu_91f\": 28841206\n    }\n  ],\n  \"distances\": [\n    \"<float>\",\n    \"<float>\"\n  ],\n  \"uris\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                                              "createdAt": "2026-07-28T01:20:55.000Z",
+                                              "updatedAt": "2026-07-28T01:20:55.000Z",
+                                              "uid": "35240-39169ee4-87a1-463d-b362-428d248f11c7"
+                                            },
+                                            {
+                                              "id": "9ec2c1e2-6388-4280-ac27-0c430780366c",
+                                              "name": "Invalid search expression",
+                                              "originalRequest": {
+                                                "method": "POST",
+                                                "header": [
+                                                  {
+                                                    "key": "Content-Type",
+                                                    "value": "application/json"
+                                                  },
+                                                  {
+                                                    "key": "Accept",
+                                                    "value": "application/json"
+                                                  },
+                                                  {
+                                                    "description": "Added as a part of security scheme: bearer",
+                                                    "key": "Authorization",
+                                                    "value": "Bearer <token>"
+                                                  }
+                                                ],
+                                                "body": {
+                                                  "mode": "raw",
+                                                  "raw": "{\n  \"where\": {\n    \"Lorem_6fe\": true,\n    \"cupidatataa\": \"Lorem aliqua deserunt\",\n    \"officia_3\": 22548468\n  },\n  \"rank\": {\n    \"esse_c32\": 25412268.09552759,\n    \"aute02_\": -25804999,\n    \"aliqua7d9\": 91895591.6872347\n  },\n  \"limit\": \"<integer>\",\n  \"select\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                                                  "options": {
+                                                    "raw": {
+                                                      "headerFamily": "json",
+                                                      "language": "json"
+                                                    }
+                                                  }
+                                                },
+                                                "url": {
+                                                  "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId/search",
+                                                  "host": [
+                                                    "{{baseUrl}}"
+                                                  ],
+                                                  "path": [
+                                                    "api",
+                                                    "v2",
+                                                    "tenants",
+                                                    ":tenantName",
+                                                    "databases",
+                                                    ":databaseName",
+                                                    "collections",
+                                                    ":collectionId",
+                                                    "search"
+                                                  ],
+                                                  "variable": [
+                                                    {
+                                                      "key": "tenantName"
+                                                    },
+                                                    {
+                                                      "key": "databaseName"
+                                                    },
+                                                    {
+                                                      "key": "collectionId"
+                                                    }
+                                                  ]
+                                                }
+                                              },
+                                              "status": "Bad Request",
+                                              "code": 400,
+                                              "_postman_previewlanguage": "json",
+                                              "header": [
+                                                {
+                                                  "key": "Content-Type",
+                                                  "value": "application/json"
+                                                }
+                                              ],
+                                              "cookie": [],
+                                              "responseTime": null,
+                                              "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                              "createdAt": "2026-07-28T01:20:55.000Z",
+                                              "updatedAt": "2026-07-28T01:20:55.000Z",
+                                              "uid": "35240-9ec2c1e2-6388-4280-ac27-0c430780366c"
+                                            },
+                                            {
+                                              "id": "6c510691-ef1d-48bb-8ccf-cbba77d143df",
+                                              "name": "Collection not found",
+                                              "originalRequest": {
+                                                "method": "POST",
+                                                "header": [
+                                                  {
+                                                    "key": "Content-Type",
+                                                    "value": "application/json"
+                                                  },
+                                                  {
+                                                    "key": "Accept",
+                                                    "value": "application/json"
+                                                  },
+                                                  {
+                                                    "description": "Added as a part of security scheme: bearer",
+                                                    "key": "Authorization",
+                                                    "value": "Bearer <token>"
+                                                  }
+                                                ],
+                                                "body": {
+                                                  "mode": "raw",
+                                                  "raw": "{\n  \"where\": {\n    \"Lorem_6fe\": true,\n    \"cupidatataa\": \"Lorem aliqua deserunt\",\n    \"officia_3\": 22548468\n  },\n  \"rank\": {\n    \"esse_c32\": 25412268.09552759,\n    \"aute02_\": -25804999,\n    \"aliqua7d9\": 91895591.6872347\n  },\n  \"limit\": \"<integer>\",\n  \"select\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                                                  "options": {
+                                                    "raw": {
+                                                      "headerFamily": "json",
+                                                      "language": "json"
+                                                    }
+                                                  }
+                                                },
+                                                "url": {
+                                                  "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId/search",
+                                                  "host": [
+                                                    "{{baseUrl}}"
+                                                  ],
+                                                  "path": [
+                                                    "api",
+                                                    "v2",
+                                                    "tenants",
+                                                    ":tenantName",
+                                                    "databases",
+                                                    ":databaseName",
+                                                    "collections",
+                                                    ":collectionId",
+                                                    "search"
+                                                  ],
+                                                  "variable": [
+                                                    {
+                                                      "key": "tenantName"
+                                                    },
+                                                    {
+                                                      "key": "databaseName"
+                                                    },
+                                                    {
+                                                      "key": "collectionId"
+                                                    }
+                                                  ]
+                                                }
+                                              },
+                                              "status": "Not Found",
+                                              "code": 404,
+                                              "_postman_previewlanguage": "json",
+                                              "header": [
+                                                {
+                                                  "key": "Content-Type",
+                                                  "value": "application/json"
+                                                }
+                                              ],
+                                              "cookie": [],
+                                              "responseTime": null,
+                                              "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                              "createdAt": "2026-07-28T01:20:55.000Z",
+                                              "updatedAt": "2026-07-28T01:20:55.000Z",
+                                              "uid": "35240-6c510691-ef1d-48bb-8ccf-cbba77d143df"
+                                            }
+                                          ],
+                                          "createdAt": "2026-07-28T01:20:55.000Z",
+                                          "updatedAt": "2026-07-28T01:20:55.000Z",
+                                          "uid": "35240-3e9bcbf2-31a6-4107-922b-186c1644aab6"
+                                        }
+                                      ],
+                                      "id": "f5d8c48a-f70f-45f7-8e7b-111727d552b6",
+                                      "createdAt": "2026-07-28T01:20:55.000Z",
+                                      "updatedAt": "2026-07-28T01:20:55.000Z",
+                                      "uid": "35240-f5d8c48a-f70f-45f7-8e7b-111727d552b6"
+                                    }
+                                  ],
+                                  "id": "c380dac3-64f7-4ed3-ad31-7852e3ea61a9",
+                                  "createdAt": "2026-07-28T01:20:55.000Z",
+                                  "updatedAt": "2026-07-28T01:20:55.000Z",
+                                  "uid": "35240-c380dac3-64f7-4ed3-ad31-7852e3ea61a9"
+                                }
+                              ],
+                              "id": "182354ba-d9fe-4e5b-bdde-c87ba89eea81",
+                              "createdAt": "2026-07-28T01:20:55.000Z",
+                              "updatedAt": "2026-07-28T01:20:55.000Z",
+                              "uid": "35240-182354ba-d9fe-4e5b-bdde-c87ba89eea81"
+                            }
+                          ],
+                          "id": "73591213-3097-4886-8437-24454a4d324d",
+                          "createdAt": "2026-07-28T01:20:55.000Z",
+                          "updatedAt": "2026-07-28T01:20:55.000Z",
+                          "uid": "35240-73591213-3097-4886-8437-24454a4d324d"
+                        }
+                      ],
+                      "id": "54e6007b-e46d-4673-b7f0-50ce84096cfd",
+                      "createdAt": "2026-07-28T01:20:55.000Z",
+                      "updatedAt": "2026-07-28T01:20:55.000Z",
+                      "uid": "35240-54e6007b-e46d-4673-b7f0-50ce84096cfd"
+                    }
+                  ],
+                  "id": "07fd4a46-e1ea-46fd-9864-9c1c4ef678e1",
+                  "createdAt": "2026-07-28T01:20:55.000Z",
+                  "updatedAt": "2026-07-28T01:20:55.000Z",
+                  "uid": "35240-07fd4a46-e1ea-46fd-9864-9c1c4ef678e1"
+                }
+              ],
+              "id": "39e0a88e-8b85-4d95-92f6-65ec031f2fd1",
+              "createdAt": "2026-07-28T01:20:55.000Z",
+              "updatedAt": "2026-07-28T01:20:55.000Z",
+              "uid": "35240-39e0a88e-8b85-4d95-92f6-65ec031f2fd1"
+            }
+          ],
+          "id": "4d2a18cc-cc2c-4e2c-8d96-b8dbc88b40e2",
+          "createdAt": "2026-07-28T01:20:55.000Z",
+          "updatedAt": "2026-07-28T01:20:55.000Z",
+          "uid": "35240-4d2a18cc-cc2c-4e2c-8d96-b8dbc88b40e2"
+        }
+      ],
+      "id": "bb0a15e0-7738-41b4-884e-d8bac637a58a",
+      "createdAt": "2026-07-28T01:20:55.000Z",
+      "updatedAt": "2026-07-28T01:20:55.000Z",
+      "uid": "35240-bb0a15e0-7738-41b4-884e-d8bac637a58a"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.trychroma.com"
+    }
+  ]
+}

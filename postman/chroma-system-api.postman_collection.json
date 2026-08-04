@@ -1,0 +1,478 @@
+{
+  "info": {
+    "_postman_id": "cf6881af-9834-412c-a42e-60990d72068e",
+    "name": "Chroma Cloud Collections System API",
+    "description": "Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text, and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based pricing with starter and team plans. The Cloud API extends the Chroma Server API with additional search capabilities including hybrid search with reciprocal rank fusion, custom ranking expressions, and batch search operations.\n\nContact Support:\n Name: Chroma Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:20:57.000Z",
+    "updatedAt": "2026-07-28T01:20:58.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-cf6881af-9834-412c-a42e-60990d72068e"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "v2",
+          "item": [
+            {
+              "name": "heartbeat",
+              "item": [
+                {
+                  "name": "Check server heartbeat",
+                  "id": "8e43386a-c0e1-4835-bb0a-ada2f9018f0a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v2/heartbeat",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "v2",
+                        "heartbeat"
+                      ]
+                    },
+                    "description": "Returns a heartbeat response indicating the server is alive and accepting requests."
+                  },
+                  "response": [
+                    {
+                      "id": "8033aeef-a586-491f-b4fc-549260be945c",
+                      "name": "Server is alive",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/heartbeat",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "heartbeat"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"nanosecond heartbeat\": \"<long>\"\n}",
+                      "createdAt": "2026-07-28T01:20:58.000Z",
+                      "updatedAt": "2026-07-28T01:20:58.000Z",
+                      "uid": "35240-8033aeef-a586-491f-b4fc-549260be945c"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:20:58.000Z",
+                  "updatedAt": "2026-07-28T01:20:58.000Z",
+                  "uid": "35240-8e43386a-c0e1-4835-bb0a-ada2f9018f0a"
+                }
+              ],
+              "id": "265b87cf-63a7-48e3-9035-37bdc11c70d4",
+              "createdAt": "2026-07-28T01:20:58.000Z",
+              "updatedAt": "2026-07-28T01:20:58.000Z",
+              "uid": "35240-265b87cf-63a7-48e3-9035-37bdc11c70d4"
+            },
+            {
+              "name": "version",
+              "item": [
+                {
+                  "name": "Get server version",
+                  "id": "5ad17ffc-ea28-4768-898e-353f38c0c28d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v2/version",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "v2",
+                        "version"
+                      ]
+                    },
+                    "description": "Returns the version string of the running Chroma Cloud server."
+                  },
+                  "response": [
+                    {
+                      "id": "0261e41e-b175-48d8-a64a-de82cfd9518d",
+                      "name": "Server version returned",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/version",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "version"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "<string>",
+                      "createdAt": "2026-07-28T01:20:58.000Z",
+                      "updatedAt": "2026-07-28T01:20:58.000Z",
+                      "uid": "35240-0261e41e-b175-48d8-a64a-de82cfd9518d"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:20:58.000Z",
+                  "updatedAt": "2026-07-28T01:20:58.000Z",
+                  "uid": "35240-5ad17ffc-ea28-4768-898e-353f38c0c28d"
+                }
+              ],
+              "id": "790782da-acf8-4723-8c88-31ce813cb186",
+              "createdAt": "2026-07-28T01:20:58.000Z",
+              "updatedAt": "2026-07-28T01:20:58.000Z",
+              "uid": "35240-790782da-acf8-4723-8c88-31ce813cb186"
+            },
+            {
+              "name": "pre-flight-checks",
+              "item": [
+                {
+                  "name": "Run pre-flight checks",
+                  "id": "2a026e9e-5141-4231-8c60-9c2aa3457b96",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v2/pre-flight-checks",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "v2",
+                        "pre-flight-checks"
+                      ]
+                    },
+                    "description": "Returns the results of pre-flight checks that verify the server is properly configured and ready to accept requests."
+                  },
+                  "response": [
+                    {
+                      "id": "7cd23224-e29c-4439-9420-9aebcfe69a75",
+                      "name": "Pre-flight check results",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/pre-flight-checks",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "pre-flight-checks"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"reprehenderit7\": \"esse nisi sunt laborum\"\n}",
+                      "createdAt": "2026-07-28T01:20:58.000Z",
+                      "updatedAt": "2026-07-28T01:20:58.000Z",
+                      "uid": "35240-7cd23224-e29c-4439-9420-9aebcfe69a75"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:20:58.000Z",
+                  "updatedAt": "2026-07-28T01:20:58.000Z",
+                  "uid": "35240-2a026e9e-5141-4231-8c60-9c2aa3457b96"
+                }
+              ],
+              "id": "a7b5f5fd-decc-4b12-a07f-886bb36ca8c4",
+              "createdAt": "2026-07-28T01:20:58.000Z",
+              "updatedAt": "2026-07-28T01:20:58.000Z",
+              "uid": "35240-a7b5f5fd-decc-4b12-a07f-886bb36ca8c4"
+            },
+            {
+              "name": "healthcheck",
+              "item": [
+                {
+                  "name": "Check server health",
+                  "id": "b21e8a24-7728-4fb8-a153-0f941f8da60a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v2/healthcheck",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "v2",
+                        "healthcheck"
+                      ]
+                    },
+                    "description": "Returns the health status of the Chroma server. Used by load balancers and orchestration tools to determine if the server is healthy and ready to serve traffic."
+                  },
+                  "response": [
+                    {
+                      "id": "7854584a-b98d-4730-bac9-c87e2ec51619",
+                      "name": "Server is healthy",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/healthcheck",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "healthcheck"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"status\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:20:58.000Z",
+                      "updatedAt": "2026-07-28T01:20:58.000Z",
+                      "uid": "35240-7854584a-b98d-4730-bac9-c87e2ec51619"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:20:58.000Z",
+                  "updatedAt": "2026-07-28T01:20:58.000Z",
+                  "uid": "35240-b21e8a24-7728-4fb8-a153-0f941f8da60a"
+                }
+              ],
+              "id": "f00e8686-ed6d-4d78-8f4d-bd950c0869e6",
+              "createdAt": "2026-07-28T01:20:58.000Z",
+              "updatedAt": "2026-07-28T01:20:58.000Z",
+              "uid": "35240-f00e8686-ed6d-4d78-8f4d-bd950c0869e6"
+            },
+            {
+              "name": "reset",
+              "item": [
+                {
+                  "name": "Reset the server",
+                  "id": "8f3b89b4-25e5-4b16-a4ec-de7e121a91fa",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v2/reset",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "v2",
+                        "reset"
+                      ]
+                    },
+                    "description": "Resets the Chroma server to its initial state, removing all data. This endpoint is typically only available in development or test configurations and may be disabled in production deployments."
+                  },
+                  "response": [
+                    {
+                      "id": "3909f4d6-186c-4e4c-be28-3d0c778de91f",
+                      "name": "Server reset successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/reset",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "reset"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "<boolean>",
+                      "createdAt": "2026-07-28T01:20:58.000Z",
+                      "updatedAt": "2026-07-28T01:20:58.000Z",
+                      "uid": "35240-3909f4d6-186c-4e4c-be28-3d0c778de91f"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:20:58.000Z",
+                  "updatedAt": "2026-07-28T01:20:58.000Z",
+                  "uid": "35240-8f3b89b4-25e5-4b16-a4ec-de7e121a91fa"
+                }
+              ],
+              "id": "4e5bacc2-2d0f-400d-bcd4-311511813053",
+              "createdAt": "2026-07-28T01:20:58.000Z",
+              "updatedAt": "2026-07-28T01:20:58.000Z",
+              "uid": "35240-4e5bacc2-2d0f-400d-bcd4-311511813053"
+            }
+          ],
+          "id": "4d2430f7-bb6d-4405-b28e-510d014d1af0",
+          "createdAt": "2026-07-28T01:20:58.000Z",
+          "updatedAt": "2026-07-28T01:20:58.000Z",
+          "uid": "35240-4d2430f7-bb6d-4405-b28e-510d014d1af0"
+        }
+      ],
+      "id": "7077de1d-46eb-4e95-9fc3-b1444e6a2e06",
+      "createdAt": "2026-07-28T01:20:58.000Z",
+      "updatedAt": "2026-07-28T01:20:58.000Z",
+      "uid": "35240-7077de1d-46eb-4e95-9fc3-b1444e6a2e06"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.trychroma.com"
+    }
+  ]
+}

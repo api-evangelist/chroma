@@ -1,0 +1,1099 @@
+openapi: 3.1.0
+info:
+  title: Chroma Cloud API
+  description: >-
+    Chroma Cloud is a managed, serverless vector database service that
+    provides fast and scalable vector, full-text, and metadata search across
+    terabytes of data. It is backed by Chroma's Apache 2.0 distributed
+    database and offers usage-based pricing with starter and team plans.
+    The Cloud API extends the Chroma Server API with additional search
+    capabilities including hybrid search with reciprocal rank fusion,
+    custom ranking expressions, and batch search operations.
+  version: '2.0.0'
+  contact:
+    name: Chroma Support
+    url: https://docs.trychroma.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://www.trychroma.com/terms
+externalDocs:
+  description: Chroma Cloud Documentation
+  url: https://docs.trychroma.com/cloud/sync/overview
+servers:
+  - url: https://api.trychroma.com
+    description: Chroma Cloud Production
+tags:
+  - name: Collections
+    description: >-
+      Collection management endpoints for creating, listing, retrieving,
+      updating, and deleting collections within a database.
+  - name: Databases
+    description: >-
+      Database management endpoints for creating, listing, retrieving, and
+      deleting databases within a tenant.
+  - name: Records
+    description: >-
+      Record management endpoints for adding, getting, updating, upserting,
+      deleting, and querying records within a collection.
+  - name: Search
+    description: >-
+      Advanced search endpoints available exclusively in Chroma Cloud.
+      Provides a unified interface for hybrid search operations combining
+      vector similarity search with metadata filtering and custom ranking
+      expressions.
+  - name: System
+    description: >-
+      System-level endpoints for health checks, version information, and
+      server diagnostics.
+  - name: Tenants
+    description: >-
+      Tenant management endpoints for creating and retrieving tenants.
+security:
+  - bearerAuth: []
+paths:
+  /api/v2/heartbeat:
+    get:
+      operationId: heartbeat
+      summary: Check server heartbeat
+      description: >-
+        Returns a heartbeat response indicating the server is alive and
+        accepting requests.
+      tags:
+        - System
+      security: []
+      responses:
+        '200':
+          description: Server is alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nanosecond heartbeat:
+                    type: integer
+                    format: int64
+                    description: Current server time in nanoseconds
+  /api/v2/version:
+    get:
+      operationId: getVersion
+      summary: Get server version
+      description: >-
+        Returns the version string of the running Chroma Cloud server.
+      tags:
+        - System
+      security: []
+      responses:
+        '200':
+          description: Server version returned
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v2/tenants:
+    post:
+      operationId: createTenant
+      summary: Create a tenant
+      description: >-
+        Creates a new tenant in Chroma Cloud. Tenants are the top-level
+        organizational unit and contain databases.
+      tags:
+        - Tenants
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTenantRequest'
+      responses:
+        '200':
+          description: Tenant created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '409':
+          description: Tenant already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/tenants/{tenantName}:
+    get:
+      operationId: getTenant
+      summary: Get a tenant
+      description: >-
+        Returns an existing tenant by name.
+      tags:
+        - Tenants
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+      responses:
+        '200':
+          description: Tenant details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '404':
+          description: Tenant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/tenants/{tenantName}/databases:
+    get:
+      operationId: listDatabases
+      summary: List databases
+      description: >-
+        Returns a list of all databases within the specified tenant.
+      tags:
+        - Databases
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of databases
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Database'
+    post:
+      operationId: createDatabase
+      summary: Create a database
+      description: >-
+        Creates a new database within the specified tenant.
+      tags:
+        - Databases
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDatabaseRequest'
+      responses:
+        '200':
+          description: Database created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+        '409':
+          description: Database already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/tenants/{tenantName}/databases/{databaseName}:
+    get:
+      operationId: getDatabase
+      summary: Get a database
+      description: >-
+        Returns an existing database by name within the specified tenant.
+      tags:
+        - Databases
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+      responses:
+        '200':
+          description: Database details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+        '404':
+          description: Database or tenant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      operationId: deleteDatabase
+      summary: Delete a database
+      description: >-
+        Deletes an existing database and all its collections.
+      tags:
+        - Databases
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+      responses:
+        '200':
+          description: Database deleted successfully
+        '404':
+          description: Database or tenant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections:
+    get:
+      operationId: listCollections
+      summary: List collections
+      description: >-
+        Returns a list of all collections within the specified database
+        and tenant.
+      tags:
+        - Collections
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of collections
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Collection'
+    post:
+      operationId: createCollection
+      summary: Create a collection
+      description: >-
+        Creates a new collection within the specified database and tenant.
+      tags:
+        - Collections
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCollectionRequest'
+      responses:
+        '200':
+          description: Collection created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+        '409':
+          description: Collection already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}:
+    get:
+      operationId: getCollection
+      summary: Get a collection
+      description: >-
+        Returns an existing collection by its unique identifier.
+      tags:
+        - Collections
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+        - $ref: '#/components/parameters/collectionId'
+      responses:
+        '200':
+          description: Collection details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      operationId: updateCollection
+      summary: Update a collection
+      description: >-
+        Updates an existing collection's name or metadata.
+      tags:
+        - Collections
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+        - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCollectionRequest'
+      responses:
+        '200':
+          description: Collection updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      operationId: deleteCollection
+      summary: Delete a collection
+      description: >-
+        Deletes an existing collection and all its records.
+      tags:
+        - Collections
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+        - $ref: '#/components/parameters/collectionId'
+      responses:
+        '200':
+          description: Collection deleted successfully
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/count:
+    get:
+      operationId: countRecords
+      summary: Count records in a collection
+      description: >-
+        Returns the number of records stored in the specified collection.
+      tags:
+        - Records
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+        - $ref: '#/components/parameters/collectionId'
+      responses:
+        '200':
+          description: Record count
+          content:
+            application/json:
+              schema:
+                type: integer
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/add:
+    post:
+      operationId: addRecords
+      summary: Add records to a collection
+      description: >-
+        Adds new records to the specified collection. Supports batch
+        operations of up to 100,000 or more items at once.
+      tags:
+        - Records
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+        - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRecordsRequest'
+      responses:
+        '201':
+          description: Records added successfully
+        '400':
+          description: Invalid request or duplicate IDs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/get:
+    post:
+      operationId: getRecords
+      summary: Get records from a collection
+      description: >-
+        Retrieves records from the specified collection by their IDs
+        or by a metadata filter.
+      tags:
+        - Records
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+        - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetRecordsRequest'
+      responses:
+        '200':
+          description: Records retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRecordsResponse'
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/update:
+    post:
+      operationId: updateRecords
+      summary: Update records in a collection
+      description: >-
+        Updates existing records in the specified collection.
+      tags:
+        - Records
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+        - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRecordsRequest'
+      responses:
+        '200':
+          description: Records updated successfully
+        '404':
+          description: Records not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/upsert:
+    post:
+      operationId: upsertRecords
+      summary: Upsert records in a collection
+      description: >-
+        Upserts records in the specified collection. If a record with the
+        given ID already exists, it will be updated. If it does not exist,
+        it will be created.
+      tags:
+        - Records
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+        - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRecordsRequest'
+      responses:
+        '200':
+          description: Records upserted successfully
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/delete:
+    post:
+      operationId: deleteRecords
+      summary: Delete records from a collection
+      description: >-
+        Deletes records from the specified collection by IDs or metadata
+        filter.
+      tags:
+        - Records
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+        - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteRecordsRequest'
+      responses:
+        '200':
+          description: Records deleted successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/query:
+    post:
+      operationId: queryRecords
+      summary: Query records in a collection
+      description: >-
+        Performs a vector similarity search on the specified collection.
+        Returns the nearest neighbors to the provided query embeddings
+        or query texts.
+      tags:
+        - Records
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+        - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRecordsRequest'
+      responses:
+        '200':
+          description: Query results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryRecordsResponse'
+  /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/search:
+    post:
+      operationId: searchRecords
+      summary: Search records in a collection
+      description: >-
+        Performs an advanced hybrid search on the specified collection.
+        This endpoint is available exclusively in Chroma Cloud and
+        provides a unified interface that replaces both query and get
+        methods. Supports vector similarity search with Knn expressions,
+        metadata filtering with composable Key expressions, full-text
+        search, custom ranking expressions, and reciprocal rank fusion
+        for combining multiple search strategies.
+      tags:
+        - Search
+      parameters:
+        - $ref: '#/components/parameters/tenantName'
+        - $ref: '#/components/parameters/databaseName'
+        - $ref: '#/components/parameters/collectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '400':
+          description: Invalid search expression
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Bearer token authentication for Chroma Cloud. Obtain tokens from
+        the Chroma Cloud dashboard.
+  parameters:
+    tenantName:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+    databaseName:
+      name: databaseName
+      in: path
+      required: true
+      description: The name of the database
+      schema:
+        type: string
+    collectionId:
+      name: collectionId
+      in: path
+      required: true
+      description: The unique identifier of the collection
+      schema:
+        type: string
+        format: uuid
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return
+      schema:
+        type: integer
+        minimum: 1
+    offset:
+      name: offset
+      in: query
+      required: false
+      description: Number of items to skip before returning results
+      schema:
+        type: integer
+        minimum: 0
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+        message:
+          type: string
+          description: Detailed error message
+      required:
+        - error
+    Tenant:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the tenant
+      required:
+        - name
+    CreateTenantRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name for the new tenant
+      required:
+        - name
+    Database:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of the database
+        name:
+          type: string
+          description: The name of the database
+        tenant:
+          type: string
+          description: The tenant this database belongs to
+      required:
+        - id
+        - name
+        - tenant
+    CreateDatabaseRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name for the new database
+      required:
+        - name
+    Collection:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of the collection
+        name:
+          type: string
+          description: The name of the collection
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+          description: >-
+            Arbitrary metadata associated with the collection
+        tenant:
+          type: string
+          description: The tenant this collection belongs to
+        database:
+          type: string
+          description: The database this collection belongs to
+      required:
+        - id
+        - name
+    CreateCollectionRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name for the new collection
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+          description: Optional metadata to associate with the collection
+        get_or_create:
+          type: boolean
+          default: false
+          description: >-
+            If true, return the existing collection if one with the same
+            name already exists
+      required:
+        - name
+    UpdateCollectionRequest:
+      type: object
+      properties:
+        new_name:
+          type: string
+          description: The new name for the collection
+        new_metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+          description: New metadata to replace the existing collection metadata
+    AddRecordsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+          description: Unique identifiers for each record
+        embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Vector embeddings for each record
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: Text documents for each record
+        metadatas:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            additionalProperties: true
+          description: Metadata objects for each record
+        uris:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: URI references for each record
+      required:
+        - ids
+    GetRecordsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: List of record IDs to retrieve
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+        include:
+          type: array
+          items:
+            type: string
+            enum:
+              - embeddings
+              - documents
+              - metadatas
+              - uris
+          description: Fields to include in the response
+        limit:
+          type: integer
+          nullable: true
+          minimum: 1
+          description: Maximum number of records to return
+        offset:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Number of records to skip
+    GetRecordsResponse:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+          description: Record IDs
+        embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Embedding vectors if requested via include
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: Documents if requested via include
+        metadatas:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            additionalProperties: true
+          description: Metadata objects if requested via include
+        uris:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: URIs if requested via include
+      required:
+        - ids
+    UpdateRecordsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+          description: IDs of the records to update
+        embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Updated embedding vectors
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: Updated documents
+        metadatas:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            additionalProperties: true
+          description: Updated metadata objects
+        uris:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: Updated URIs
+      required:
+        - ids
+    DeleteRecordsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: IDs of the records to delete
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+    QueryRecordsRequest:
+      type: object
+      properties:
+        query_embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Query embedding vectors to find nearest neighbors for
+        query_texts:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: Query texts to be embedded by the server
+        n_results:
+          type: integer
+          default: 10
+          minimum: 1
+          description: Number of nearest neighbor results to return per query
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+        include:
+          type: array
+          items:
+            type: string
+            enum:
+              - embeddings
+              - documents
+              - metadatas
+              - distances
+              - uris
+          description: Fields to include in the response
+    QueryRecordsResponse:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+          description: Record IDs for each query result set
+        embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: array
+              items:
+                type: number
+                format: float
+          description: Embedding vectors if requested via include
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: string
+              nullable: true
+          description: Documents if requested via include
+        metadatas:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: object
+              nullable: true
+              additionalProperties: true
+          description: Metadata objects if requested via include
+        distances:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Distance scores if requested via include
+        uris:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: string
+              nullable: true
+          description: URIs if requested via include
+      required:
+        - ids
+    SearchRequest:
+      type: object
+      properties:
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        rank:
+          type: object
+          nullable: true
+          additionalProperties: true
+          description: >-
+            Ranking expression for ordering results. Supports Knn for
+            vector similarity, RRF for reciprocal rank fusion combining
+            multiple ranking strategies, and custom ranking expressions.
+        limit:
+          type: integer
+          minimum: 1
+          description: Maximum number of results to return
+        select:
+          type: array
+          items:
+            type: string
+          description: >-
+            Fields to include in the response such as embeddings,
+            documents, metadatas, uris, and distances.
+    SearchResponse:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+          description: Record IDs matching the search criteria
+        embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Embedding vectors if requested via select
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: Documents if requested via select
+        metadatas:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            additionalProperties: true
+          description: Metadata objects if requested via select
+        distances:
+          type: array
+          nullable: true
+          items:
+            type: number
+            format: float
+          description: Distance scores if requested via select
+        uris:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: URIs if requested via select
+      required:
+        - ids
+    WhereFilter:
+      type: object
+      nullable: true
+      additionalProperties: true
+      description: >-
+        Metadata filter expression. Supports operators including $eq,
+        $ne, $gt, $gte, $lt, $lte, $in, $nin for field comparisons,
+        and $and, $or for combining multiple conditions.
+    WhereDocumentFilter:
+      type: object
+      nullable: true
+      additionalProperties: true
+      description: >-
+        Document content filter expression. Supports $contains and
+        $not_contains operators for full-text search, and $regex and
+        $not_regex operators for regular expression pattern matching.

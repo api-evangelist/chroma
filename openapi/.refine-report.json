@@ -1,0 +1,24 @@
+{
+  "provider": "chroma",
+  "sources": [
+    "chroma-collections-api-openapi.yml",
+    "chroma-databases-api-openapi.yml",
+    "chroma-records-api-openapi.yml",
+    "chroma-search-api-openapi.yml",
+    "chroma-system-api-openapi.yml",
+    "chroma-tenants-api-openapi.yml"
+  ],
+  "outputs": [
+    "chroma-collections-api-openapi.yml",
+    "chroma-databases-api-openapi.yml",
+    "chroma-records-api-openapi.yml",
+    "chroma-search-api-openapi.yml",
+    "chroma-system-api-openapi.yml",
+    "chroma-tenants-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

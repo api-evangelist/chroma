@@ -1,0 +1,371 @@
+{
+  "info": {
+    "_postman_id": "23f4046c-86e3-4fd4-a019-0cf7591251b1",
+    "name": "Chroma Cloud Collections Tenants API",
+    "description": "Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text, and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based pricing with starter and team plans. The Cloud API extends the Chroma Server API with additional search capabilities including hybrid search with reciprocal rank fusion, custom ranking expressions, and batch search operations.\n\nContact Support:\n Name: Chroma Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:20:58.000Z",
+    "updatedAt": "2026-07-28T01:20:58.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-23f4046c-86e3-4fd4-a019-0cf7591251b1"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "v2",
+          "item": [
+            {
+              "name": "tenants",
+              "item": [
+                {
+                  "name": "{tenantName}",
+                  "item": [
+                    {
+                      "name": "Get a tenant",
+                      "id": "20afc908-033e-47c5-9a7f-11b06e5df7fc",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/tenants/:tenantName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "tenants",
+                            ":tenantName"
+                          ],
+                          "variable": [
+                            {
+                              "id": "56ca8bd4-93a5-4ac1-9e44-bbc1ddc8fa9f",
+                              "key": "tenantName",
+                              "value": "<string>",
+                              "description": "(Required) The name of the tenant"
+                            }
+                          ]
+                        },
+                        "description": "Returns an existing tenant by name."
+                      },
+                      "response": [
+                        {
+                          "id": "8f19c498-6f97-4b9f-8211-8b14ad0c61e5",
+                          "name": "Tenant details",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/tenants/:tenantName",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "tenants",
+                                ":tenantName"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "tenantName"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"name\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:20:59.000Z",
+                          "updatedAt": "2026-07-28T01:20:59.000Z",
+                          "uid": "35240-8f19c498-6f97-4b9f-8211-8b14ad0c61e5"
+                        },
+                        {
+                          "id": "7ca3ac62-90cb-4751-b27e-f5aaf3f37e1b",
+                          "name": "Tenant not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/tenants/:tenantName",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "tenants",
+                                ":tenantName"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "tenantName"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:20:59.000Z",
+                          "updatedAt": "2026-07-28T01:20:59.000Z",
+                          "uid": "35240-7ca3ac62-90cb-4751-b27e-f5aaf3f37e1b"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:20:59.000Z",
+                      "updatedAt": "2026-07-28T01:20:59.000Z",
+                      "uid": "35240-20afc908-033e-47c5-9a7f-11b06e5df7fc"
+                    }
+                  ],
+                  "id": "63510f8e-c51a-4cbe-9cb0-50d252b3ebc6",
+                  "createdAt": "2026-07-28T01:20:59.000Z",
+                  "updatedAt": "2026-07-28T01:20:59.000Z",
+                  "uid": "35240-63510f8e-c51a-4cbe-9cb0-50d252b3ebc6"
+                },
+                {
+                  "name": "Create a tenant",
+                  "id": "9b165a03-c885-4e15-9b10-2c5480b4a251",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v2/tenants",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "v2",
+                        "tenants"
+                      ]
+                    },
+                    "description": "Creates a new tenant in Chroma Cloud. Tenants are the top-level organizational unit and contain databases."
+                  },
+                  "response": [
+                    {
+                      "id": "263c9ef8-6e86-471f-b752-32411e4d09b5",
+                      "name": "Tenant created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/tenants",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "tenants"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"name\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:20:59.000Z",
+                      "updatedAt": "2026-07-28T01:20:59.000Z",
+                      "uid": "35240-263c9ef8-6e86-471f-b752-32411e4d09b5"
+                    },
+                    {
+                      "id": "c8d07861-0803-499a-afb9-f7ae3f149605",
+                      "name": "Tenant already exists",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/tenants",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "tenants"
+                          ]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:20:59.000Z",
+                      "updatedAt": "2026-07-28T01:20:59.000Z",
+                      "uid": "35240-c8d07861-0803-499a-afb9-f7ae3f149605"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:20:59.000Z",
+                  "updatedAt": "2026-07-28T01:20:59.000Z",
+                  "uid": "35240-9b165a03-c885-4e15-9b10-2c5480b4a251"
+                }
+              ],
+              "id": "9965e287-d540-414d-82a5-efecbdeb1596",
+              "createdAt": "2026-07-28T01:20:59.000Z",
+              "updatedAt": "2026-07-28T01:20:59.000Z",
+              "uid": "35240-9965e287-d540-414d-82a5-efecbdeb1596"
+            }
+          ],
+          "id": "969fbbae-b7ec-4e12-be61-cf7da7e622dd",
+          "createdAt": "2026-07-28T01:20:59.000Z",
+          "updatedAt": "2026-07-28T01:20:59.000Z",
+          "uid": "35240-969fbbae-b7ec-4e12-be61-cf7da7e622dd"
+        }
+      ],
+      "id": "89396997-1f2b-4d63-8760-992b97222990",
+      "createdAt": "2026-07-28T01:20:59.000Z",
+      "updatedAt": "2026-07-28T01:20:59.000Z",
+      "uid": "35240-89396997-1f2b-4d63-8760-992b97222990"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.trychroma.com"
+    }
+  ]
+}

@@ -1,0 +1,1005 @@
+{
+  "info": {
+    "_postman_id": "12b3b3da-2327-4039-93e3-044e891031e0",
+    "name": "Chroma Cloud Collections API",
+    "description": "Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text, and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based pricing with starter and team plans. The Cloud API extends the Chroma Server API with additional search capabilities including hybrid search with reciprocal rank fusion, custom ranking expressions, and batch search operations.\n\nContact Support:\n Name: Chroma Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:20:37.000Z",
+    "updatedAt": "2026-07-28T01:20:37.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-12b3b3da-2327-4039-93e3-044e891031e0"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "v2",
+          "item": [
+            {
+              "name": "tenants",
+              "item": [
+                {
+                  "name": "{tenantName}",
+                  "item": [
+                    {
+                      "name": "databases",
+                      "item": [
+                        {
+                          "name": "{databaseName}",
+                          "item": [
+                            {
+                              "name": "collections",
+                              "item": [
+                                {
+                                  "name": "{collectionId}",
+                                  "item": [
+                                    {
+                                      "name": "Get a collection",
+                                      "id": "b7020f90-7fcf-471a-b147-bd18fc9d66a2",
+                                      "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                      },
+                                      "request": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "api",
+                                            "v2",
+                                            "tenants",
+                                            ":tenantName",
+                                            "databases",
+                                            ":databaseName",
+                                            "collections",
+                                            ":collectionId"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "id": "f8433889-3247-4928-9f8a-557c87886c4c",
+                                              "key": "tenantName",
+                                              "value": "<string>",
+                                              "description": "(Required) The name of the tenant"
+                                            },
+                                            {
+                                              "id": "e532d5b0-0730-409b-8560-d0cca1ed1450",
+                                              "key": "databaseName",
+                                              "value": "<string>",
+                                              "description": "(Required) The name of the database"
+                                            },
+                                            {
+                                              "id": "19488938-f031-432d-a809-c175c43674c4",
+                                              "key": "collectionId",
+                                              "value": "<uuid>",
+                                              "description": "(Required) The unique identifier of the collection"
+                                            }
+                                          ]
+                                        },
+                                        "description": "Returns an existing collection by its unique identifier."
+                                      },
+                                      "response": [
+                                        {
+                                          "id": "649066ab-12fb-4588-a521-133ad0171a7b",
+                                          "name": "Collection details",
+                                          "originalRequest": {
+                                            "method": "GET",
+                                            "header": [
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: bearer",
+                                                "key": "Authorization",
+                                                "value": "Bearer <token>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "api",
+                                                "v2",
+                                                "tenants",
+                                                ":tenantName",
+                                                "databases",
+                                                ":databaseName",
+                                                "collections",
+                                                ":collectionId"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "tenantName"
+                                                },
+                                                {
+                                                  "key": "databaseName"
+                                                },
+                                                {
+                                                  "key": "collectionId"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "OK",
+                                          "code": 200,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"metadata\": {\n    \"commodo14b\": 4908933\n  },\n  \"tenant\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                                          "createdAt": "2026-07-28T01:20:38.000Z",
+                                          "updatedAt": "2026-07-28T01:20:38.000Z",
+                                          "uid": "35240-649066ab-12fb-4588-a521-133ad0171a7b"
+                                        },
+                                        {
+                                          "id": "158b7d0e-76c2-42de-b9c2-986ad2245024",
+                                          "name": "Collection not found",
+                                          "originalRequest": {
+                                            "method": "GET",
+                                            "header": [
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: bearer",
+                                                "key": "Authorization",
+                                                "value": "Bearer <token>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "api",
+                                                "v2",
+                                                "tenants",
+                                                ":tenantName",
+                                                "databases",
+                                                ":databaseName",
+                                                "collections",
+                                                ":collectionId"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "tenantName"
+                                                },
+                                                {
+                                                  "key": "databaseName"
+                                                },
+                                                {
+                                                  "key": "collectionId"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Not Found",
+                                          "code": 404,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                          "createdAt": "2026-07-28T01:20:38.000Z",
+                                          "updatedAt": "2026-07-28T01:20:38.000Z",
+                                          "uid": "35240-158b7d0e-76c2-42de-b9c2-986ad2245024"
+                                        }
+                                      ],
+                                      "createdAt": "2026-07-28T01:20:38.000Z",
+                                      "updatedAt": "2026-07-28T01:20:38.000Z",
+                                      "uid": "35240-b7020f90-7fcf-471a-b147-bd18fc9d66a2"
+                                    },
+                                    {
+                                      "name": "Update a collection",
+                                      "id": "874a3900-1824-4843-8f59-222d1e902265",
+                                      "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                      },
+                                      "request": {
+                                        "method": "PUT",
+                                        "header": [
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "{\n  \"new_name\": \"<string>\",\n  \"new_metadata\": {\n    \"minim_4b\": -25230823,\n    \"sunt_a\": false,\n    \"amet364\": 96541897.0417502\n  }\n}",
+                                          "options": {
+                                            "raw": {
+                                              "headerFamily": "json",
+                                              "language": "json"
+                                            }
+                                          }
+                                        },
+                                        "url": {
+                                          "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "api",
+                                            "v2",
+                                            "tenants",
+                                            ":tenantName",
+                                            "databases",
+                                            ":databaseName",
+                                            "collections",
+                                            ":collectionId"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "id": "b36fc021-be26-482c-a826-12a4377b0e38",
+                                              "key": "tenantName",
+                                              "value": "<string>",
+                                              "description": "(Required) The name of the tenant"
+                                            },
+                                            {
+                                              "id": "4ca1bef1-cab7-4551-af0e-37ffcf36b151",
+                                              "key": "databaseName",
+                                              "value": "<string>",
+                                              "description": "(Required) The name of the database"
+                                            },
+                                            {
+                                              "id": "264729fd-838f-46f5-a136-12a9215ca8d5",
+                                              "key": "collectionId",
+                                              "value": "<uuid>",
+                                              "description": "(Required) The unique identifier of the collection"
+                                            }
+                                          ]
+                                        },
+                                        "description": "Updates an existing collection's name or metadata."
+                                      },
+                                      "response": [
+                                        {
+                                          "id": "cb9a5f8d-234e-451f-b026-5884b9ced266",
+                                          "name": "Collection updated successfully",
+                                          "originalRequest": {
+                                            "method": "PUT",
+                                            "header": [
+                                              {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: bearer",
+                                                "key": "Authorization",
+                                                "value": "Bearer <token>"
+                                              }
+                                            ],
+                                            "body": {
+                                              "mode": "raw",
+                                              "raw": "{\n  \"new_name\": \"<string>\",\n  \"new_metadata\": {\n    \"minim_4b\": -25230823,\n    \"sunt_a\": false,\n    \"amet364\": 96541897.0417502\n  }\n}",
+                                              "options": {
+                                                "raw": {
+                                                  "headerFamily": "json",
+                                                  "language": "json"
+                                                }
+                                              }
+                                            },
+                                            "url": {
+                                              "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "api",
+                                                "v2",
+                                                "tenants",
+                                                ":tenantName",
+                                                "databases",
+                                                ":databaseName",
+                                                "collections",
+                                                ":collectionId"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "tenantName"
+                                                },
+                                                {
+                                                  "key": "databaseName"
+                                                },
+                                                {
+                                                  "key": "collectionId"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "OK",
+                                          "code": 200,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"metadata\": {\n    \"commodo14b\": 4908933\n  },\n  \"tenant\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                                          "createdAt": "2026-07-28T01:20:38.000Z",
+                                          "updatedAt": "2026-07-28T01:20:38.000Z",
+                                          "uid": "35240-cb9a5f8d-234e-451f-b026-5884b9ced266"
+                                        },
+                                        {
+                                          "id": "90f4e30c-c0ab-4f38-ac23-c0de56d22f7c",
+                                          "name": "Collection not found",
+                                          "originalRequest": {
+                                            "method": "PUT",
+                                            "header": [
+                                              {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: bearer",
+                                                "key": "Authorization",
+                                                "value": "Bearer <token>"
+                                              }
+                                            ],
+                                            "body": {
+                                              "mode": "raw",
+                                              "raw": "{\n  \"new_name\": \"<string>\",\n  \"new_metadata\": {\n    \"minim_4b\": -25230823,\n    \"sunt_a\": false,\n    \"amet364\": 96541897.0417502\n  }\n}",
+                                              "options": {
+                                                "raw": {
+                                                  "headerFamily": "json",
+                                                  "language": "json"
+                                                }
+                                              }
+                                            },
+                                            "url": {
+                                              "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "api",
+                                                "v2",
+                                                "tenants",
+                                                ":tenantName",
+                                                "databases",
+                                                ":databaseName",
+                                                "collections",
+                                                ":collectionId"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "tenantName"
+                                                },
+                                                {
+                                                  "key": "databaseName"
+                                                },
+                                                {
+                                                  "key": "collectionId"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Not Found",
+                                          "code": 404,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                          "createdAt": "2026-07-28T01:20:38.000Z",
+                                          "updatedAt": "2026-07-28T01:20:38.000Z",
+                                          "uid": "35240-90f4e30c-c0ab-4f38-ac23-c0de56d22f7c"
+                                        }
+                                      ],
+                                      "createdAt": "2026-07-28T01:20:38.000Z",
+                                      "updatedAt": "2026-07-28T01:20:38.000Z",
+                                      "uid": "35240-874a3900-1824-4843-8f59-222d1e902265"
+                                    },
+                                    {
+                                      "name": "Delete a collection",
+                                      "id": "5c1825cb-ef6b-480b-9b55-d4385721679f",
+                                      "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                      },
+                                      "request": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "api",
+                                            "v2",
+                                            "tenants",
+                                            ":tenantName",
+                                            "databases",
+                                            ":databaseName",
+                                            "collections",
+                                            ":collectionId"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "id": "24d9417c-a5ca-41d7-b044-067233214ebb",
+                                              "key": "tenantName",
+                                              "value": "<string>",
+                                              "description": "(Required) The name of the tenant"
+                                            },
+                                            {
+                                              "id": "02bc72d8-0d2d-4d17-b63f-85e330de7ec2",
+                                              "key": "databaseName",
+                                              "value": "<string>",
+                                              "description": "(Required) The name of the database"
+                                            },
+                                            {
+                                              "id": "5958a53b-b4f4-4e9e-a793-cbaac96c5db0",
+                                              "key": "collectionId",
+                                              "value": "<uuid>",
+                                              "description": "(Required) The unique identifier of the collection"
+                                            }
+                                          ]
+                                        },
+                                        "description": "Deletes an existing collection and all its records."
+                                      },
+                                      "response": [
+                                        {
+                                          "id": "d1b869e8-7396-414b-b4c3-82b4253efe8c",
+                                          "name": "Collection deleted successfully",
+                                          "originalRequest": {
+                                            "method": "DELETE",
+                                            "header": [
+                                              {
+                                                "description": "Added as a part of security scheme: bearer",
+                                                "key": "Authorization",
+                                                "value": "Bearer <token>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "api",
+                                                "v2",
+                                                "tenants",
+                                                ":tenantName",
+                                                "databases",
+                                                ":databaseName",
+                                                "collections",
+                                                ":collectionId"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "tenantName"
+                                                },
+                                                {
+                                                  "key": "databaseName"
+                                                },
+                                                {
+                                                  "key": "collectionId"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "OK",
+                                          "code": 200,
+                                          "_postman_previewlanguage": "text",
+                                          "header": [],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": null,
+                                          "createdAt": "2026-07-28T01:20:38.000Z",
+                                          "updatedAt": "2026-07-28T01:20:38.000Z",
+                                          "uid": "35240-d1b869e8-7396-414b-b4c3-82b4253efe8c"
+                                        },
+                                        {
+                                          "id": "e23eaa71-6345-4c05-a815-e211485bc498",
+                                          "name": "Collection not found",
+                                          "originalRequest": {
+                                            "method": "DELETE",
+                                            "header": [
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: bearer",
+                                                "key": "Authorization",
+                                                "value": "Bearer <token>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "api",
+                                                "v2",
+                                                "tenants",
+                                                ":tenantName",
+                                                "databases",
+                                                ":databaseName",
+                                                "collections",
+                                                ":collectionId"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "tenantName"
+                                                },
+                                                {
+                                                  "key": "databaseName"
+                                                },
+                                                {
+                                                  "key": "collectionId"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Not Found",
+                                          "code": 404,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                          "createdAt": "2026-07-28T01:20:38.000Z",
+                                          "updatedAt": "2026-07-28T01:20:38.000Z",
+                                          "uid": "35240-e23eaa71-6345-4c05-a815-e211485bc498"
+                                        }
+                                      ],
+                                      "createdAt": "2026-07-28T01:20:38.000Z",
+                                      "updatedAt": "2026-07-28T01:20:38.000Z",
+                                      "uid": "35240-5c1825cb-ef6b-480b-9b55-d4385721679f"
+                                    }
+                                  ],
+                                  "id": "f3cbfb2a-a043-4d0a-a794-efd1b413fa01",
+                                  "createdAt": "2026-07-28T01:20:38.000Z",
+                                  "updatedAt": "2026-07-28T01:20:38.000Z",
+                                  "uid": "35240-f3cbfb2a-a043-4d0a-a794-efd1b413fa01"
+                                },
+                                {
+                                  "name": "List collections",
+                                  "id": "a78dc220-e27b-45a6-bb11-d7922ea1e724",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections?limit=<integer>&offset=<integer>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "tenants",
+                                        ":tenantName",
+                                        "databases",
+                                        ":databaseName",
+                                        "collections"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "Maximum number of items to return",
+                                          "key": "limit",
+                                          "value": "<integer>"
+                                        },
+                                        {
+                                          "description": "Number of items to skip before returning results",
+                                          "key": "offset",
+                                          "value": "<integer>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "e1e42890-9d40-4a51-b0e6-104d575411e5",
+                                          "key": "tenantName",
+                                          "value": "<string>",
+                                          "description": "(Required) The name of the tenant"
+                                        },
+                                        {
+                                          "id": "28daae10-30c8-4b34-965c-4b4738603ddd",
+                                          "key": "databaseName",
+                                          "value": "<string>",
+                                          "description": "(Required) The name of the database"
+                                        }
+                                      ]
+                                    },
+                                    "description": "Returns a list of all collections within the specified database and tenant."
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "d689fda3-a304-4d15-b59b-fbb4c2a3b3a1",
+                                      "name": "List of collections",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections?limit=<integer>&offset=<integer>",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "api",
+                                            "v2",
+                                            "tenants",
+                                            ":tenantName",
+                                            "databases",
+                                            ":databaseName",
+                                            "collections"
+                                          ],
+                                          "query": [
+                                            {
+                                              "description": "Maximum number of items to return",
+                                              "key": "limit",
+                                              "value": "<integer>"
+                                            },
+                                            {
+                                              "description": "Number of items to skip before returning results",
+                                              "key": "offset",
+                                              "value": "<integer>"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "tenantName"
+                                            },
+                                            {
+                                              "key": "databaseName"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"metadata\": {\n      \"exercitation8\": -14857056,\n      \"id_a6c\": false\n    },\n    \"tenant\": \"<string>\",\n    \"database\": \"<string>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"metadata\": {\n      \"labore_cb4\": 61179446.69613409,\n      \"amet_49\": true\n    },\n    \"tenant\": \"<string>\",\n    \"database\": \"<string>\"\n  }\n]",
+                                      "createdAt": "2026-07-28T01:20:38.000Z",
+                                      "updatedAt": "2026-07-28T01:20:38.000Z",
+                                      "uid": "35240-d689fda3-a304-4d15-b59b-fbb4c2a3b3a1"
+                                    }
+                                  ],
+                                  "createdAt": "2026-07-28T01:20:38.000Z",
+                                  "updatedAt": "2026-07-28T01:20:38.000Z",
+                                  "uid": "35240-a78dc220-e27b-45a6-bb11-d7922ea1e724"
+                                },
+                                {
+                                  "name": "Create a collection",
+                                  "id": "4f309a48-7d74-444d-ab1b-a504ba4797fa",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"name\": \"<string>\",\n  \"metadata\": {\n    \"in4b3\": \"laborum ad mollit sunt dolore\"\n  },\n  \"get_or_create\": false\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "tenants",
+                                        ":tenantName",
+                                        "databases",
+                                        ":databaseName",
+                                        "collections"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "d8a79226-906a-4a5c-aea3-8a1a6e78bbc4",
+                                          "key": "tenantName",
+                                          "value": "<string>",
+                                          "description": "(Required) The name of the tenant"
+                                        },
+                                        {
+                                          "id": "05e7461a-cd33-40ec-b1bb-1a8ad4b04019",
+                                          "key": "databaseName",
+                                          "value": "<string>",
+                                          "description": "(Required) The name of the database"
+                                        }
+                                      ]
+                                    },
+                                    "description": "Creates a new collection within the specified database and tenant."
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "dbee082c-3586-4d63-9473-b7f874e878ba",
+                                      "name": "Collection created successfully",
+                                      "originalRequest": {
+                                        "method": "POST",
+                                        "header": [
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "{\n  \"name\": \"<string>\",\n  \"metadata\": {\n    \"in4b3\": \"laborum ad mollit sunt dolore\"\n  },\n  \"get_or_create\": false\n}",
+                                          "options": {
+                                            "raw": {
+                                              "headerFamily": "json",
+                                              "language": "json"
+                                            }
+                                          }
+                                        },
+                                        "url": {
+                                          "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "api",
+                                            "v2",
+                                            "tenants",
+                                            ":tenantName",
+                                            "databases",
+                                            ":databaseName",
+                                            "collections"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "tenantName"
+                                            },
+                                            {
+                                              "key": "databaseName"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"metadata\": {\n    \"commodo14b\": 4908933\n  },\n  \"tenant\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                                      "createdAt": "2026-07-28T01:20:38.000Z",
+                                      "updatedAt": "2026-07-28T01:20:38.000Z",
+                                      "uid": "35240-dbee082c-3586-4d63-9473-b7f874e878ba"
+                                    },
+                                    {
+                                      "id": "e51ea62b-eb46-44e6-a546-ac9f4078ca09",
+                                      "name": "Collection already exists",
+                                      "originalRequest": {
+                                        "method": "POST",
+                                        "header": [
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "{\n  \"name\": \"<string>\",\n  \"metadata\": {\n    \"in4b3\": \"laborum ad mollit sunt dolore\"\n  },\n  \"get_or_create\": false\n}",
+                                          "options": {
+                                            "raw": {
+                                              "headerFamily": "json",
+                                              "language": "json"
+                                            }
+                                          }
+                                        },
+                                        "url": {
+                                          "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName/collections",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "api",
+                                            "v2",
+                                            "tenants",
+                                            ":tenantName",
+                                            "databases",
+                                            ":databaseName",
+                                            "collections"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "tenantName"
+                                            },
+                                            {
+                                              "key": "databaseName"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Conflict",
+                                      "code": 409,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                      "createdAt": "2026-07-28T01:20:38.000Z",
+                                      "updatedAt": "2026-07-28T01:20:38.000Z",
+                                      "uid": "35240-e51ea62b-eb46-44e6-a546-ac9f4078ca09"
+                                    }
+                                  ],
+                                  "createdAt": "2026-07-28T01:20:38.000Z",
+                                  "updatedAt": "2026-07-28T01:20:38.000Z",
+                                  "uid": "35240-4f309a48-7d74-444d-ab1b-a504ba4797fa"
+                                }
+                              ],
+                              "id": "7499d55e-76aa-4aa4-ae74-f566b926c47d",
+                              "createdAt": "2026-07-28T01:20:38.000Z",
+                              "updatedAt": "2026-07-28T01:20:38.000Z",
+                              "uid": "35240-7499d55e-76aa-4aa4-ae74-f566b926c47d"
+                            }
+                          ],
+                          "id": "11663920-3b06-460d-8edc-ace88b895259",
+                          "createdAt": "2026-07-28T01:20:38.000Z",
+                          "updatedAt": "2026-07-28T01:20:38.000Z",
+                          "uid": "35240-11663920-3b06-460d-8edc-ace88b895259"
+                        }
+                      ],
+                      "id": "a3f15114-5139-4b30-aa12-ab679e687fea",
+                      "createdAt": "2026-07-28T01:20:38.000Z",
+                      "updatedAt": "2026-07-28T01:20:38.000Z",
+                      "uid": "35240-a3f15114-5139-4b30-aa12-ab679e687fea"
+                    }
+                  ],
+                  "id": "c0ff4e2e-23a4-4d5d-b306-2edaaef2ff62",
+                  "createdAt": "2026-07-28T01:20:38.000Z",
+                  "updatedAt": "2026-07-28T01:20:38.000Z",
+                  "uid": "35240-c0ff4e2e-23a4-4d5d-b306-2edaaef2ff62"
+                }
+              ],
+              "id": "96abb55a-7ba2-4250-a1b7-c18be40e950f",
+              "createdAt": "2026-07-28T01:20:38.000Z",
+              "updatedAt": "2026-07-28T01:20:38.000Z",
+              "uid": "35240-96abb55a-7ba2-4250-a1b7-c18be40e950f"
+            }
+          ],
+          "id": "28d43f1a-0787-4f91-86ee-61c612248290",
+          "createdAt": "2026-07-28T01:20:38.000Z",
+          "updatedAt": "2026-07-28T01:20:38.000Z",
+          "uid": "35240-28d43f1a-0787-4f91-86ee-61c612248290"
+        }
+      ],
+      "id": "d0ec294e-53a7-4cb7-aa84-3d814aec5ca5",
+      "createdAt": "2026-07-28T01:20:38.000Z",
+      "updatedAt": "2026-07-28T01:20:38.000Z",
+      "uid": "35240-d0ec294e-53a7-4cb7-aa84-3d814aec5ca5"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.trychroma.com"
+    }
+  ]
+}

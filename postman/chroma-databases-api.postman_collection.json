@@ -1,0 +1,700 @@
+{
+  "info": {
+    "_postman_id": "91f2fdfd-da1d-442d-9b46-94dd17876332",
+    "name": "Chroma Cloud Collections Databases API",
+    "description": "Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text, and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based pricing with starter and team plans. The Cloud API extends the Chroma Server API with additional search capabilities including hybrid search with reciprocal rank fusion, custom ranking expressions, and batch search operations.\n\nContact Support:\n Name: Chroma Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:20:38.000Z",
+    "updatedAt": "2026-07-28T01:20:38.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-91f2fdfd-da1d-442d-9b46-94dd17876332"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "v2",
+          "item": [
+            {
+              "name": "tenants",
+              "item": [
+                {
+                  "name": "{tenantName}",
+                  "item": [
+                    {
+                      "name": "databases",
+                      "item": [
+                        {
+                          "name": "{databaseName}",
+                          "item": [
+                            {
+                              "name": "Get a database",
+                              "id": "1d4e7d30-08a6-4964-affd-a291bdae361c",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "tenants",
+                                    ":tenantName",
+                                    "databases",
+                                    ":databaseName"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "e65eac7b-277e-4067-b868-ad88a129fbaa",
+                                      "key": "tenantName",
+                                      "value": "<string>",
+                                      "description": "(Required) The name of the tenant"
+                                    },
+                                    {
+                                      "id": "d2f31990-9d7c-4934-a65b-b33ccadedff0",
+                                      "key": "databaseName",
+                                      "value": "<string>",
+                                      "description": "(Required) The name of the database"
+                                    }
+                                  ]
+                                },
+                                "description": "Returns an existing database by name within the specified tenant."
+                              },
+                              "response": [
+                                {
+                                  "id": "bad270bb-dc50-4d87-8632-475943bd7588",
+                                  "name": "Database details",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "tenants",
+                                        ":tenantName",
+                                        "databases",
+                                        ":databaseName"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "tenantName"
+                                        },
+                                        {
+                                          "key": "databaseName"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"tenant\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T01:20:39.000Z",
+                                  "updatedAt": "2026-07-28T01:20:39.000Z",
+                                  "uid": "35240-bad270bb-dc50-4d87-8632-475943bd7588"
+                                },
+                                {
+                                  "id": "94021d74-a6ca-41e7-bf0d-6e3a8b23d1ad",
+                                  "name": "Database or tenant not found",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "tenants",
+                                        ":tenantName",
+                                        "databases",
+                                        ":databaseName"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "tenantName"
+                                        },
+                                        {
+                                          "key": "databaseName"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Not Found",
+                                  "code": 404,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T01:20:39.000Z",
+                                  "updatedAt": "2026-07-28T01:20:39.000Z",
+                                  "uid": "35240-94021d74-a6ca-41e7-bf0d-6e3a8b23d1ad"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T01:20:39.000Z",
+                              "updatedAt": "2026-07-28T01:20:39.000Z",
+                              "uid": "35240-1d4e7d30-08a6-4964-affd-a291bdae361c"
+                            },
+                            {
+                              "name": "Delete a database",
+                              "id": "acf7e0a8-c646-4aee-96f7-4df95179964b",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "tenants",
+                                    ":tenantName",
+                                    "databases",
+                                    ":databaseName"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "55f14f42-48e1-464d-8650-94fa5e93481d",
+                                      "key": "tenantName",
+                                      "value": "<string>",
+                                      "description": "(Required) The name of the tenant"
+                                    },
+                                    {
+                                      "id": "8d222511-383c-4c2e-81b2-4bddc91370bc",
+                                      "key": "databaseName",
+                                      "value": "<string>",
+                                      "description": "(Required) The name of the database"
+                                    }
+                                  ]
+                                },
+                                "description": "Deletes an existing database and all its collections."
+                              },
+                              "response": [
+                                {
+                                  "id": "5f18a30d-f594-48a8-9da6-190f4fc14b1a",
+                                  "name": "Database deleted successfully",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "tenants",
+                                        ":tenantName",
+                                        "databases",
+                                        ":databaseName"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "tenantName"
+                                        },
+                                        {
+                                          "key": "databaseName"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": null,
+                                  "createdAt": "2026-07-28T01:20:39.000Z",
+                                  "updatedAt": "2026-07-28T01:20:39.000Z",
+                                  "uid": "35240-5f18a30d-f594-48a8-9da6-190f4fc14b1a"
+                                },
+                                {
+                                  "id": "6a9943c1-c39d-4958-b03a-8dacdc452218",
+                                  "name": "Database or tenant not found",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases/:databaseName",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "tenants",
+                                        ":tenantName",
+                                        "databases",
+                                        ":databaseName"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "tenantName"
+                                        },
+                                        {
+                                          "key": "databaseName"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Not Found",
+                                  "code": 404,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T01:20:39.000Z",
+                                  "updatedAt": "2026-07-28T01:20:39.000Z",
+                                  "uid": "35240-6a9943c1-c39d-4958-b03a-8dacdc452218"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T01:20:39.000Z",
+                              "updatedAt": "2026-07-28T01:20:39.000Z",
+                              "uid": "35240-acf7e0a8-c646-4aee-96f7-4df95179964b"
+                            }
+                          ],
+                          "id": "3eb05879-775d-4340-a518-02fbd8d3ea0d",
+                          "createdAt": "2026-07-28T01:20:39.000Z",
+                          "updatedAt": "2026-07-28T01:20:39.000Z",
+                          "uid": "35240-3eb05879-775d-4340-a518-02fbd8d3ea0d"
+                        },
+                        {
+                          "name": "List databases",
+                          "id": "c8810107-651d-4495-af21-4c9504b19735",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases?limit=<integer>&offset=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "tenants",
+                                ":tenantName",
+                                "databases"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Maximum number of items to return",
+                                  "key": "limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Number of items to skip before returning results",
+                                  "key": "offset",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "58022469-357c-4afc-9d23-7fc2513c8d52",
+                                  "key": "tenantName",
+                                  "value": "<string>",
+                                  "description": "(Required) The name of the tenant"
+                                }
+                              ]
+                            },
+                            "description": "Returns a list of all databases within the specified tenant."
+                          },
+                          "response": [
+                            {
+                              "id": "57e050de-ba3a-4eb2-898c-ff9e8979034c",
+                              "name": "List of databases",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases?limit=<integer>&offset=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "tenants",
+                                    ":tenantName",
+                                    "databases"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Maximum number of items to return",
+                                      "key": "limit",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "Number of items to skip before returning results",
+                                      "key": "offset",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "tenantName"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"tenant\": \"<string>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"tenant\": \"<string>\"\n  }\n]",
+                              "createdAt": "2026-07-28T01:20:39.000Z",
+                              "updatedAt": "2026-07-28T01:20:39.000Z",
+                              "uid": "35240-57e050de-ba3a-4eb2-898c-ff9e8979034c"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:20:39.000Z",
+                          "updatedAt": "2026-07-28T01:20:39.000Z",
+                          "uid": "35240-c8810107-651d-4495-af21-4c9504b19735"
+                        },
+                        {
+                          "name": "Create a database",
+                          "id": "a14d1b92-9aa4-436f-b17d-a4eae7c9db86",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "tenants",
+                                ":tenantName",
+                                "databases"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "76238648-31f9-4b1b-b2af-1c4a3d65b503",
+                                  "key": "tenantName",
+                                  "value": "<string>",
+                                  "description": "(Required) The name of the tenant"
+                                }
+                              ]
+                            },
+                            "description": "Creates a new database within the specified tenant."
+                          },
+                          "response": [
+                            {
+                              "id": "7965c3d7-e6c3-4557-b7e5-614248f56809",
+                              "name": "Database created successfully",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "tenants",
+                                    ":tenantName",
+                                    "databases"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "tenantName"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"tenant\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:20:39.000Z",
+                              "updatedAt": "2026-07-28T01:20:39.000Z",
+                              "uid": "35240-7965c3d7-e6c3-4557-b7e5-614248f56809"
+                            },
+                            {
+                              "id": "7e8484e7-6ade-407f-817e-6562bf4770ea",
+                              "name": "Database already exists",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/tenants/:tenantName/databases",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "tenants",
+                                    ":tenantName",
+                                    "databases"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "tenantName"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Conflict",
+                              "code": 409,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:20:39.000Z",
+                              "updatedAt": "2026-07-28T01:20:39.000Z",
+                              "uid": "35240-7e8484e7-6ade-407f-817e-6562bf4770ea"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:20:39.000Z",
+                          "updatedAt": "2026-07-28T01:20:39.000Z",
+                          "uid": "35240-a14d1b92-9aa4-436f-b17d-a4eae7c9db86"
+                        }
+                      ],
+                      "id": "e1e86d46-d61d-453e-b251-e1cf0643c1cd",
+                      "createdAt": "2026-07-28T01:20:39.000Z",
+                      "updatedAt": "2026-07-28T01:20:39.000Z",
+                      "uid": "35240-e1e86d46-d61d-453e-b251-e1cf0643c1cd"
+                    }
+                  ],
+                  "id": "8878e11b-2e21-4d6a-9ec3-5d12cc339f2b",
+                  "createdAt": "2026-07-28T01:20:39.000Z",
+                  "updatedAt": "2026-07-28T01:20:39.000Z",
+                  "uid": "35240-8878e11b-2e21-4d6a-9ec3-5d12cc339f2b"
+                }
+              ],
+              "id": "3abbdfff-c411-40e8-be63-47f947adb040",
+              "createdAt": "2026-07-28T01:20:39.000Z",
+              "updatedAt": "2026-07-28T01:20:39.000Z",
+              "uid": "35240-3abbdfff-c411-40e8-be63-47f947adb040"
+            }
+          ],
+          "id": "24ee00e8-df84-4022-a2bd-3b1d142025a6",
+          "createdAt": "2026-07-28T01:20:39.000Z",
+          "updatedAt": "2026-07-28T01:20:39.000Z",
+          "uid": "35240-24ee00e8-df84-4022-a2bd-3b1d142025a6"
+        }
+      ],
+      "id": "9f78f1eb-d7a7-4152-b546-908e504dd327",
+      "createdAt": "2026-07-28T01:20:39.000Z",
+      "updatedAt": "2026-07-28T01:20:39.000Z",
+      "uid": "35240-9f78f1eb-d7a7-4152-b546-908e504dd327"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.trychroma.com"
+    }
+  ]
+}
