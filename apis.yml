@@ -199,6 +199,10 @@ apis:
   - type: Documentation
     url: https://docs.trychroma.com/cloud/sync/overview
 common:
+- type: IssueTracker
+  url: https://github.com/chroma-core/chroma/issues
+- type: Releases
+  url: https://github.com/chroma-core/chroma/releases
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/chroma/overview
 - type: AgenticAccess
