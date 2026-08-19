@@ -1,0 +1,187 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Chroma Cloud Collections API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trychroma.com/api/v2/tenants/:tenantName/databases/:databaseName/collections",
+            "params": [
+              {
+                "name": "tenantName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the tenant"
+              },
+              {
+                "name": "databaseName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the database"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip before returning results"
+              }
+            ]
+          },
+          "docs": "Returns a list of all collections within the specified database and tenant."
+        },
+        {
+          "info": {
+            "name": "Create a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trychroma.com/api/v2/tenants/:tenantName/databases/:databaseName/collections",
+            "params": [
+              {
+                "name": "tenantName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the tenant"
+              },
+              {
+                "name": "databaseName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the database"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new collection within the specified database and tenant."
+        },
+        {
+          "info": {
+            "name": "Get a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trychroma.com/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId",
+            "params": [
+              {
+                "name": "tenantName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the tenant"
+              },
+              {
+                "name": "databaseName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the database"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the collection"
+              }
+            ]
+          },
+          "docs": "Returns an existing collection by its unique identifier."
+        },
+        {
+          "info": {
+            "name": "Update a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.trychroma.com/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId",
+            "params": [
+              {
+                "name": "tenantName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the tenant"
+              },
+              {
+                "name": "databaseName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the database"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the collection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing collection's name or metadata."
+        },
+        {
+          "info": {
+            "name": "Delete a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.trychroma.com/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId",
+            "params": [
+              {
+                "name": "tenantName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the tenant"
+              },
+              {
+                "name": "databaseName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the database"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the collection"
+              }
+            ]
+          },
+          "docs": "Deletes an existing collection and all its records."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

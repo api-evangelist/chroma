@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Chroma Cloud Collections System API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check server heartbeat",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trychroma.com/api/v2/heartbeat"
+          },
+          "docs": "Returns a heartbeat response indicating the server is alive and accepting requests."
+        },
+        {
+          "info": {
+            "name": "Get server version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trychroma.com/api/v2/version"
+          },
+          "docs": "Returns the version string of the running Chroma Cloud server."
+        },
+        {
+          "info": {
+            "name": "Run pre-flight checks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trychroma.com/api/v2/pre-flight-checks"
+          },
+          "docs": "Returns the results of pre-flight checks that verify the server is properly configured and ready to accept requests."
+        },
+        {
+          "info": {
+            "name": "Check server health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trychroma.com/api/v2/healthcheck"
+          },
+          "docs": "Returns the health status of the Chroma server. Used by load balancers and orchestration tools to determine if the server is healthy and ready to serve traffic."
+        },
+        {
+          "info": {
+            "name": "Reset the server",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trychroma.com/api/v2/reset"
+          },
+          "docs": "Resets the Chroma server to its initial state, removing all data. This endpoint is typically only available in development or test configurations and may be disabled in production deployments."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

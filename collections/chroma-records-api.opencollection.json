@@ -1,0 +1,265 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Chroma Cloud Collections Records API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Records",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Count records in a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trychroma.com/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId/count",
+            "params": [
+              {
+                "name": "tenantName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the tenant"
+              },
+              {
+                "name": "databaseName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the database"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the collection"
+              }
+            ]
+          },
+          "docs": "Returns the number of records stored in the specified collection."
+        },
+        {
+          "info": {
+            "name": "Add records to a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trychroma.com/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId/add",
+            "params": [
+              {
+                "name": "tenantName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the tenant"
+              },
+              {
+                "name": "databaseName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the database"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the collection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds new records to the specified collection. Supports batch operations of up to 100,000 or more items at once."
+        },
+        {
+          "info": {
+            "name": "Get records from a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trychroma.com/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId/get",
+            "params": [
+              {
+                "name": "tenantName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the tenant"
+              },
+              {
+                "name": "databaseName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the database"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the collection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves records from the specified collection by their IDs or by a metadata filter."
+        },
+        {
+          "info": {
+            "name": "Update records in a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trychroma.com/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId/update",
+            "params": [
+              {
+                "name": "tenantName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the tenant"
+              },
+              {
+                "name": "databaseName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the database"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the collection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates existing records in the specified collection."
+        },
+        {
+          "info": {
+            "name": "Upsert records in a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trychroma.com/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId/upsert",
+            "params": [
+              {
+                "name": "tenantName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the tenant"
+              },
+              {
+                "name": "databaseName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the database"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the collection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upserts records in the specified collection. If a record with the given ID already exists, it will be updated. If it does not exist, it will be created."
+        },
+        {
+          "info": {
+            "name": "Delete records from a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trychroma.com/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId/delete",
+            "params": [
+              {
+                "name": "tenantName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the tenant"
+              },
+              {
+                "name": "databaseName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the database"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the collection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deletes records from the specified collection by IDs or metadata filter."
+        },
+        {
+          "info": {
+            "name": "Query records in a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trychroma.com/api/v2/tenants/:tenantName/databases/:databaseName/collections/:collectionId/query",
+            "params": [
+              {
+                "name": "tenantName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the tenant"
+              },
+              {
+                "name": "databaseName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the database"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the collection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Performs a vector similarity search on the specified collection. Returns the nearest neighbors to the provided query embeddings or query texts."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

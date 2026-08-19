@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Chroma Cloud Collections Tenants API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tenants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trychroma.com/api/v2/tenants",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new tenant in Chroma Cloud. Tenants are the top-level organizational unit and contain databases."
+        },
+        {
+          "info": {
+            "name": "Get a tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trychroma.com/api/v2/tenants/:tenantName",
+            "params": [
+              {
+                "name": "tenantName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the tenant"
+              }
+            ]
+          },
+          "docs": "Returns an existing tenant by name."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

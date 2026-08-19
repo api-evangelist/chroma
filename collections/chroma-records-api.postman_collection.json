@@ -1,0 +1,1364 @@
+{
+  "item": [
+    {
+      "id": "d3ed611d-1797-4043-9313-780c8b66763b",
+      "name": "Records",
+      "description": {
+        "content": "Record management endpoints for adding, getting, updating, upserting, deleting, and querying records within a collection.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8dec43b3-081b-40a8-9f3b-13f074dd7284",
+          "name": "Count records in a collection",
+          "request": {
+            "name": "Count records in a collection",
+            "description": {
+              "content": "Returns the number of records stored in the specified collection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "tenants",
+                ":tenantName",
+                "databases",
+                ":databaseName",
+                "collections",
+                ":collectionId",
+                "count"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenantName",
+                  "description": "(Required) The name of the tenant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "databaseName",
+                  "description": "(Required) The name of the database"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "collectionId",
+                  "description": "(Required) The unique identifier of the collection"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2ff56f7d-ab06-4bb0-9524-1d1f55b495cf",
+              "name": "Record count",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tenants",
+                    ":tenantName",
+                    "databases",
+                    ":databaseName",
+                    "collections",
+                    ":collectionId",
+                    "count"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantName",
+                      "description": "(Required) The name of the tenant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "databaseName",
+                      "description": "(Required) The name of the database"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "collectionId",
+                      "description": "(Required) The unique identifier of the collection"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "1545",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ecc179aa-2b09-4f97-b496-7c936b2c6bd1",
+          "name": "Add records to a collection",
+          "request": {
+            "name": "Add records to a collection",
+            "description": {
+              "content": "Adds new records to the specified collection. Supports batch operations of up to 100,000 or more items at once.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "tenants",
+                ":tenantName",
+                "databases",
+                ":databaseName",
+                "collections",
+                ":collectionId",
+                "add"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenantName",
+                  "description": "(Required) The name of the tenant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "databaseName",
+                  "description": "(Required) The name of the database"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "collectionId",
+                  "description": "(Required) The unique identifier of the collection"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"embeddings\": [\n    [\n      \"<float>\",\n      \"<float>\"\n    ],\n    [\n      \"<float>\",\n      \"<float>\"\n    ]\n  ],\n  \"documents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadatas\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": 211,\n      \"key_1\": true\n    }\n  ],\n  \"uris\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "03373bee-7cde-4123-9a63-f9a22c1d2532",
+              "name": "Records added successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tenants",
+                    ":tenantName",
+                    "databases",
+                    ":databaseName",
+                    "collections",
+                    ":collectionId",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantName",
+                      "description": "(Required) The name of the tenant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "databaseName",
+                      "description": "(Required) The name of the database"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "collectionId",
+                      "description": "(Required) The unique identifier of the collection"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"embeddings\": [\n    [\n      \"<float>\",\n      \"<float>\"\n    ],\n    [\n      \"<float>\",\n      \"<float>\"\n    ]\n  ],\n  \"documents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadatas\": [\n    {\n      \"key_0\": 4859.097307210432,\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    {\n      \"key_0\": 169.8277522177205\n    }\n  ],\n  \"uris\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1fdf9bbb-e5d0-44f4-8ea9-5c9e8d78d78b",
+              "name": "Invalid request or duplicate IDs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tenants",
+                    ":tenantName",
+                    "databases",
+                    ":databaseName",
+                    "collections",
+                    ":collectionId",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantName",
+                      "description": "(Required) The name of the tenant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "databaseName",
+                      "description": "(Required) The name of the database"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "collectionId",
+                      "description": "(Required) The unique identifier of the collection"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"embeddings\": [\n    [\n      \"<float>\",\n      \"<float>\"\n    ],\n    [\n      \"<float>\",\n      \"<float>\"\n    ]\n  ],\n  \"documents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadatas\": [\n    {\n      \"key_0\": 4859.097307210432,\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    {\n      \"key_0\": 169.8277522177205\n    }\n  ],\n  \"uris\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "338700c0-60b1-443a-9499-77fcdcf7054f",
+          "name": "Get records from a collection",
+          "request": {
+            "name": "Get records from a collection",
+            "description": {
+              "content": "Retrieves records from the specified collection by their IDs or by a metadata filter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "tenants",
+                ":tenantName",
+                "databases",
+                ":databaseName",
+                "collections",
+                ":collectionId",
+                "get"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenantName",
+                  "description": "(Required) The name of the tenant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "databaseName",
+                  "description": "(Required) The name of the database"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "collectionId",
+                  "description": "(Required) The unique identifier of the collection"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"where\": {\n    \"key_0\": 4991,\n    \"key_1\": false,\n    \"key_2\": \"string\",\n    \"key_3\": true\n  },\n  \"where_document\": {\n    \"key_0\": true\n  },\n  \"include\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"limit\": \"<integer>\",\n  \"offset\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "79a8bdf5-a0e9-4f32-8634-5379be00cedf",
+              "name": "Records retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tenants",
+                    ":tenantName",
+                    "databases",
+                    ":databaseName",
+                    "collections",
+                    ":collectionId",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantName",
+                      "description": "(Required) The name of the tenant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "databaseName",
+                      "description": "(Required) The name of the database"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "collectionId",
+                      "description": "(Required) The unique identifier of the collection"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"where\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": \"string\"\n  },\n  \"where_document\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": 1281.014236187743\n  },\n  \"include\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"limit\": \"<integer>\",\n  \"offset\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ids\": [\n    \"string\",\n    \"string\"\n  ],\n  \"embeddings\": [\n    [\n      1363.7792931913373,\n      7457.618623577981\n    ],\n    [\n      8333.064428497235,\n      8913.415509194647\n    ]\n  ],\n  \"documents\": [\n    \"string\",\n    \"string\"\n  ],\n  \"metadatas\": [\n    {\n      \"key_0\": 5348.73066269812,\n      \"key_1\": 4432.590571781284,\n      \"key_2\": \"string\"\n    },\n    {\n      \"key_0\": 2894.952394641095,\n      \"key_1\": 6844.660042414702\n    }\n  ],\n  \"uris\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "80969a31-72c3-4cad-b702-07551399cfed",
+          "name": "Update records in a collection",
+          "request": {
+            "name": "Update records in a collection",
+            "description": {
+              "content": "Updates existing records in the specified collection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "tenants",
+                ":tenantName",
+                "databases",
+                ":databaseName",
+                "collections",
+                ":collectionId",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenantName",
+                  "description": "(Required) The name of the tenant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "databaseName",
+                  "description": "(Required) The name of the database"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "collectionId",
+                  "description": "(Required) The unique identifier of the collection"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"embeddings\": [\n    [\n      \"<float>\",\n      \"<float>\"\n    ],\n    [\n      \"<float>\",\n      \"<float>\"\n    ]\n  ],\n  \"documents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadatas\": [\n    {\n      \"key_0\": \"string\",\n      \"key_1\": true\n    },\n    {\n      \"key_0\": false,\n      \"key_1\": 3833\n    }\n  ],\n  \"uris\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c5edc366-dae7-4911-a5fc-18ed058fab03",
+              "name": "Records updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tenants",
+                    ":tenantName",
+                    "databases",
+                    ":databaseName",
+                    "collections",
+                    ":collectionId",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantName",
+                      "description": "(Required) The name of the tenant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "databaseName",
+                      "description": "(Required) The name of the database"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "collectionId",
+                      "description": "(Required) The unique identifier of the collection"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"embeddings\": [\n    [\n      \"<float>\",\n      \"<float>\"\n    ],\n    [\n      \"<float>\",\n      \"<float>\"\n    ]\n  ],\n  \"documents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadatas\": [\n    {\n      \"key_0\": 9089\n    },\n    {\n      \"key_0\": \"string\",\n      \"key_1\": 2413.0052858494623\n    }\n  ],\n  \"uris\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e111c09e-b90b-4296-a818-fef95def2654",
+              "name": "Records not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tenants",
+                    ":tenantName",
+                    "databases",
+                    ":databaseName",
+                    "collections",
+                    ":collectionId",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantName",
+                      "description": "(Required) The name of the tenant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "databaseName",
+                      "description": "(Required) The name of the database"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "collectionId",
+                      "description": "(Required) The unique identifier of the collection"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"embeddings\": [\n    [\n      \"<float>\",\n      \"<float>\"\n    ],\n    [\n      \"<float>\",\n      \"<float>\"\n    ]\n  ],\n  \"documents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadatas\": [\n    {\n      \"key_0\": 9089\n    },\n    {\n      \"key_0\": \"string\",\n      \"key_1\": 2413.0052858494623\n    }\n  ],\n  \"uris\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4140f812-c996-446b-8864-8a86f9a3155b",
+          "name": "Upsert records in a collection",
+          "request": {
+            "name": "Upsert records in a collection",
+            "description": {
+              "content": "Upserts records in the specified collection. If a record with the given ID already exists, it will be updated. If it does not exist, it will be created.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "tenants",
+                ":tenantName",
+                "databases",
+                ":databaseName",
+                "collections",
+                ":collectionId",
+                "upsert"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenantName",
+                  "description": "(Required) The name of the tenant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "databaseName",
+                  "description": "(Required) The name of the database"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "collectionId",
+                  "description": "(Required) The unique identifier of the collection"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"embeddings\": [\n    [\n      \"<float>\",\n      \"<float>\"\n    ],\n    [\n      \"<float>\",\n      \"<float>\"\n    ]\n  ],\n  \"documents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadatas\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": 211,\n      \"key_1\": true\n    }\n  ],\n  \"uris\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4b12f34d-6f37-4029-b165-6d753f87f01f",
+              "name": "Records upserted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tenants",
+                    ":tenantName",
+                    "databases",
+                    ":databaseName",
+                    "collections",
+                    ":collectionId",
+                    "upsert"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantName",
+                      "description": "(Required) The name of the tenant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "databaseName",
+                      "description": "(Required) The name of the database"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "collectionId",
+                      "description": "(Required) The unique identifier of the collection"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"embeddings\": [\n    [\n      \"<float>\",\n      \"<float>\"\n    ],\n    [\n      \"<float>\",\n      \"<float>\"\n    ]\n  ],\n  \"documents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadatas\": [\n    {\n      \"key_0\": 4859.097307210432,\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    {\n      \"key_0\": 169.8277522177205\n    }\n  ],\n  \"uris\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "de461c32-1645-463a-b7e8-bc54a42adf11",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tenants",
+                    ":tenantName",
+                    "databases",
+                    ":databaseName",
+                    "collections",
+                    ":collectionId",
+                    "upsert"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantName",
+                      "description": "(Required) The name of the tenant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "databaseName",
+                      "description": "(Required) The name of the database"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "collectionId",
+                      "description": "(Required) The unique identifier of the collection"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"embeddings\": [\n    [\n      \"<float>\",\n      \"<float>\"\n    ],\n    [\n      \"<float>\",\n      \"<float>\"\n    ]\n  ],\n  \"documents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadatas\": [\n    {\n      \"key_0\": 4859.097307210432,\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    {\n      \"key_0\": 169.8277522177205\n    }\n  ],\n  \"uris\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "550324d7-f086-4178-bc96-0cbe89d54f89",
+          "name": "Delete records from a collection",
+          "request": {
+            "name": "Delete records from a collection",
+            "description": {
+              "content": "Deletes records from the specified collection by IDs or metadata filter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "tenants",
+                ":tenantName",
+                "databases",
+                ":databaseName",
+                "collections",
+                ":collectionId",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenantName",
+                  "description": "(Required) The name of the tenant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "databaseName",
+                  "description": "(Required) The name of the database"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "collectionId",
+                  "description": "(Required) The unique identifier of the collection"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"where\": {\n    \"key_0\": 8398,\n    \"key_1\": 1327.2214902253609\n  },\n  \"where_document\": {\n    \"key_0\": 7083,\n    \"key_1\": \"string\",\n    \"key_2\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0ea5e2cd-e80d-4e9e-b1c5-ea571b6658fa",
+              "name": "Records deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tenants",
+                    ":tenantName",
+                    "databases",
+                    ":databaseName",
+                    "collections",
+                    ":collectionId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantName",
+                      "description": "(Required) The name of the tenant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "databaseName",
+                      "description": "(Required) The name of the database"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "collectionId",
+                      "description": "(Required) The unique identifier of the collection"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"where\": {\n    \"key_0\": true,\n    \"key_1\": 8259\n  },\n  \"where_document\": {\n    \"key_0\": 8129,\n    \"key_1\": 9374\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"string\",\n  \"string\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "16315582-df86-4266-889c-5309afd3116d",
+          "name": "Query records in a collection",
+          "request": {
+            "name": "Query records in a collection",
+            "description": {
+              "content": "Performs a vector similarity search on the specified collection. Returns the nearest neighbors to the provided query embeddings or query texts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "tenants",
+                ":tenantName",
+                "databases",
+                ":databaseName",
+                "collections",
+                ":collectionId",
+                "query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenantName",
+                  "description": "(Required) The name of the tenant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "databaseName",
+                  "description": "(Required) The name of the database"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "collectionId",
+                  "description": "(Required) The unique identifier of the collection"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query_embeddings\": [\n    [\n      \"<float>\",\n      \"<float>\"\n    ],\n    [\n      \"<float>\",\n      \"<float>\"\n    ]\n  ],\n  \"query_texts\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"n_results\": 10,\n  \"where\": {\n    \"key_0\": 4098.043663913965\n  },\n  \"where_document\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"include\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dcb9dc16-6d3e-4efb-832b-b3c3bbe03dfc",
+              "name": "Query results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tenants",
+                    ":tenantName",
+                    "databases",
+                    ":databaseName",
+                    "collections",
+                    ":collectionId",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantName",
+                      "description": "(Required) The name of the tenant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "databaseName",
+                      "description": "(Required) The name of the database"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "collectionId",
+                      "description": "(Required) The unique identifier of the collection"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query_embeddings\": [\n    [\n      \"<float>\",\n      \"<float>\"\n    ],\n    [\n      \"<float>\",\n      \"<float>\"\n    ]\n  ],\n  \"query_texts\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"n_results\": 10,\n  \"where\": {\n    \"key_0\": 3652.085499786605,\n    \"key_1\": true,\n    \"key_2\": \"string\"\n  },\n  \"where_document\": {\n    \"key_0\": false\n  },\n  \"include\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ids\": [\n    [\n      \"string\",\n      \"string\"\n    ],\n    [\n      \"string\",\n      \"string\"\n    ]\n  ],\n  \"embeddings\": [\n    [\n      [\n        8033.691904987856,\n        7950.512272479835\n      ],\n      [\n        495.178748291224,\n        8333.88630820059\n      ]\n    ],\n    [\n      [\n        379.54043950155227,\n        7612.137357214542\n      ],\n      [\n        3617.022967582837,\n        7829.670820496406\n      ]\n    ]\n  ],\n  \"documents\": [\n    [\n      \"string\",\n      \"string\"\n    ],\n    [\n      \"string\",\n      \"string\"\n    ]\n  ],\n  \"metadatas\": [\n    [\n      {\n        \"key_0\": 532,\n        \"key_1\": 7593.075450421639\n      },\n      {\n        \"key_0\": 5666,\n        \"key_1\": 8139,\n        \"key_2\": \"string\"\n      }\n    ],\n    [\n      {\n        \"key_0\": false,\n        \"key_1\": false\n      },\n      {\n        \"key_0\": 6960.6316588912\n      }\n    ]\n  ],\n  \"distances\": [\n    [\n      2169.501690066792,\n      7716.097150283532\n    ],\n    [\n      7432.206944760471,\n      3065.956454586104\n    ]\n  ],\n  \"uris\": [\n    [\n      \"string\",\n      \"string\"\n    ],\n    [\n      \"string\",\n      \"string\"\n    ]\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.trychroma.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5293c63d-7262-42d0-87b5-91ec4b23e518",
+    "name": "Chroma Cloud Collections Records API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text, and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based pricing with starter and team plans. The Cloud API extends the Chroma Server API with additional search capabilities including hybrid search with reciprocal rank fusion, custom ranking expressions, and batch search operations.\n\nContact Support:\n Name: Chroma Support",
+      "type": "text/plain"
+    }
+  }
+}

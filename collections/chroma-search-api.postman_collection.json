@@ -1,0 +1,362 @@
+{
+  "item": [
+    {
+      "id": "7e129027-0bab-435c-8ce0-c1f976d35124",
+      "name": "Search",
+      "description": {
+        "content": "Advanced search endpoints available exclusively in Chroma Cloud. Provides a unified interface for hybrid search operations combining vector similarity search with metadata filtering and custom ranking expressions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "39a04ea4-6925-467e-bf6e-140a472e46bc",
+          "name": "Search records in a collection",
+          "request": {
+            "name": "Search records in a collection",
+            "description": {
+              "content": "Performs an advanced hybrid search on the specified collection. This endpoint is available exclusively in Chroma Cloud and provides a unified interface that replaces both query and get methods. Supports vector similarity search with Knn expressions, metadata filtering with composable Key expressions, full-text search, custom ranking expressions, and reciprocal rank fusion for combining multiple search strategies.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "tenants",
+                ":tenantName",
+                "databases",
+                ":databaseName",
+                "collections",
+                ":collectionId",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenantName",
+                  "description": "(Required) The name of the tenant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "databaseName",
+                  "description": "(Required) The name of the database"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "collectionId",
+                  "description": "(Required) The unique identifier of the collection"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"where\": {\n    \"key_0\": false,\n    \"key_1\": \"string\"\n  },\n  \"rank\": {\n    \"key_0\": 891,\n    \"key_1\": 7675\n  },\n  \"limit\": \"<integer>\",\n  \"select\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "370dd041-7954-453c-b22c-75dd0405e464",
+              "name": "Search results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tenants",
+                    ":tenantName",
+                    "databases",
+                    ":databaseName",
+                    "collections",
+                    ":collectionId",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantName",
+                      "description": "(Required) The name of the tenant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "databaseName",
+                      "description": "(Required) The name of the database"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "collectionId",
+                      "description": "(Required) The unique identifier of the collection"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"where\": {\n    \"key_0\": 3727.172254246985,\n    \"key_1\": 7739.190416614916,\n    \"key_2\": 6832.516952420179\n  },\n  \"rank\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"limit\": \"<integer>\",\n  \"select\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ids\": [\n    \"string\",\n    \"string\"\n  ],\n  \"embeddings\": [\n    [\n      8115.903561691398,\n      8333.864825143763\n    ],\n    [\n      2373.93381281215,\n      2014.6289405996743\n    ]\n  ],\n  \"documents\": [\n    \"string\",\n    \"string\"\n  ],\n  \"metadatas\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": false,\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    }\n  ],\n  \"distances\": [\n    4548.904318110432,\n    9748.835959926939\n  ],\n  \"uris\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8383943f-e13f-4ae4-a5b9-8f5dcb9f7d91",
+              "name": "Invalid search expression",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tenants",
+                    ":tenantName",
+                    "databases",
+                    ":databaseName",
+                    "collections",
+                    ":collectionId",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantName",
+                      "description": "(Required) The name of the tenant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "databaseName",
+                      "description": "(Required) The name of the database"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "collectionId",
+                      "description": "(Required) The unique identifier of the collection"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"where\": {\n    \"key_0\": 3727.172254246985,\n    \"key_1\": 7739.190416614916,\n    \"key_2\": 6832.516952420179\n  },\n  \"rank\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"limit\": \"<integer>\",\n  \"select\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24c9b6cc-aece-4012-b8d7-436c0c16fdba",
+              "name": "Collection not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "tenants",
+                    ":tenantName",
+                    "databases",
+                    ":databaseName",
+                    "collections",
+                    ":collectionId",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenantName",
+                      "description": "(Required) The name of the tenant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "databaseName",
+                      "description": "(Required) The name of the database"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "collectionId",
+                      "description": "(Required) The unique identifier of the collection"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"where\": {\n    \"key_0\": 3727.172254246985,\n    \"key_1\": 7739.190416614916,\n    \"key_2\": 6832.516952420179\n  },\n  \"rank\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"limit\": \"<integer>\",\n  \"select\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.trychroma.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "40d82a4e-b53d-4357-9382-7fa672be939d",
+    "name": "Chroma Cloud Collections Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text, and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based pricing with starter and team plans. The Cloud API extends the Chroma Server API with additional search capabilities including hybrid search with reciprocal rank fusion, custom ranking expressions, and batch search operations.\n\nContact Support:\n Name: Chroma Support",
+      "type": "text/plain"
+    }
+  }
+}
