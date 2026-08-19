@@ -51,7 +51,7 @@ tags:
 - Vector Database
 created: '2025-03-07'
 modified: '2026-05-19'
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 apis:
 - aid: chroma:python-client
   name: Chroma Python Client
