@@ -13,6 +13,20 @@ description: Chroma (Chroma DB) is an open-source AI-native embedding database d
   sentence-transformers).
 url: https://raw.githubusercontent.com/api-evangelist/chroma/refs/heads/main/apis.yml
 type: Index
+deliveryModel:
+  model: saas
+  license: Apache License 2.0
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - license
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
