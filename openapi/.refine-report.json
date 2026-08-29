@@ -1,12 +1,8 @@
 {
   "provider": "chroma",
   "sources": [
-    "chroma-collections-api-openapi.yml",
-    "chroma-databases-api-openapi.yml",
-    "chroma-records-api-openapi.yml",
-    "chroma-search-api-openapi.yml",
-    "chroma-system-api-openapi.yml",
-    "chroma-tenants-api-openapi.yml"
+    "_original/chroma-cloud-api-openapi.yml",
+    "_original/chroma-server-api-openapi.yml"
   ],
   "outputs": [
     "chroma-collections-api-openapi.yml",
@@ -19,6 +15,22 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "chroma-cloud-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "chroma-server-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Collections' spans 2 source specs (chroma-cloud-api-openapi.yml, chroma-server-api-openapi.yml): per-path servers applied",
+    "tag 'Databases' spans 2 source specs (chroma-cloud-api-openapi.yml, chroma-server-api-openapi.yml): per-path servers applied",
+    "tag 'Records' spans 2 source specs (chroma-cloud-api-openapi.yml, chroma-server-api-openapi.yml): per-path servers applied",
+    "tag 'System' spans 2 source specs (chroma-cloud-api-openapi.yml, chroma-server-api-openapi.yml): per-path servers applied",
+    "tag 'Tenants' spans 2 source specs (chroma-cloud-api-openapi.yml, chroma-server-api-openapi.yml): per-path servers applied"
+  ],
+  "skipped": [
+    "chroma-collections-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "chroma-databases-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "chroma-records-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "chroma-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "chroma-system-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "chroma-tenants-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

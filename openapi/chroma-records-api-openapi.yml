@@ -1,7 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Chroma Cloud Collections Records API
-  description: Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text, and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based pricing with starter and team plans. The Cloud API extends the Chroma Server API with additional search capabilities including hybrid search with reciprocal rank fusion, custom ranking expressions, and batch search operations.
+  title: Chroma Records API
   version: 2.0.0
   contact:
     name: Chroma Support
@@ -10,11 +9,12 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   termsOfService: https://www.trychroma.com/terms
+  description: 'Operations tagged Records across 2 of this provider''s published API definitions: chroma-cloud-api-openapi.yml, chroma-server-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.trychroma.com
   description: Chroma Cloud Production
-security:
-- bearerAuth: []
+- url: http://localhost:8000
+  description: Local Chroma Server
 tags:
 - name: Records
   description: Record management endpoints for adding, getting, updating, upserting, deleting, and querying records within a collection.
@@ -37,6 +37,11 @@ paths:
             application/json:
               schema:
                 type: integer
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.trychroma.com
+      description: Chroma Cloud Production
   /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/add:
     post:
       operationId: addRecords
@@ -63,6 +68,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.trychroma.com
+      description: Chroma Cloud Production
   /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/get:
     post:
       operationId: getRecords
@@ -87,6 +97,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetRecordsResponse'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.trychroma.com
+      description: Chroma Cloud Production
   /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/update:
     post:
       operationId: updateRecords
@@ -113,6 +128,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.trychroma.com
+      description: Chroma Cloud Production
   /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/upsert:
     post:
       operationId: upsertRecords
@@ -139,6 +159,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.trychroma.com
+      description: Chroma Cloud Production
   /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/delete:
     post:
       operationId: deleteRecords
@@ -165,6 +190,11 @@ paths:
                 type: array
                 items:
                   type: string
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.trychroma.com
+      description: Chroma Cloud Production
   /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/query:
     post:
       operationId: queryRecords
@@ -189,85 +219,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/QueryRecordsResponse'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.trychroma.com
+      description: Chroma Cloud Production
 components:
-  parameters:
-    tenantName:
-      name: tenantName
-      in: path
-      required: true
-      description: The name of the tenant
-      schema:
-        type: string
-    collectionId:
-      name: collectionId
-      in: path
-      required: true
-      description: The unique identifier of the collection
-      schema:
-        type: string
-        format: uuid
-    databaseName:
-      name: databaseName
-      in: path
-      required: true
-      description: The name of the database
-      schema:
-        type: string
   schemas:
-    WhereFilter:
-      type: object
-      nullable: true
-      additionalProperties: true
-      description: Metadata filter expression. Supports operators including $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin for field comparisons, and $and, $or for combining multiple conditions.
-    QueryRecordsRequest:
-      type: object
-      properties:
-        query_embeddings:
-          type: array
-          nullable: true
-          items:
-            type: array
-            items:
-              type: number
-              format: float
-          description: Query embedding vectors to find nearest neighbors for
-        query_texts:
-          type: array
-          nullable: true
-          items:
-            type: string
-          description: Query texts to be embedded by the server
-        n_results:
-          type: integer
-          default: 10
-          minimum: 1
-          description: Number of nearest neighbor results to return per query
-        where:
-          $ref: '#/components/schemas/WhereFilter'
-        where_document:
-          $ref: '#/components/schemas/WhereDocumentFilter'
-        include:
-          type: array
-          items:
-            type: string
-            enum:
-            - embeddings
-            - documents
-            - metadatas
-            - distances
-            - uris
-          description: Fields to include in the response
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
-        message:
-          type: string
-          description: Detailed error message
-      required:
-      - error
     GetRecordsResponse:
       type: object
       properties:
@@ -309,6 +267,50 @@ components:
           description: URIs if requested via include
       required:
       - ids
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+        message:
+          type: string
+          description: Detailed error message
+      required:
+      - error
+    GetRecordsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: List of record IDs to retrieve
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+        include:
+          type: array
+          items:
+            type: string
+            enum:
+            - embeddings
+            - documents
+            - metadatas
+            - uris
+          description: Fields to include in the response
+        limit:
+          type: integer
+          nullable: true
+          minimum: 1
+          description: Maximum number of records to return
+        offset:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Number of records to skip
     AddRecordsRequest:
       type: object
       properties:
@@ -410,57 +412,11 @@ components:
           description: URIs if requested via include
       required:
       - ids
-    GetRecordsRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          nullable: true
-          items:
-            type: string
-          description: List of record IDs to retrieve
-        where:
-          $ref: '#/components/schemas/WhereFilter'
-        where_document:
-          $ref: '#/components/schemas/WhereDocumentFilter'
-        include:
-          type: array
-          items:
-            type: string
-            enum:
-            - embeddings
-            - documents
-            - metadatas
-            - uris
-          description: Fields to include in the response
-        limit:
-          type: integer
-          nullable: true
-          minimum: 1
-          description: Maximum number of records to return
-        offset:
-          type: integer
-          nullable: true
-          minimum: 0
-          description: Number of records to skip
-    DeleteRecordsRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          nullable: true
-          items:
-            type: string
-          description: IDs of the records to delete
-        where:
-          $ref: '#/components/schemas/WhereFilter'
-        where_document:
-          $ref: '#/components/schemas/WhereDocumentFilter'
-    WhereDocumentFilter:
+    WhereFilter:
       type: object
       nullable: true
       additionalProperties: true
-      description: Document content filter expression. Supports $contains and $not_contains operators for full-text search, and $regex and $not_regex operators for regular expression pattern matching.
+      description: Metadata filter expression. Supports operators including $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin for field comparisons, and $and, $or for combining multiple conditions.
     UpdateRecordsRequest:
       type: object
       properties:
@@ -502,11 +458,227 @@ components:
           description: Updated URIs
       required:
       - ids
+    DeleteRecordsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: IDs of the records to delete
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+    WhereDocumentFilter:
+      type: object
+      nullable: true
+      additionalProperties: true
+      description: Document content filter expression. Supports $contains and $not_contains operators for full-text search, and $regex and $not_regex operators for regular expression pattern matching.
+    QueryRecordsRequest:
+      type: object
+      properties:
+        query_embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Query embedding vectors to find nearest neighbors for
+        query_texts:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: Query texts to be embedded by the server
+        n_results:
+          type: integer
+          default: 10
+          minimum: 1
+          description: Number of nearest neighbor results to return per query
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+        include:
+          type: array
+          items:
+            type: string
+            enum:
+            - embeddings
+            - documents
+            - metadatas
+            - distances
+            - uris
+          description: Fields to include in the response
+    GetRecordsRequest_2:
+      type: object
+      properties:
+        ids:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: List of record IDs to retrieve. At least one of ids or where must be provided.
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+        include:
+          type: array
+          items:
+            type: string
+            enum:
+            - embeddings
+            - documents
+            - metadatas
+            - uris
+          description: Fields to include in the response. Defaults to metadatas and documents.
+        limit:
+          type: integer
+          nullable: true
+          minimum: 1
+          description: Maximum number of records to return
+        offset:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Number of records to skip
+    AddRecordsRequest_2:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+          description: Unique identifiers for each record
+        embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Vector embeddings for each record. Each embedding is an array of floating point numbers.
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: Text documents for each record. If provided without embeddings, the server will generate embeddings automatically.
+        metadatas:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            additionalProperties: true
+          description: Metadata objects for each record, stored as key-value pairs
+        uris:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: URI references for each record
+      required:
+      - ids
+    QueryRecordsRequest_2:
+      type: object
+      properties:
+        query_embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Query embedding vectors to find nearest neighbors for. Multiple queries can be performed in a single request.
+        query_texts:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: Query texts that will be embedded by the server before performing the similarity search.
+        n_results:
+          type: integer
+          default: 10
+          minimum: 1
+          description: Number of nearest neighbor results to return per query
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+        include:
+          type: array
+          items:
+            type: string
+            enum:
+            - embeddings
+            - documents
+            - metadatas
+            - distances
+            - uris
+          description: Fields to include in the response. Defaults to metadatas, documents, and distances.
+  parameters:
+    tenantName:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+    collectionId:
+      name: collectionId
+      in: path
+      required: true
+      description: The unique identifier of the collection
+      schema:
+        type: string
+        format: uuid
+    databaseName:
+      name: databaseName
+      in: path
+      required: true
+      description: The name of the database
+      schema:
+        type: string
+    tenantName_2:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+        default: default_tenant
+    databaseName_2:
+      name: databaseName
+      in: path
+      required: true
+      description: The name of the database
+      schema:
+        type: string
+        default: default_database
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       description: Bearer token authentication for Chroma Cloud. Obtain tokens from the Chroma Cloud dashboard.
-externalDocs:
-  description: Chroma Cloud Documentation
-  url: https://docs.trychroma.com/cloud/sync/overview
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: X-Chroma-Token
+      description: Static token authentication via the X-Chroma-Token header.
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication using RFC 7617 with a user:password base64-encoded Authorization header.
+x-refined-from:
+- chroma-cloud-api-openapi.yml
+- chroma-server-api-openapi.yml
