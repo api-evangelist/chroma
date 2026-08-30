@@ -45,7 +45,7 @@ access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/chroma.png
 tags:
 - Artificial Intelligence
-- AI-Native
+- AI Native
 - Apache 2.0
 - Cloud
 - Embeddings
