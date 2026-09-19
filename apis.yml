@@ -147,6 +147,8 @@ apis:
   humanURL: https://docs.trychroma.com/reference/chroma-reference
   baseURL: https://api.trychroma.com
   tags:
+  - Database
+  tags_raw:
   - Databases
   properties:
   - type: OpenAPI
