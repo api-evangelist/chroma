@@ -2,7 +2,8 @@
   "provider": "chroma",
   "sources": [
     "_original/chroma-cloud-api-openapi.yml",
-    "_original/chroma-server-api-openapi.yml"
+    "_original/chroma-server-api-openapi.yml",
+    "chroma-query-api-openapi.yml"
   ],
   "outputs": [
     "chroma-collections-api-openapi.yml",
@@ -10,11 +11,14 @@
     "chroma-records-api-openapi.yml",
     "chroma-search-api-openapi.yml",
     "chroma-system-api-openapi.yml",
-    "chroma-tenants-api-openapi.yml"
+    "chroma-tenants-api-openapi.yml",
+    "chroma-query-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "chroma-query-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/query post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+  ],
   "notes": [
     "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "chroma-cloud-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
@@ -23,7 +27,8 @@
     "tag 'Databases' spans 2 source specs (chroma-cloud-api-openapi.yml, chroma-server-api-openapi.yml): per-path servers applied",
     "tag 'Records' spans 2 source specs (chroma-cloud-api-openapi.yml, chroma-server-api-openapi.yml): per-path servers applied",
     "tag 'System' spans 2 source specs (chroma-cloud-api-openapi.yml, chroma-server-api-openapi.yml): per-path servers applied",
-    "tag 'Tenants' spans 2 source specs (chroma-cloud-api-openapi.yml, chroma-server-api-openapi.yml): per-path servers applied"
+    "tag 'Tenants' spans 2 source specs (chroma-cloud-api-openapi.yml, chroma-server-api-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "chroma-collections-api-openapi.yml: previously refined output, superseded by openapi/_original/",

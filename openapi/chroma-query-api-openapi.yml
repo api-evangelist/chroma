@@ -1,0 +1,213 @@
+openapi: 3.2.0
+info:
+  title: Chroma Server API (v2) Collections Query API
+  description: Chroma is an open-source, AI-native vector (embedding) database for LLM, RAG, and semantic-search applications.
+  version: '2.0'
+  contact:
+    name: Chroma
+    url: https://www.trychroma.com
+  license:
+    name: Apache 2.0
+    url: https://github.com/chroma-core/chroma/blob/main/LICENSE
+servers:
+- url: https://api.trychroma.com
+  description: Chroma Cloud (managed, serverless)
+- url: http://localhost:8000
+  description: Local development / self-hosted Chroma server (default port 8000)
+security:
+- chromaToken: []
+tags:
+- name: Query
+  description: Nearest-neighbor vector similarity search over a collection.
+paths:
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/query:
+    parameters:
+    - $ref: '#/components/parameters/Tenant'
+    - $ref: '#/components/parameters/Database'
+    - $ref: '#/components/parameters/CollectionId'
+    post:
+      operationId: queryCollection
+      tags:
+      - Query
+      summary: Query a collection (similarity search)
+      description: Runs nearest-neighbor vector similarity search over a collection. Supply one or more query embeddings and, optionally, metadata (`where`) and full-text (`where_document`) filters. Returns the closest records with the requested included fields.
+      parameters:
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Query results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    QueryRequest:
+      type: object
+      required:
+      - query_embeddings
+      properties:
+        query_embeddings:
+          type: array
+          description: One or more query embedding vectors.
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+        n_results:
+          type: integer
+          description: Number of nearest neighbors to return per query embedding.
+          default: 10
+        ids:
+          type: array
+          description: Optional subset of record ids to restrict the search to.
+          items:
+            type: string
+        where:
+          type: object
+          description: Metadata filter clause.
+          additionalProperties: true
+        where_document:
+          type: object
+          description: Full-text / document filter clause.
+          additionalProperties: true
+        include:
+          $ref: '#/components/schemas/Include'
+    Include:
+      type: array
+      description: Which fields to return in results.
+      items:
+        type: string
+        enum:
+        - distances
+        - documents
+        - embeddings
+        - metadatas
+        - uris
+    QueryResult:
+      type: object
+      description: Results are returned as arrays-of-arrays, one inner array per query embedding.
+      properties:
+        ids:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        distances:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+        documents:
+          type: array
+          items:
+            type: array
+            items:
+              type:
+              - string
+              - 'null'
+        metadatas:
+          type: array
+          items:
+            type: array
+            items:
+              type:
+              - object
+              - 'null'
+              additionalProperties: true
+        embeddings:
+          type: array
+          items:
+            type: array
+            items:
+              type: array
+              items:
+                type: number
+                format: float
+        uris:
+          type: array
+          items:
+            type: array
+            items:
+              type:
+              - string
+              - 'null'
+  parameters:
+    Database:
+      name: database
+      in: path
+      required: true
+      description: The database name.
+      schema:
+        type: string
+    Tenant:
+      name: tenant
+      in: path
+      required: true
+      description: The tenant name or UUID.
+      schema:
+        type: string
+    Limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return.
+      schema:
+        type: integer
+        minimum: 1
+    Offset:
+      name: offset
+      in: query
+      required: false
+      description: Number of items to skip for pagination.
+      schema:
+        type: integer
+        minimum: 0
+    CollectionId:
+      name: collection_id
+      in: path
+      required: true
+      description: The collection UUID.
+      schema:
+        type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    chromaToken:
+      type: apiKey
+      in: header
+      name: x-chroma-token
+      description: Chroma Cloud API key passed in the `x-chroma-token` header. Self-hosted servers can be run open (no auth) or configured with static-token or basic authentication; Chroma Cloud always requires a token.

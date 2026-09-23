@@ -1,0 +1,30 @@
+# Front Door AI Index — chroma — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: chroma
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.trychroma.com
+  final_host: www.trychroma.com
+  ownership: own
+  owner: chroma
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 14
+  host_score: 14
+  density: 13.26
+  words: 1056
+  tiers:
+    agentic: 7
+    core: 7
+    model: 0
+  ambiguous: 2
+  top_terms:
+    embedding: 6
+    AI: 3
+    ML: 3
+    agent: 2
+    LLMs: 1
+    MCP: 1

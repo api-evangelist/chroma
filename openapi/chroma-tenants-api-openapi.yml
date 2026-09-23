@@ -79,6 +79,17 @@ paths:
       description: Chroma Cloud Production
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+        message:
+          type: string
+          description: Detailed error message
+      required:
+      - error
     CreateTenantRequest:
       type: object
       properties:
@@ -95,17 +106,6 @@ components:
           description: The name of the tenant
       required:
       - name
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
-        message:
-          type: string
-          description: Detailed error message
-      required:
-      - error
   parameters:
     tenantName:
       name: tenantName

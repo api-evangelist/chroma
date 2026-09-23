@@ -68,6 +68,25 @@ components:
           description: Detailed error message
       required:
       - error
+    SearchRequest:
+      type: object
+      properties:
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        rank:
+          type: object
+          nullable: true
+          additionalProperties: true
+          description: Ranking expression for ordering results. Supports Knn for vector similarity, RRF for reciprocal rank fusion combining multiple ranking strategies, and custom ranking expressions.
+        limit:
+          type: integer
+          minimum: 1
+          description: Maximum number of results to return
+        select:
+          type: array
+          items:
+            type: string
+          description: Fields to include in the response such as embeddings, documents, metadatas, uris, and distances.
     WhereFilter:
       type: object
       nullable: true
@@ -121,25 +140,6 @@ components:
           description: URIs if requested via select
       required:
       - ids
-    SearchRequest:
-      type: object
-      properties:
-        where:
-          $ref: '#/components/schemas/WhereFilter'
-        rank:
-          type: object
-          nullable: true
-          additionalProperties: true
-          description: Ranking expression for ordering results. Supports Knn for vector similarity, RRF for reciprocal rank fusion combining multiple ranking strategies, and custom ranking expressions.
-        limit:
-          type: integer
-          minimum: 1
-          description: Maximum number of results to return
-        select:
-          type: array
-          items:
-            type: string
-          description: Fields to include in the response such as embeddings, documents, metadatas, uris, and distances.
   parameters:
     databaseName:
       name: databaseName
