@@ -48,9 +48,9 @@ tags:
 - Hybrid Search
 - JavaScript
 - LLM
-- Machine-Learning
+- Machine Learning
 - Multi-Modal
-- Open-Source
+- Open Source
 - Python
 - RAG
 - Retrieval
@@ -59,6 +59,7 @@ tags:
 - Serverless
 - TypeScript
 - Vector Database
+- Database
 tags_raw:
 - AI
 - AI Native
@@ -79,6 +80,9 @@ tags_raw:
 - Serverless
 - TypeScript
 - Vector Database
+- Machine-Learning
+- Open-Source
+- Database
 created: '2025-03-07'
 modified: '2026-05-19'
 specificationVersion: '0.23'
@@ -140,8 +144,6 @@ apis:
     url: openapi/chroma-collections-api-openapi.yml
   - type: Documentation
     url: https://docs.trychroma.com/reference/chroma-reference
-  - type: GraphQL
-    url: graphql/chroma-graphql.md
   - type: Documentation
     url: https://docs.trychroma.com/cloud/sync/overview
 - aid: chroma:chroma-databases-api
@@ -159,8 +161,6 @@ apis:
     url: openapi/chroma-databases-api-openapi.yml
   - type: Documentation
     url: https://docs.trychroma.com/reference/chroma-reference
-  - type: GraphQL
-    url: graphql/chroma-graphql.md
   - type: Documentation
     url: https://docs.trychroma.com/cloud/sync/overview
 - aid: chroma:chroma-records-api
@@ -177,8 +177,6 @@ apis:
     url: openapi/chroma-records-api-openapi.yml
   - type: Documentation
     url: https://docs.trychroma.com/reference/chroma-reference
-  - type: GraphQL
-    url: graphql/chroma-graphql.md
   - type: Documentation
     url: https://docs.trychroma.com/cloud/sync/overview
 - aid: chroma:chroma-search-api
@@ -196,8 +194,6 @@ apis:
     url: openapi/chroma-search-api-openapi.yml
   - type: Documentation
     url: https://docs.trychroma.com/reference/chroma-reference
-  - type: GraphQL
-    url: graphql/chroma-graphql.md
   - type: Documentation
     url: https://docs.trychroma.com/cloud/sync/overview
 - aid: chroma:chroma-system-api
@@ -212,8 +208,6 @@ apis:
     url: openapi/chroma-system-api-openapi.yml
   - type: Documentation
     url: https://docs.trychroma.com/reference/chroma-reference
-  - type: GraphQL
-    url: graphql/chroma-graphql.md
   - type: Documentation
     url: https://docs.trychroma.com/cloud/sync/overview
 - aid: chroma:chroma-tenants-api
@@ -228,8 +222,6 @@ apis:
     url: openapi/chroma-tenants-api-openapi.yml
   - type: Documentation
     url: https://docs.trychroma.com/reference/chroma-reference
-  - type: GraphQL
-    url: graphql/chroma-graphql.md
   - type: Documentation
     url: https://docs.trychroma.com/cloud/sync/overview
 - aid: chroma:chroma-query-api
