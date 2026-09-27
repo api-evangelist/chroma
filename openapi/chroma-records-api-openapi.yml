@@ -225,26 +225,54 @@ paths:
     - url: https://api.trychroma.com
       description: Chroma Cloud Production
 components:
+  parameters:
+    collectionId:
+      name: collectionId
+      in: path
+      required: true
+      description: The unique identifier of the collection
+      schema:
+        type: string
+        format: uuid
+    databaseName:
+      name: databaseName
+      in: path
+      required: true
+      description: The name of the database
+      schema:
+        type: string
+    tenantName:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+    databaseName_2:
+      name: databaseName
+      in: path
+      required: true
+      description: The name of the database
+      schema:
+        type: string
+        default: default_database
+    tenantName_2:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+        default: default_tenant
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
-        message:
-          type: string
-          description: Detailed error message
-      required:
-      - error
-    GetRecordsResponse:
+    UpdateRecordsRequest:
       type: object
       properties:
         ids:
           type: array
           items:
             type: string
-          description: Record IDs
+          description: IDs of the records to update
         embeddings:
           type: array
           nullable: true
@@ -253,14 +281,14 @@ components:
             items:
               type: number
               format: float
-          description: Embedding vectors if requested via include
+          description: Updated embedding vectors
         documents:
           type: array
           nullable: true
           items:
             type: string
             nullable: true
-          description: Documents if requested via include
+          description: Updated documents
         metadatas:
           type: array
           nullable: true
@@ -268,67 +296,21 @@ components:
             type: object
             nullable: true
             additionalProperties: true
-          description: Metadata objects if requested via include
+          description: Updated metadata objects
         uris:
           type: array
           nullable: true
           items:
             type: string
             nullable: true
-          description: URIs if requested via include
+          description: Updated URIs
       required:
       - ids
-    WhereFilter:
+    WhereDocumentFilter:
       type: object
       nullable: true
       additionalProperties: true
-      description: Metadata filter expression. Supports operators including $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin for field comparisons, and $and, $or for combining multiple conditions.
-    DeleteRecordsRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          nullable: true
-          items:
-            type: string
-          description: IDs of the records to delete
-        where:
-          $ref: '#/components/schemas/WhereFilter'
-        where_document:
-          $ref: '#/components/schemas/WhereDocumentFilter'
-    GetRecordsRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          nullable: true
-          items:
-            type: string
-          description: List of record IDs to retrieve
-        where:
-          $ref: '#/components/schemas/WhereFilter'
-        where_document:
-          $ref: '#/components/schemas/WhereDocumentFilter'
-        include:
-          type: array
-          items:
-            type: string
-            enum:
-            - embeddings
-            - documents
-            - metadatas
-            - uris
-          description: Fields to include in the response
-        limit:
-          type: integer
-          nullable: true
-          minimum: 1
-          description: Maximum number of records to return
-        offset:
-          type: integer
-          nullable: true
-          minimum: 0
-          description: Number of records to skip
+      description: Document content filter expression. Supports $contains and $not_contains operators for full-text search, and $regex and $not_regex operators for regular expression pattern matching.
     AddRecordsRequest:
       type: object
       properties:
@@ -370,6 +352,73 @@ components:
           description: URI references for each record
       required:
       - ids
+    WhereFilter:
+      type: object
+      nullable: true
+      additionalProperties: true
+      description: Metadata filter expression. Supports operators including $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin for field comparisons, and $and, $or for combining multiple conditions.
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+        message:
+          type: string
+          description: Detailed error message
+      required:
+      - error
+    DeleteRecordsRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: IDs of the records to delete
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+    QueryRecordsRequest:
+      type: object
+      properties:
+        query_embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Query embedding vectors to find nearest neighbors for
+        query_texts:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: Query texts to be embedded by the server
+        n_results:
+          type: integer
+          default: 10
+          minimum: 1
+          description: Number of nearest neighbor results to return per query
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+        include:
+          type: array
+          items:
+            type: string
+            enum:
+            - embeddings
+            - documents
+            - metadatas
+            - distances
+            - uris
+          description: Fields to include in the response
     QueryRecordsResponse:
       type: object
       properties:
@@ -430,75 +479,15 @@ components:
           description: URIs if requested via include
       required:
       - ids
-    UpdateRecordsRequest:
+    GetRecordsRequest:
       type: object
       properties:
         ids:
           type: array
-          items:
-            type: string
-          description: IDs of the records to update
-        embeddings:
-          type: array
-          nullable: true
-          items:
-            type: array
-            items:
-              type: number
-              format: float
-          description: Updated embedding vectors
-        documents:
-          type: array
           nullable: true
           items:
             type: string
-            nullable: true
-          description: Updated documents
-        metadatas:
-          type: array
-          nullable: true
-          items:
-            type: object
-            nullable: true
-            additionalProperties: true
-          description: Updated metadata objects
-        uris:
-          type: array
-          nullable: true
-          items:
-            type: string
-            nullable: true
-          description: Updated URIs
-      required:
-      - ids
-    WhereDocumentFilter:
-      type: object
-      nullable: true
-      additionalProperties: true
-      description: Document content filter expression. Supports $contains and $not_contains operators for full-text search, and $regex and $not_regex operators for regular expression pattern matching.
-    QueryRecordsRequest:
-      type: object
-      properties:
-        query_embeddings:
-          type: array
-          nullable: true
-          items:
-            type: array
-            items:
-              type: number
-              format: float
-          description: Query embedding vectors to find nearest neighbors for
-        query_texts:
-          type: array
-          nullable: true
-          items:
-            type: string
-          description: Query texts to be embedded by the server
-        n_results:
-          type: integer
-          default: 10
-          minimum: 1
-          description: Number of nearest neighbor results to return per query
+          description: List of record IDs to retrieve
         where:
           $ref: '#/components/schemas/WhereFilter'
         where_document:
@@ -511,32 +500,8 @@ components:
             - embeddings
             - documents
             - metadatas
-            - distances
             - uris
           description: Fields to include in the response
-    GetRecordsRequest_2:
-      type: object
-      properties:
-        ids:
-          type: array
-          nullable: true
-          items:
-            type: string
-          description: List of record IDs to retrieve. At least one of ids or where must be provided.
-        where:
-          $ref: '#/components/schemas/WhereFilter'
-        where_document:
-          $ref: '#/components/schemas/WhereDocumentFilter'
-        include:
-          type: array
-          items:
-            type: string
-            enum:
-            - embeddings
-            - documents
-            - metadatas
-            - uris
-          description: Fields to include in the response. Defaults to metadatas and documents.
         limit:
           type: integer
           nullable: true
@@ -547,6 +512,47 @@ components:
           nullable: true
           minimum: 0
           description: Number of records to skip
+    GetRecordsResponse:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+          description: Record IDs
+        embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Embedding vectors if requested via include
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: Documents if requested via include
+        metadatas:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            additionalProperties: true
+          description: Metadata objects if requested via include
+        uris:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: URIs if requested via include
+      required:
+      - ids
     AddRecordsRequest_2:
       type: object
       properties:
@@ -626,45 +632,39 @@ components:
             - distances
             - uris
           description: Fields to include in the response. Defaults to metadatas, documents, and distances.
-  parameters:
-    databaseName:
-      name: databaseName
-      in: path
-      required: true
-      description: The name of the database
-      schema:
-        type: string
-    tenantName:
-      name: tenantName
-      in: path
-      required: true
-      description: The name of the tenant
-      schema:
-        type: string
-    collectionId:
-      name: collectionId
-      in: path
-      required: true
-      description: The unique identifier of the collection
-      schema:
-        type: string
-        format: uuid
-    databaseName_2:
-      name: databaseName
-      in: path
-      required: true
-      description: The name of the database
-      schema:
-        type: string
-        default: default_database
-    tenantName_2:
-      name: tenantName
-      in: path
-      required: true
-      description: The name of the tenant
-      schema:
-        type: string
-        default: default_tenant
+    GetRecordsRequest_2:
+      type: object
+      properties:
+        ids:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: List of record IDs to retrieve. At least one of ids or where must be provided.
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+        include:
+          type: array
+          items:
+            type: string
+            enum:
+            - embeddings
+            - documents
+            - metadatas
+            - uris
+          description: Fields to include in the response. Defaults to metadatas and documents.
+        limit:
+          type: integer
+          nullable: true
+          minimum: 1
+          description: Maximum number of records to return
+        offset:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Number of records to skip
   securitySchemes:
     bearerAuth:
       type: http

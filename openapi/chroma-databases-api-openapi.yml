@@ -122,6 +122,53 @@ paths:
     - url: https://api.trychroma.com
       description: Chroma Cloud Production
 components:
+  parameters:
+    offset:
+      name: offset
+      in: query
+      required: false
+      description: Number of items to skip before returning results
+      schema:
+        type: integer
+        minimum: 0
+    databaseName:
+      name: databaseName
+      in: path
+      required: true
+      description: The name of the database
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return
+      schema:
+        type: integer
+        minimum: 1
+    tenantName:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+    databaseName_2:
+      name: databaseName
+      in: path
+      required: true
+      description: The name of the database
+      schema:
+        type: string
+        default: default_database
+    tenantName_2:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+        default: default_tenant
   schemas:
     Error:
       type: object
@@ -176,53 +223,6 @@ components:
       - id
       - name
       - tenant
-  parameters:
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of items to return
-      schema:
-        type: integer
-        minimum: 1
-    databaseName:
-      name: databaseName
-      in: path
-      required: true
-      description: The name of the database
-      schema:
-        type: string
-    tenantName:
-      name: tenantName
-      in: path
-      required: true
-      description: The name of the tenant
-      schema:
-        type: string
-    offset:
-      name: offset
-      in: query
-      required: false
-      description: Number of items to skip before returning results
-      schema:
-        type: integer
-        minimum: 0
-    databaseName_2:
-      name: databaseName
-      in: path
-      required: true
-      description: The name of the database
-      schema:
-        type: string
-        default: default_database
-    tenantName_2:
-      name: tenantName
-      in: path
-      required: true
-      description: The name of the tenant
-      schema:
-        type: string
-        default: default_tenant
   securitySchemes:
     bearerAuth:
       type: http

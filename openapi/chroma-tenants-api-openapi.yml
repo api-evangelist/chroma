@@ -90,20 +90,20 @@ components:
           description: Detailed error message
       required:
       - error
-    CreateTenantRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name for the new tenant
-      required:
-      - name
     Tenant:
       type: object
       properties:
         name:
           type: string
           description: The name of the tenant
+      required:
+      - name
+    CreateTenantRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name for the new tenant
       required:
       - name
   parameters:
