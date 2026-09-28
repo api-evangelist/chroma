@@ -17,10 +17,18 @@ deployment:
 tools_count: 3
 tools:
 - name: package_search_grep
-  description: ''
+  description: '## Description Executes a grep over the source code of a public package. This tool is
+    useful for deterministically finding code in a package using regex.  Use this tool before implementing
+    solutions that use external packages. The regex pa'
 - name: package_search_read_file
-  description: ''
+  description: '## Description Reads exact lines from a source file of a public package. Useful for fetching
+    specific code regions by line range.  Required Args: "registry", "package_name", "filename_sha256",
+    "start_line", "end_line" Optional Args: "versi'
 - name: package_search_hybrid
-  description: ''
+  description: '## Description Searches package source code using semantic understanding AND optionally
+    regex patterns. This allows for hybrid search, allowing for prefiltering with regex, and semantic
+    ranking.  Required Args: "registry", "package_name",'
 tools_source: live tools/list via initialize handshake, 2026-09-11 (signals/audit_mcp_authorship.py --probe)
 authorship: provider
+descriptions_source: live tools/list (authorship probe or saved capture); filled by backfill-tools-from-authorship.py
+  --descriptions, 2026-09-28
