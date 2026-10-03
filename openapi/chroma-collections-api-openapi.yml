@@ -158,21 +158,6 @@ paths:
       description: Chroma Cloud Production
 components:
   parameters:
-    collectionId:
-      name: collectionId
-      in: path
-      required: true
-      description: The unique identifier of the collection
-      schema:
-        type: string
-        format: uuid
-    databaseName:
-      name: databaseName
-      in: path
-      required: true
-      description: The name of the database
-      schema:
-        type: string
     offset:
       name: offset
       in: query
@@ -196,14 +181,21 @@ components:
       description: The name of the tenant
       schema:
         type: string
-    databaseName_2:
+    collectionId:
+      name: collectionId
+      in: path
+      required: true
+      description: The unique identifier of the collection
+      schema:
+        type: string
+        format: uuid
+    databaseName:
       name: databaseName
       in: path
       required: true
       description: The name of the database
       schema:
         type: string
-        default: default_database
     tenantName_2:
       name: tenantName
       in: path
@@ -212,18 +204,15 @@ components:
       schema:
         type: string
         default: default_tenant
+    databaseName_2:
+      name: databaseName
+      in: path
+      required: true
+      description: The name of the database
+      schema:
+        type: string
+        default: default_database
   schemas:
-    UpdateCollectionRequest:
-      type: object
-      properties:
-        new_name:
-          type: string
-          description: The new name for the collection
-        new_metadata:
-          type: object
-          nullable: true
-          additionalProperties: true
-          description: New metadata to replace the existing collection metadata
     Collection:
       type: object
       properties:
@@ -248,17 +237,6 @@ components:
       required:
       - id
       - name
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
-        message:
-          type: string
-          description: Detailed error message
-      required:
-      - error
     CreateCollectionRequest:
       type: object
       properties:
@@ -276,6 +254,28 @@ components:
           description: If true, return the existing collection if one with the same name already exists
       required:
       - name
+    UpdateCollectionRequest:
+      type: object
+      properties:
+        new_name:
+          type: string
+          description: The new name for the collection
+        new_metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+          description: New metadata to replace the existing collection metadata
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+        message:
+          type: string
+          description: Detailed error message
+      required:
+      - error
     Collection_2:
       type: object
       properties:

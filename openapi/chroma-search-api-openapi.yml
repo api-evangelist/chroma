@@ -57,6 +57,13 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   parameters:
+    tenantName:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
     collectionId:
       name: collectionId
       in: path
@@ -72,30 +79,7 @@ components:
       description: The name of the database
       schema:
         type: string
-    tenantName:
-      name: tenantName
-      in: path
-      required: true
-      description: The name of the tenant
-      schema:
-        type: string
   schemas:
-    WhereFilter:
-      type: object
-      nullable: true
-      additionalProperties: true
-      description: Metadata filter expression. Supports operators including $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin for field comparisons, and $and, $or for combining multiple conditions.
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
-        message:
-          type: string
-          description: Detailed error message
-      required:
-      - error
     SearchResponse:
       type: object
       properties:
@@ -144,6 +128,11 @@ components:
           description: URIs if requested via select
       required:
       - ids
+    WhereFilter:
+      type: object
+      nullable: true
+      additionalProperties: true
+      description: Metadata filter expression. Supports operators including $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin for field comparisons, and $and, $or for combining multiple conditions.
     SearchRequest:
       type: object
       properties:
@@ -163,6 +152,17 @@ components:
           items:
             type: string
           description: Fields to include in the response such as embeddings, documents, metadatas, uris, and distances.
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+        message:
+          type: string
+          description: Detailed error message
+      required:
+      - error
   securitySchemes:
     bearerAuth:
       type: http
