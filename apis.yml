@@ -60,6 +60,7 @@ tags:
 - TypeScript
 - Vector Database
 - Database
+- Vector Search
 tags_raw:
 - AI
 - AI Native
@@ -83,6 +84,7 @@ tags_raw:
 - Machine-Learning
 - Open-Source
 - Database
+- Vector Search
 created: '2025-03-07'
 modified: '2026-05-19'
 specificationVersion: '0.23'
