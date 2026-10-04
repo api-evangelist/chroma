@@ -87,14 +87,6 @@ components:
           description: The name of the tenant
       required:
       - name
-    CreateTenantRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name for the new tenant
-      required:
-      - name
     Error:
       type: object
       properties:
@@ -106,6 +98,14 @@ components:
           description: Detailed error message
       required:
       - error
+    CreateTenantRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name for the new tenant
+      required:
+      - name
   parameters:
     tenantName:
       name: tenantName

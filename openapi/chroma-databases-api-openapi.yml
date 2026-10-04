@@ -123,22 +123,6 @@ paths:
       description: Chroma Cloud Production
 components:
   parameters:
-    offset:
-      name: offset
-      in: query
-      required: false
-      description: Number of items to skip before returning results
-      schema:
-        type: integer
-        minimum: 0
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of items to return
-      schema:
-        type: integer
-        minimum: 1
     tenantName:
       name: tenantName
       in: path
@@ -153,6 +137,22 @@ components:
       description: The name of the database
       schema:
         type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return
+      schema:
+        type: integer
+        minimum: 1
+    offset:
+      name: offset
+      in: query
+      required: false
+      description: Number of items to skip before returning results
+      schema:
+        type: integer
+        minimum: 0
     tenantName_2:
       name: tenantName
       in: path
@@ -187,14 +187,6 @@ components:
       - id
       - name
       - tenant
-    CreateDatabaseRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name for the new database
-      required:
-      - name
     Error:
       type: object
       properties:
@@ -206,6 +198,14 @@ components:
           description: Detailed error message
       required:
       - error
+    CreateDatabaseRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name for the new database
+      required:
+      - name
     Database_2:
       type: object
       properties:

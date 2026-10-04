@@ -158,14 +158,20 @@ paths:
       description: Chroma Cloud Production
 components:
   parameters:
-    offset:
-      name: offset
-      in: query
-      required: false
-      description: Number of items to skip before returning results
+    tenantName:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
       schema:
-        type: integer
-        minimum: 0
+        type: string
+    databaseName:
+      name: databaseName
+      in: path
+      required: true
+      description: The name of the database
+      schema:
+        type: string
     limit:
       name: limit
       in: query
@@ -174,13 +180,6 @@ components:
       schema:
         type: integer
         minimum: 1
-    tenantName:
-      name: tenantName
-      in: path
-      required: true
-      description: The name of the tenant
-      schema:
-        type: string
     collectionId:
       name: collectionId
       in: path
@@ -189,13 +188,14 @@ components:
       schema:
         type: string
         format: uuid
-    databaseName:
-      name: databaseName
-      in: path
-      required: true
-      description: The name of the database
+    offset:
+      name: offset
+      in: query
+      required: false
+      description: Number of items to skip before returning results
       schema:
-        type: string
+        type: integer
+        minimum: 0
     tenantName_2:
       name: tenantName
       in: path
@@ -213,6 +213,23 @@ components:
         type: string
         default: default_database
   schemas:
+    CreateCollectionRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name for the new collection
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+          description: Optional metadata to associate with the collection
+        get_or_create:
+          type: boolean
+          default: false
+          description: If true, return the existing collection if one with the same name already exists
+      required:
+      - name
     Collection:
       type: object
       properties:
@@ -237,23 +254,6 @@ components:
       required:
       - id
       - name
-    CreateCollectionRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name for the new collection
-        metadata:
-          type: object
-          nullable: true
-          additionalProperties: true
-          description: Optional metadata to associate with the collection
-        get_or_create:
-          type: boolean
-          default: false
-          description: If true, return the existing collection if one with the same name already exists
-      required:
-      - name
     UpdateCollectionRequest:
       type: object
       properties:
@@ -276,6 +276,23 @@ components:
           description: Detailed error message
       required:
       - error
+    CreateCollectionRequest_2:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name for the new collection
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+          description: Optional metadata to associate with the collection
+        get_or_create:
+          type: boolean
+          default: false
+          description: If true, return the existing collection if one with the same name already exists instead of raising an error
+      required:
+      - name
     Collection_2:
       type: object
       properties:
@@ -299,23 +316,6 @@ components:
           description: The database this collection belongs to
       required:
       - id
-      - name
-    CreateCollectionRequest_2:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name for the new collection
-        metadata:
-          type: object
-          nullable: true
-          additionalProperties: true
-          description: Optional metadata to associate with the collection
-        get_or_create:
-          type: boolean
-          default: false
-          description: If true, return the existing collection if one with the same name already exists instead of raising an error
-      required:
       - name
   securitySchemes:
     bearerAuth:
