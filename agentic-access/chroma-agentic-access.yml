@@ -1,118 +1,22 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/chroma-cloud-api-openapi.yml, openapi/chroma-server-api-openapi.yml
+source: openapi/chroma-collections-api-openapi.yml, openapi/chroma-databases-api-openapi.yml,
+  openapi/chroma-query-api-openapi.yml, openapi/chroma-records-api-openapi.yml, openapi/chroma-search-api-openapi.yml,
+  openapi/chroma-system-api-openapi.yml, openapi/chroma-tenants-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 44
+  operations: 25
   by_action_class:
-    connected: 18
-    acting: 26
+    connected: 14
+    acting: 11
   by_consequence:
-    read: 18
-    write: 25
+    read: 14
+    write: 10
     safety-critical: 1
   human_in_the_loop_required: 1
 operations:
-- path: /api/v2/heartbeat
-  method: get
-  operationId: heartbeat
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v2/version
-  method: get
-  operationId: getVersion
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v2/tenants
-  method: post
-  operationId: createTenant
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v2/tenants/{tenantName}
-  method: get
-  operationId: getTenant
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v2/tenants/{tenantName}/databases
-  method: get
-  operationId: listDatabases
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v2/tenants/{tenantName}/databases
-  method: post
-  operationId: createDatabase
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}
-  method: get
-  operationId: getDatabase
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}
-  method: delete
-  operationId: deleteDatabase
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections
   method: get
   operationId: listCollections
@@ -181,6 +85,68 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /api/v2/tenants/{tenantName}/databases
+  method: get
+  operationId: listDatabases
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/tenants/{tenantName}/databases
+  method: post
+  operationId: createDatabase
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v2/tenants/{tenantName}/databases/{databaseName}
+  method: get
+  operationId: getDatabase
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/tenants/{tenantName}/databases/{databaseName}
+  method: delete
+  operationId: deleteDatabase
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/query
+  method: post
+  operationId: queryCollection
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/count
   method: get
   operationId: countRecords
@@ -211,18 +177,12 @@ operations:
   method: post
   operationId: getRecords
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/update
   method: post
   operationId: updateRecords
@@ -275,34 +235,22 @@ operations:
   method: post
   operationId: queryRecords
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/search
   method: post
   operationId: searchRecords
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /api/v2/heartbeat
   method: get
   operationId: heartbeat
@@ -385,229 +333,3 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/v2/tenants/{tenantName}/databases
-  method: get
-  operationId: listDatabases
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v2/tenants/{tenantName}/databases
-  method: post
-  operationId: createDatabase
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}
-  method: get
-  operationId: getDatabase
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}
-  method: delete
-  operationId: deleteDatabase
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections
-  method: get
-  operationId: listCollections
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections
-  method: post
-  operationId: createCollection
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}
-  method: get
-  operationId: getCollection
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}
-  method: put
-  operationId: updateCollection
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}
-  method: delete
-  operationId: deleteCollection
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/count
-  method: get
-  operationId: countRecords
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/add
-  method: post
-  operationId: addRecords
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/get
-  method: post
-  operationId: getRecords
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/update
-  method: post
-  operationId: updateRecords
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/upsert
-  method: post
-  operationId: upsertRecords
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/delete
-  method: post
-  operationId: deleteRecords
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v2/tenants/{tenantName}/databases/{databaseName}/collections/{collectionId}/query
-  method: post
-  operationId: queryRecords
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required

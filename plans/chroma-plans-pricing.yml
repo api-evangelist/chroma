@@ -1,244 +1,161 @@
-specification: API Commons Plans
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
-provider: Chroma
-providerId: chroma
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: true
-tags:
-  - AI
-  - Embeddings
-  - LLM
-  - RAG
-  - Retrieval
-  - Search
-  - Serverless
-  - Vector Database
-description: Chroma Cloud is a hybrid plan-plus-usage product. Three plans (Starter, Team, Enterprise)
-  set platform tier features (databases, team members, support, compliance), while four metered
-  primitives (Write, Storage, Query, Network) drive the variable bill. Starter and Team include
-  monthly credits; Team credits do not roll over. Enterprise is custom-priced and supports BYOC.
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://docs.trychroma.com/cloud/pricing
 sources:
-  - https://www.trychroma.com/pricing
+- https://docs.trychroma.com/cloud/pricing
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T104522
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: usage-other
+delivery:
+  delivery: managed+licensed
+  method: page
+  read: '2026-10-07'
+  evidence: Yes. We offer a BYOC (bring your own cloud) option for single-tenant deployments. Contact
+    us for more details.
+published: true
+note: Usage-based Chroma Cloud pricing across writes, reads, storage, forking and sync; BYOC single-tenant
+  option mentioned as contact us.
+plan_count: 9
+currency: USD
 plans:
-  - id: chroma-starter
-    name: Starter
-    type: usage-based
-    description: Pay-as-you-go entry plan with $5 in monthly free credits, 10 databases, 10 team
-      members, and community Slack support.
-    entries:
-      - label: Plan fee
-        name: plan_fee
-        type: subscription
-        metric: month
-        limit: 1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '$0/month + usage'
-        userMultiplied: false
-      - label: Free credits
-        name: free_credits
-        type: flat
-        metric: month
-        limit: 1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '$5/month included'
-        userMultiplied: false
-      - label: Write
-        name: write
-        type: metered
-        metric: GiB
-        limit: -1
-        timeFrame: usage
-        geo: global
-        unit: 1
-        price: '$2.50 per GiB written'
-        userMultiplied: false
-      - label: Storage
-        name: storage
-        type: metered
-        metric: GiB
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '$0.33 per GiB / month'
-        userMultiplied: false
-      - label: Query
-        name: query
-        type: metered
-        metric: TiB
-        limit: -1
-        timeFrame: usage
-        geo: global
-        unit: 1
-        price: '$0.0075 per TiB queried'
-        userMultiplied: false
-      - label: Network
-        name: network
-        type: metered
-        metric: GiB
-        limit: -1
-        timeFrame: usage
-        geo: global
-        unit: 1
-        price: '$0.09 per GiB returned'
-        userMultiplied: false
-      - label: Databases
-        name: databases
-        type: quota
-        metric: database
-        limit: 10
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: included
-        userMultiplied: false
-      - label: Team members
-        name: team_members
-        type: quota
-        metric: seat
-        limit: 10
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: included
-        userMultiplied: true
-    elements:
-      - name: Community Slack support
-      - name: Vector, full-text, and metadata search
-      - name: Serverless infrastructure
-  - id: chroma-team
-    name: Team
-    type: subscription
-    description: Production plan with $250/month flat fee plus usage at the same rates as Starter,
-      higher quotas, $100 monthly credits (do not roll over), volume-based discounts, and SOC 2
-      compliance.
-    entries:
-      - label: Plan fee
-        name: plan_fee
-        type: subscription
-        metric: month
-        limit: 1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '$250/month + usage'
-        userMultiplied: false
-      - label: Monthly credits
-        name: monthly_credits
-        type: flat
-        metric: month
-        limit: 1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '$100/month (do not roll over)'
-        userMultiplied: false
-      - label: Write
-        name: write
-        type: metered
-        metric: GiB
-        limit: -1
-        timeFrame: usage
-        geo: global
-        unit: 1
-        price: '$2.50 per GiB written'
-        userMultiplied: false
-      - label: Storage
-        name: storage
-        type: metered
-        metric: GiB
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '$0.33 per GiB / month'
-        userMultiplied: false
-      - label: Query
-        name: query
-        type: metered
-        metric: TiB
-        limit: -1
-        timeFrame: usage
-        geo: global
-        unit: 1
-        price: '$0.0075 per TiB queried'
-        userMultiplied: false
-      - label: Network
-        name: network
-        type: metered
-        metric: GiB
-        limit: -1
-        timeFrame: usage
-        geo: global
-        unit: 1
-        price: '$0.09 per GiB returned'
-        userMultiplied: false
-      - label: Databases
-        name: databases
-        type: quota
-        metric: database
-        limit: 100
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: included
-        userMultiplied: false
-      - label: Team members
-        name: team_members
-        type: quota
-        metric: seat
-        limit: 30
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: included
-        userMultiplied: true
-    elements:
-      - name: Slack support
-      - name: SOC 2 compliance
-      - name: Volume-based discounts
-  - id: chroma-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-priced tier with unlimited databases and team members, single-tenant clusters,
-      BYOC option, dedicated support, and SLAs.
-    entries:
-      - label: Subscription
-        name: subscription
-        type: subscription
-        metric: varies
-        limit: -1
-        timeFrame: year
-        geo: global
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Usage
-        name: usage
-        type: metered
-        metric: varies
-        limit: -1
-        timeFrame: usage
-        geo: global
-        unit: 1
-        price: negotiated (Write / Storage / Query / Network)
-        userMultiplied: false
-    elements:
-      - name: Unlimited databases
-      - name: Unlimited team members
-      - name: Single-tenant clusters
-      - name: BYOC (Bring Your Own Cloud)
-      - name: Dedicated support
-      - name: SLAs
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- name: Writes
+  price_text: $2.50 per logical GiB written
+  price: 2.5
+  currency: USD
+  period: per-use
+  unit: logical GiB written
+- name: Forking
+  price_text: $0.03 per fork request
+  price: 0.03
+  currency: USD
+  period: per-use
+  unit: fork request
+- name: Reads - queried
+  price_text: $0.0075 per TiB queried
+  price: 0.0075
+  currency: USD
+  period: per-use
+  unit: TiB queried
+- name: Reads - returned
+  price_text: $0.09 per GiB returned
+  price: 0.09
+  currency: USD
+  period: per-use
+  unit: GiB returned
+- name: Storage
+  price_text: $0.33 per GiB per month
+  price: 0.33
+  currency: USD
+  period: month
+  unit: GiB
+- name: Sync - data processed
+  price_text: $0.04 per GiB processed
+  price: 0.04
+  currency: USD
+  period: per-use
+  unit: GiB processed
+- name: Sync - document page extracted
+  price_text: $0.01 per document page extracted
+  price: 0.01
+  currency: USD
+  period: per-use
+  unit: document page
+- name: Sync - page scraped
+  price_text: $0.01 per page scraped
+  price: 0.01
+  currency: USD
+  period: per-use
+  unit: page scraped
+- name: New user credits
+  price_text: $5 in credits to new users
+  price: 5
+  currency: USD
+  period: one-time
+  unit: credits
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - subscription
+  units:
+  - credit
+  - data
+  - request
+  plans:
+  - name: Writes
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - other
+  - name: Forking
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - request
+    periods:
+    - other
+  - name: Reads - queried
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Reads - returned
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - other
+  - name: Storage
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - month
+  - name: Sync - data processed
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - other
+  - name: Sync - document page extracted
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Sync - page scraped
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: New user credits
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - credit
+    periods:
+    - one-time
