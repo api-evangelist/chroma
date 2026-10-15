@@ -25,3 +25,16 @@
   relationship: system-coverage
   status: not-a-workflow
   arazzo: null
+- slug: chroma-stripe-own
+  label: Stripe (own)
+  partner: stripe
+  partner_name: Stripe (own)
+  category: developer_tools
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.stripe.com/apps/chroma
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
