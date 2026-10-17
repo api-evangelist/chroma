@@ -78,15 +78,23 @@ paths:
     - url: https://api.trychroma.com
       description: Chroma Cloud Production
 components:
+  parameters:
+    tenantName:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+    tenantName_2:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+        default: default_tenant
   schemas:
-    Tenant:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the tenant
-      required:
-      - name
     Error:
       type: object
       properties:
@@ -106,22 +114,14 @@ components:
           description: The name for the new tenant
       required:
       - name
-  parameters:
-    tenantName:
-      name: tenantName
-      in: path
-      required: true
-      description: The name of the tenant
-      schema:
-        type: string
-    tenantName_2:
-      name: tenantName
-      in: path
-      required: true
-      description: The name of the tenant
-      schema:
-        type: string
-        default: default_tenant
+    Tenant:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the tenant
+      required:
+      - name
   securitySchemes:
     bearerAuth:
       type: http

@@ -157,62 +157,29 @@ paths:
     - url: https://api.trychroma.com
       description: Chroma Cloud Production
 components:
-  parameters:
-    tenantName:
-      name: tenantName
-      in: path
-      required: true
-      description: The name of the tenant
-      schema:
-        type: string
-    databaseName:
-      name: databaseName
-      in: path
-      required: true
-      description: The name of the database
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of items to return
-      schema:
-        type: integer
-        minimum: 1
-    collectionId:
-      name: collectionId
-      in: path
-      required: true
-      description: The unique identifier of the collection
-      schema:
-        type: string
-        format: uuid
-    offset:
-      name: offset
-      in: query
-      required: false
-      description: Number of items to skip before returning results
-      schema:
-        type: integer
-        minimum: 0
-    tenantName_2:
-      name: tenantName
-      in: path
-      required: true
-      description: The name of the tenant
-      schema:
-        type: string
-        default: default_tenant
-    databaseName_2:
-      name: databaseName
-      in: path
-      required: true
-      description: The name of the database
-      schema:
-        type: string
-        default: default_database
   schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+        message:
+          type: string
+          description: Detailed error message
+      required:
+      - error
+    UpdateCollectionRequest:
+      type: object
+      properties:
+        new_name:
+          type: string
+          description: The new name for the collection
+        new_metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+          description: New metadata to replace the existing collection metadata
     CreateCollectionRequest:
       type: object
       properties:
@@ -254,28 +221,6 @@ components:
       required:
       - id
       - name
-    UpdateCollectionRequest:
-      type: object
-      properties:
-        new_name:
-          type: string
-          description: The new name for the collection
-        new_metadata:
-          type: object
-          nullable: true
-          additionalProperties: true
-          description: New metadata to replace the existing collection metadata
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
-        message:
-          type: string
-          description: Detailed error message
-      required:
-      - error
     CreateCollectionRequest_2:
       type: object
       properties:
@@ -317,6 +262,61 @@ components:
       required:
       - id
       - name
+  parameters:
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return
+      schema:
+        type: integer
+        minimum: 1
+    databaseName:
+      name: databaseName
+      in: path
+      required: true
+      description: The name of the database
+      schema:
+        type: string
+    tenantName:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+    offset:
+      name: offset
+      in: query
+      required: false
+      description: Number of items to skip before returning results
+      schema:
+        type: integer
+        minimum: 0
+    collectionId:
+      name: collectionId
+      in: path
+      required: true
+      description: The unique identifier of the collection
+      schema:
+        type: string
+        format: uuid
+    databaseName_2:
+      name: databaseName
+      in: path
+      required: true
+      description: The name of the database
+      schema:
+        type: string
+        default: default_database
+    tenantName_2:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+        default: default_tenant
   securitySchemes:
     bearerAuth:
       type: http

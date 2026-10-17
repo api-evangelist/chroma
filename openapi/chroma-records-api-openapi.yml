@@ -226,6 +226,16 @@ paths:
       description: Chroma Cloud Production
 components:
   schemas:
+    WhereDocumentFilter:
+      type: object
+      nullable: true
+      additionalProperties: true
+      description: Document content filter expression. Supports $contains and $not_contains operators for full-text search, and $regex and $not_regex operators for regular expression pattern matching.
+    WhereFilter:
+      type: object
+      nullable: true
+      additionalProperties: true
+      description: Metadata filter expression. Supports operators including $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin for field comparisons, and $and, $or for combining multiple conditions.
     AddRecordsRequest:
       type: object
       properties:
@@ -267,88 +277,6 @@ components:
           description: URI references for each record
       required:
       - ids
-    UpdateRecordsRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-          description: IDs of the records to update
-        embeddings:
-          type: array
-          nullable: true
-          items:
-            type: array
-            items:
-              type: number
-              format: float
-          description: Updated embedding vectors
-        documents:
-          type: array
-          nullable: true
-          items:
-            type: string
-            nullable: true
-          description: Updated documents
-        metadatas:
-          type: array
-          nullable: true
-          items:
-            type: object
-            nullable: true
-            additionalProperties: true
-          description: Updated metadata objects
-        uris:
-          type: array
-          nullable: true
-          items:
-            type: string
-            nullable: true
-          description: Updated URIs
-      required:
-      - ids
-    GetRecordsResponse:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-          description: Record IDs
-        embeddings:
-          type: array
-          nullable: true
-          items:
-            type: array
-            items:
-              type: number
-              format: float
-          description: Embedding vectors if requested via include
-        documents:
-          type: array
-          nullable: true
-          items:
-            type: string
-            nullable: true
-          description: Documents if requested via include
-        metadatas:
-          type: array
-          nullable: true
-          items:
-            type: object
-            nullable: true
-            additionalProperties: true
-          description: Metadata objects if requested via include
-        uris:
-          type: array
-          nullable: true
-          items:
-            type: string
-            nullable: true
-          description: URIs if requested via include
-      required:
-      - ids
     Error:
       type: object
       properties:
@@ -360,11 +288,44 @@ components:
           description: Detailed error message
       required:
       - error
-    WhereDocumentFilter:
+    QueryRecordsRequest:
       type: object
-      nullable: true
-      additionalProperties: true
-      description: Document content filter expression. Supports $contains and $not_contains operators for full-text search, and $regex and $not_regex operators for regular expression pattern matching.
+      properties:
+        query_embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Query embedding vectors to find nearest neighbors for
+        query_texts:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: Query texts to be embedded by the server
+        n_results:
+          type: integer
+          default: 10
+          minimum: 1
+          description: Number of nearest neighbor results to return per query
+        where:
+          $ref: '#/components/schemas/WhereFilter'
+        where_document:
+          $ref: '#/components/schemas/WhereDocumentFilter'
+        include:
+          type: array
+          items:
+            type: string
+            enum:
+            - embeddings
+            - documents
+            - metadatas
+            - distances
+            - uris
+          description: Fields to include in the response
     QueryRecordsResponse:
       type: object
       properties:
@@ -425,10 +386,15 @@ components:
           description: URIs if requested via include
       required:
       - ids
-    QueryRecordsRequest:
+    UpdateRecordsRequest:
       type: object
       properties:
-        query_embeddings:
+        ids:
+          type: array
+          items:
+            type: string
+          description: IDs of the records to update
+        embeddings:
           type: array
           nullable: true
           items:
@@ -436,33 +402,31 @@ components:
             items:
               type: number
               format: float
-          description: Query embedding vectors to find nearest neighbors for
-        query_texts:
+          description: Updated embedding vectors
+        documents:
           type: array
           nullable: true
           items:
             type: string
-          description: Query texts to be embedded by the server
-        n_results:
-          type: integer
-          default: 10
-          minimum: 1
-          description: Number of nearest neighbor results to return per query
-        where:
-          $ref: '#/components/schemas/WhereFilter'
-        where_document:
-          $ref: '#/components/schemas/WhereDocumentFilter'
-        include:
+            nullable: true
+          description: Updated documents
+        metadatas:
           type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            additionalProperties: true
+          description: Updated metadata objects
+        uris:
+          type: array
+          nullable: true
           items:
             type: string
-            enum:
-            - embeddings
-            - documents
-            - metadatas
-            - distances
-            - uris
-          description: Fields to include in the response
+            nullable: true
+          description: Updated URIs
+      required:
+      - ids
     GetRecordsRequest:
       type: object
       properties:
@@ -496,6 +460,47 @@ components:
           nullable: true
           minimum: 0
           description: Number of records to skip
+    GetRecordsResponse:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+          description: Record IDs
+        embeddings:
+          type: array
+          nullable: true
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: Embedding vectors if requested via include
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: Documents if requested via include
+        metadatas:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            additionalProperties: true
+          description: Metadata objects if requested via include
+        uris:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: true
+          description: URIs if requested via include
+      required:
+      - ids
     DeleteRecordsRequest:
       type: object
       properties:
@@ -509,11 +514,6 @@ components:
           $ref: '#/components/schemas/WhereFilter'
         where_document:
           $ref: '#/components/schemas/WhereDocumentFilter'
-    WhereFilter:
-      type: object
-      nullable: true
-      additionalProperties: true
-      description: Metadata filter expression. Supports operators including $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin for field comparisons, and $and, $or for combining multiple conditions.
     AddRecordsRequest_2:
       type: object
       properties:
@@ -627,18 +627,18 @@ components:
           minimum: 0
           description: Number of records to skip
   parameters:
-    tenantName:
-      name: tenantName
-      in: path
-      required: true
-      description: The name of the tenant
-      schema:
-        type: string
     databaseName:
       name: databaseName
       in: path
       required: true
       description: The name of the database
+      schema:
+        type: string
+    tenantName:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
       schema:
         type: string
     collectionId:
@@ -649,14 +649,6 @@ components:
       schema:
         type: string
         format: uuid
-    tenantName_2:
-      name: tenantName
-      in: path
-      required: true
-      description: The name of the tenant
-      schema:
-        type: string
-        default: default_tenant
     databaseName_2:
       name: databaseName
       in: path
@@ -665,6 +657,14 @@ components:
       schema:
         type: string
         default: default_database
+    tenantName_2:
+      name: tenantName
+      in: path
+      required: true
+      description: The name of the tenant
+      schema:
+        type: string
+        default: default_tenant
   securitySchemes:
     bearerAuth:
       type: http
