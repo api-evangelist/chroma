@@ -130,74 +130,6 @@ apis:
     url: https://docs.trychroma.com/reference/js/client
   - type: SourceCode
     url: https://github.com/chroma-core/chroma-js
-- aid: chroma:chroma-collections-api
-  name: Chroma Collections API
-  description: >-
-    Collection management endpoints for creating, listing, retrieving, updating, and deleting collections
-    within a database.
-  humanURL: https://docs.trychroma.com/reference/chroma-reference
-  baseURL: https://api.trychroma.com
-  tags:
-  - Collection
-  tags_raw:
-  - Collections
-  properties:
-  - type: OpenAPI
-    url: openapi/chroma-collections-api-openapi.yml
-  - type: Documentation
-    url: https://docs.trychroma.com/reference/chroma-reference
-  - type: Documentation
-    url: https://docs.trychroma.com/cloud/sync/overview
-- aid: chroma:chroma-databases-api
-  name: Chroma Databases API
-  description: >-
-    Database management endpoints for creating, listing, retrieving, and deleting databases within a tenant.
-  humanURL: https://docs.trychroma.com/reference/chroma-reference
-  baseURL: https://api.trychroma.com
-  tags:
-  - Database
-  tags_raw:
-  - Databases
-  properties:
-  - type: OpenAPI
-    url: openapi/chroma-databases-api-openapi.yml
-  - type: Documentation
-    url: https://docs.trychroma.com/reference/chroma-reference
-  - type: Documentation
-    url: https://docs.trychroma.com/cloud/sync/overview
-- aid: chroma:chroma-records-api
-  name: Chroma Records API
-  description: >-
-    Record management endpoints for adding, getting, updating, upserting, deleting, and querying records
-    within a collection.
-  humanURL: https://docs.trychroma.com/reference/chroma-reference
-  baseURL: https://api.trychroma.com
-  tags:
-  - Records
-  properties:
-  - type: OpenAPI
-    url: openapi/chroma-records-api-openapi.yml
-  - type: Documentation
-    url: https://docs.trychroma.com/reference/chroma-reference
-  - type: Documentation
-    url: https://docs.trychroma.com/cloud/sync/overview
-- aid: chroma:chroma-search-api
-  name: Chroma Search API
-  description: >-
-    Advanced search endpoints available exclusively in Chroma Cloud. Provides a unified interface for
-    hybrid search operations combining vector similarity search with metadata filtering and custom ranking
-    expressions.
-  humanURL: https://docs.trychroma.com/reference/chroma-reference
-  baseURL: https://api.trychroma.com
-  tags:
-  - Search
-  properties:
-  - type: OpenAPI
-    url: openapi/chroma-search-api-openapi.yml
-  - type: Documentation
-    url: https://docs.trychroma.com/reference/chroma-reference
-  - type: Documentation
-    url: https://docs.trychroma.com/cloud/sync/overview
 - aid: chroma:chroma-system-api
   name: Chroma System API
   description: System-level endpoints for health checks, version information, and server diagnostics.
@@ -212,30 +144,180 @@ apis:
     url: https://docs.trychroma.com/reference/chroma-reference
   - type: Documentation
     url: https://docs.trychroma.com/cloud/sync/overview
-- aid: chroma:chroma-tenants-api
-  name: Chroma Tenants API
-  description: Tenant management endpoints for creating and retrieving tenants.
-  humanURL: https://docs.trychroma.com/reference/chroma-reference
+- aid: chroma:chroma-authentication-api
+  name: Chroma Authentication API
+  description: The Authentication API from Chroma — 1 operation(s) for authentication.
+  humanURL: https://docs.trychroma.com/reference/python/client
   baseURL: https://api.trychroma.com
   tags:
-  - Tenants
+  - Authentication
   properties:
   - type: OpenAPI
-    url: openapi/chroma-tenants-api-openapi.yml
+    url: openapi/chroma-authentication-api-openapi.yml
   - type: Documentation
     url: https://docs.trychroma.com/reference/chroma-reference
   - type: Documentation
     url: https://docs.trychroma.com/cloud/sync/overview
-- aid: chroma:chroma-query-api
-  name: Chroma Query API
-  description: Nearest-neighbor vector similarity search over a collection.
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/collections/manage-collections
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: PostmanCollection
+    url: collections/chroma-db.postman_collection.json
+  - type: OpenCollection
+    url: collections/chroma-db.opencollection.json
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/collections/add-data
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-api/record/add-records
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/querying-collections/query-and-get
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-api/record/query-collection
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/overview/architecture
+- aid: chroma:chroma-collection-api
+  name: Chroma Collection API
+  description: The Collection API from Chroma — 7 operation(s) for collection.
   humanURL: https://docs.trychroma.com/reference/python/client
   baseURL: https://api.trychroma.com
   tags:
-  - Query
+  - Collection
   properties:
   - type: OpenAPI
-    url: openapi/chroma-query-api-openapi.yml
+    url: openapi/chroma-collection-api-openapi.yml
+  - type: Documentation
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: Documentation
+    url: https://docs.trychroma.com/cloud/sync/overview
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/collections/manage-collections
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: PostmanCollection
+    url: collections/chroma-db.postman_collection.json
+  - type: OpenCollection
+    url: collections/chroma-db.opencollection.json
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/collections/add-data
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-api/record/add-records
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/querying-collections/query-and-get
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-api/record/query-collection
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/overview/architecture
+- aid: chroma:chroma-database-api
+  name: Chroma Database API
+  description: The Database API from Chroma — 3 operation(s) for database.
+  humanURL: https://docs.trychroma.com/reference/python/client
+  baseURL: https://api.trychroma.com
+  tags:
+  - Database
+  properties:
+  - type: OpenAPI
+    url: openapi/chroma-database-api-openapi.yml
+  - type: Documentation
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: Documentation
+    url: https://docs.trychroma.com/cloud/sync/overview
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/collections/manage-collections
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: PostmanCollection
+    url: collections/chroma-db.postman_collection.json
+  - type: OpenCollection
+    url: collections/chroma-db.opencollection.json
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/collections/add-data
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-api/record/add-records
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/querying-collections/query-and-get
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-api/record/query-collection
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/overview/architecture
+- aid: chroma:chroma-function-api
+  name: Chroma Function API
+  description: The Function API from Chroma — 4 operation(s) for function.
+  humanURL: https://docs.trychroma.com/reference/python/client
+  baseURL: https://api.trychroma.com
+  tags:
+  - Function
+  properties:
+  - type: OpenAPI
+    url: openapi/chroma-function-api-openapi.yml
+  - type: Documentation
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: Documentation
+    url: https://docs.trychroma.com/cloud/sync/overview
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/collections/manage-collections
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: PostmanCollection
+    url: collections/chroma-db.postman_collection.json
+  - type: OpenCollection
+    url: collections/chroma-db.opencollection.json
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/collections/add-data
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-api/record/add-records
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/querying-collections/query-and-get
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-api/record/query-collection
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/overview/architecture
+- aid: chroma:chroma-record-api
+  name: Chroma Record API
+  description: The Record API from Chroma — 11 operation(s) for record.
+  humanURL: https://docs.trychroma.com/reference/python/client
+  baseURL: https://api.trychroma.com
+  tags:
+  - Record
+  properties:
+  - type: OpenAPI
+    url: openapi/chroma-record-api-openapi.yml
+  - type: Documentation
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: Documentation
+    url: https://docs.trychroma.com/cloud/sync/overview
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/collections/manage-collections
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: PostmanCollection
+    url: collections/chroma-db.postman_collection.json
+  - type: OpenCollection
+    url: collections/chroma-db.opencollection.json
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/collections/add-data
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-api/record/add-records
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/querying-collections/query-and-get
+  - type: APIReference
+    url: https://docs.trychroma.com/reference/chroma-api/record/query-collection
+  - type: Documentation
+    url: https://docs.trychroma.com/docs/overview/architecture
+- aid: chroma:chroma-tenant-api
+  name: Chroma Tenant API
+  description: The Tenant API from Chroma — 2 operation(s) for tenant.
+  humanURL: https://docs.trychroma.com/reference/python/client
+  baseURL: https://api.trychroma.com
+  tags:
+  - Tenant
+  properties:
+  - type: OpenAPI
+    url: openapi/chroma-tenant-api-openapi.yml
+  - type: Documentation
+    url: https://docs.trychroma.com/reference/chroma-reference
+  - type: Documentation
+    url: https://docs.trychroma.com/cloud/sync/overview
   - type: Documentation
     url: https://docs.trychroma.com/docs/collections/manage-collections
   - type: APIReference

@@ -1,0 +1,982 @@
+openapi: 3.2.0
+info:
+  title: chroma-frontend Database API
+  description: ''
+  license:
+    name: ''
+  version: 1.0.0
+tags:
+- name: Database
+paths:
+  /api/v2/tenants/{tenant}/databases:
+    get:
+      tags:
+      - Database
+      summary: List databases
+      description: Lists all databases for a tenant.
+      operationId: list_databases
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: limit
+        in: query
+        description: Limit for pagination
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+        example: 10
+      - name: offset
+        in: query
+        description: Offset for pagination
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+        example: 0
+      responses:
+        '200':
+          description: List of databases
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vec'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codeSamples:
+      - label: List Databases
+        lang: terminal
+        source: chroma db list
+    post:
+      tags:
+      - Database
+      summary: Create database
+      description: Creates a new database for a tenant.
+      operationId: create_database
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDatabasePayload'
+        required: true
+      responses:
+        '200':
+          description: Database created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateDatabaseResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codeSamples:
+      - label: Create Database
+        lang: terminal
+        source: chroma db create my-new-db
+  /api/v2/tenants/{tenant}/databases/by-id/{database_id}:
+    get:
+      tags:
+      - Database
+      summary: Get database by ID
+      description: Returns a database by ID, scoped to a tenant.
+      operationId: get_database_by_id
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database_id
+        in: path
+        description: Database UUID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Database retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Database not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /api/v2/tenants/{tenant}/databases/{database}:
+    get:
+      tags:
+      - Database
+      summary: Get database
+      description: Returns a database by name.
+      operationId: get_database
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Database retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Database not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+    delete:
+      tags:
+      - Database
+      summary: Delete database
+      description: Deletes a database by name.
+      operationId: delete_database
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Database deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteDatabaseResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Database not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codeSamples:
+      - label: Delete Database
+        lang: terminal
+        source: chroma db delete my-db
+components:
+  schemas:
+    Space:
+      type: string
+      enum:
+      - l2
+      - cosine
+      - ip
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    Schema:
+      type: object
+      description: 'Schema representation for collection index configurations
+
+
+        This represents the server-side schema structure used for index management'
+      required:
+      - defaults
+      - keys
+      properties:
+        cmek:
+          type:
+          - object
+          - 'null'
+          description: Customer-managed encryption key for collection data
+        defaults:
+          $ref: '#/components/schemas/ValueTypes'
+          description: Default index configurations for each value type
+        keys:
+          type: object
+          description: 'Key-specific index overrides
+
+            TODO(Sanket): Needed for backwards compatibility. Should remove after deploy.'
+          additionalProperties:
+            $ref: '#/components/schemas/ValueTypes'
+          propertyNames:
+            type: string
+    FtsAlgorithm:
+      type: string
+      description: 'Full-text search index algorithm.
+
+
+        Controls which index format and query pipeline are used for
+
+        document substring search within a collection.'
+      enum:
+      - trigram
+      - token_bitmap
+    BoolValueType:
+      type: object
+      description: Boolean value type index configurations
+      properties:
+        bool_inverted_index:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/BoolInvertedIndexType'
+    IntInvertedIndexConfig:
+      type: object
+      additionalProperties: false
+    HnswIndexConfig:
+      type: object
+      description: Configuration for HNSW vector index algorithm parameters
+      properties:
+        batch_size:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        ef_construction:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        ef_search:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        max_neighbors:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        num_threads:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        resize_factor:
+          type:
+          - number
+          - 'null'
+          format: double
+        sync_threshold:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+    SpannConfiguration:
+      type: object
+      properties:
+        ef_construction:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        ef_search:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        max_neighbors:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        merge_threshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        reassign_neighbor_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        search_nprobe:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        space:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Space'
+        split_threshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        write_nprobe:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+      additionalProperties: false
+    EmbeddingFunctionConfiguration:
+      oneOf:
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - legacy
+      - allOf:
+        - $ref: '#/components/schemas/EmbeddingFunctionNewConfiguration'
+        - type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - known
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - unknown
+    FloatValueType:
+      type: object
+      description: Float value type index configurations
+      properties:
+        float_inverted_index:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/FloatInvertedIndexType'
+    CollectionConfiguration:
+      type: object
+      properties:
+        embedding_function:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/EmbeddingFunctionConfiguration'
+        hnsw:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/HnswConfiguration'
+        spann:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/SpannConfiguration'
+    FloatInvertedIndexConfig:
+      type: object
+      additionalProperties: false
+    IntValueType:
+      type: object
+      description: Integer value type index configurations
+      properties:
+        int_inverted_index:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/IntInvertedIndexType'
+    FtsIndexType:
+      type: object
+      required:
+      - enabled
+      - config
+      properties:
+        config:
+          $ref: '#/components/schemas/FtsIndexConfig'
+        enabled:
+          type: boolean
+    IntInvertedIndexType:
+      type: object
+      required:
+      - enabled
+      - config
+      properties:
+        config:
+          $ref: '#/components/schemas/IntInvertedIndexConfig'
+        enabled:
+          type: boolean
+    HnswConfiguration:
+      type: object
+      properties:
+        ef_construction:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        ef_search:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        max_neighbors:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        resize_factor:
+          type:
+          - number
+          - 'null'
+          format: double
+        space:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Space'
+        sync_threshold:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+    CollectionUuid:
+      type: string
+      format: uuid
+    CreateDatabaseResponse:
+      type: object
+    SparseVectorIndexType:
+      type: object
+      required:
+      - enabled
+      - config
+      properties:
+        config:
+          $ref: '#/components/schemas/SparseVectorIndexConfig'
+        enabled:
+          type: boolean
+    DeleteDatabaseResponse:
+      type: object
+    SpannIndexConfig:
+      type: object
+      description: Configuration for SPANN vector index algorithm parameters
+      properties:
+        center_drift_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        ef_construction:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        ef_search:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        initial_lambda:
+          type:
+          - number
+          - 'null'
+          format: float
+        max_neighbors:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        merge_threshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        nreplica_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        num_centers_to_merge_to:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        num_samples_kmeans:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        quantize:
+          $ref: '#/components/schemas/Quantization'
+          description: Quantization implementation for vector search (cloud-only feature)
+        reassign_neighbor_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        search_nprobe:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        search_rng_epsilon:
+          type:
+          - number
+          - 'null'
+          format: float
+        search_rng_factor:
+          type:
+          - number
+          - 'null'
+          format: float
+        split_threshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        write_nprobe:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        write_rng_epsilon:
+          type:
+          - number
+          - 'null'
+          format: float
+        write_rng_factor:
+          type:
+          - number
+          - 'null'
+          format: float
+      additionalProperties: false
+    Quantization:
+      type: string
+      description: Quantization implementation for SPANN vector index.
+      enum:
+      - none
+      - four_bit_rabit_q_with_u_search
+    StringInvertedIndexConfig:
+      type: object
+      additionalProperties: false
+    FloatInvertedIndexType:
+      type: object
+      required:
+      - enabled
+      - config
+      properties:
+        config:
+          $ref: '#/components/schemas/FloatInvertedIndexConfig'
+        enabled:
+          type: boolean
+    BoolInvertedIndexType:
+      type: object
+      required:
+      - enabled
+      - config
+      properties:
+        config:
+          $ref: '#/components/schemas/BoolInvertedIndexConfig'
+        enabled:
+          type: boolean
+    ValueTypes:
+      type: object
+      description: 'Strongly-typed value type configurations
+
+        Contains optional configurations for each supported value type'
+      properties:
+        bool:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/BoolValueType'
+        float:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/FloatValueType'
+        float_list:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/FloatListValueType'
+        int:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/IntValueType'
+        sparse_vector:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/SparseVectorValueType'
+        string:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/StringValueType'
+    Vec:
+      type: array
+      items:
+        type: object
+        required:
+        - id
+        - name
+        - configuration_json
+        - tenant
+        - database
+        - log_position
+        - version
+        properties:
+          configuration_json:
+            $ref: '#/components/schemas/CollectionConfiguration'
+          database:
+            type: string
+          dimension:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          id:
+            $ref: '#/components/schemas/CollectionUuid'
+          log_position:
+            type: integer
+            format: int64
+          metadata:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/HashMap'
+          name:
+            type: string
+          schema:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Schema'
+          tenant:
+            type: string
+          version:
+            type: integer
+            format: int32
+    CreateDatabasePayload:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+    SparseVector:
+      type: object
+      description: 'Represents a sparse vector using parallel arrays for indices and values.
+
+
+        On deserialization: accepts both old format `{"indices": [...], "values": [...]}`
+
+        and new format `{"#type": "sparse_vector", "indices": [...], "values": [...]}`.
+
+
+        On serialization: always includes `#type` field with value `"sparse_vector"`.'
+      required:
+      - indices
+      - values
+      properties:
+        indices:
+          type: array
+          items:
+            type: integer
+            format: int32
+            minimum: 0
+          description: Dimension indices
+        tokens:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Tokens corresponding to each index
+        values:
+          type: array
+          items:
+            type: number
+            format: float
+          description: Values corresponding to each index
+    EmbeddingFunctionNewConfiguration:
+      type: object
+      required:
+      - name
+      - config
+      properties:
+        config: {}
+        name:
+          type: string
+    VectorIndexType:
+      type: object
+      required:
+      - enabled
+      - config
+      properties:
+        config:
+          $ref: '#/components/schemas/VectorIndexConfig'
+        enabled:
+          type: boolean
+    FloatListValueType:
+      type: object
+      description: Float list value type index configurations (for vectors)
+      properties:
+        vector_index:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/VectorIndexType'
+    SparseIndexAlgorithm:
+      type: string
+      description: 'Sparse vector index algorithm.
+
+
+        Controls which posting list format and query engine are used for
+
+        sparse vector search within a collection.'
+      enum:
+      - wand
+      - max_score
+    HashMap:
+      type: object
+      additionalProperties:
+        oneOf:
+        - type: boolean
+        - type: integer
+          format: int64
+        - type: number
+          format: double
+        - type: string
+        - $ref: '#/components/schemas/SparseVector'
+        - type: array
+          items:
+            type: boolean
+        - type: array
+          items:
+            type: integer
+            format: int64
+        - type: array
+          items:
+            type: number
+            format: double
+        - type: array
+          items:
+            type: string
+      propertyNames:
+        type: string
+    StringValueType:
+      type: object
+      description: String value type index configurations
+      properties:
+        fts_index:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/FtsIndexType'
+        string_inverted_index:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/StringInvertedIndexType'
+    FtsIndexConfig:
+      type: object
+      properties:
+        algorithm:
+          $ref: '#/components/schemas/FtsAlgorithm'
+          description: 'FTS index algorithm.
+
+            Omitted from JSON when set to the default (Trigram) so that old
+
+            servers/clients that do not know about this field can still
+
+            deserialize the schema.'
+      additionalProperties: false
+    SparseVectorValueType:
+      type: object
+      description: Sparse vector value type index configurations
+      properties:
+        sparse_vector_index:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/SparseVectorIndexType'
+    StringInvertedIndexType:
+      type: object
+      required:
+      - enabled
+      - config
+      properties:
+        config:
+          $ref: '#/components/schemas/StringInvertedIndexConfig'
+        enabled:
+          type: boolean
+    Database:
+      type: object
+      required:
+      - id
+      - name
+      - tenant
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        tenant:
+          type: string
+    VectorIndexConfig:
+      type: object
+      properties:
+        embedding_function:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/EmbeddingFunctionConfiguration'
+            description: Embedding function configuration
+        hnsw:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/HnswIndexConfig'
+            description: HNSW algorithm configuration
+        source_key:
+          type:
+          - string
+          - 'null'
+          description: Key to source the vector from
+        space:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Space'
+            description: Vector space for similarity calculation (cosine, l2, ip)
+        spann:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/SpannIndexConfig'
+            description: SPANN algorithm configuration
+      additionalProperties: false
+    SparseVectorIndexConfig:
+      type: object
+      properties:
+        algorithm:
+          $ref: '#/components/schemas/SparseIndexAlgorithm'
+          description: 'Sparse index algorithm (cloud-only, tenant-gated).
+
+            Omitted from JSON when set to the default (Wand) so that old
+
+            servers/clients that do not know about this field can still
+
+            deserialize the schema.'
+        bm25:
+          type:
+          - boolean
+          - 'null'
+          description: Whether this embedding is BM25
+        embedding_function:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/EmbeddingFunctionConfiguration'
+            description: Embedding function configuration
+        source_key:
+          type:
+          - string
+          - 'null'
+          description: Key to source the sparse vector from
+      additionalProperties: false
+    BoolInvertedIndexConfig:
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-chroma-token

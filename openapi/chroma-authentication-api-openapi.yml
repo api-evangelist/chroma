@@ -1,0 +1,65 @@
+openapi: 3.2.0
+info:
+  title: chroma-frontend Authentication API
+  description: ''
+  license:
+    name: ''
+  version: 1.0.0
+tags:
+- name: Authentication
+paths:
+  /api/v2/auth/identity:
+    get:
+      tags:
+      - Authentication
+      summary: Get user identity
+      description: Returns the current user's identity, tenant, and databases.
+      operationId: get_user_identity
+      responses:
+        '200':
+          description: User identity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserIdentityResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    GetUserIdentityResponse:
+      type: object
+      required:
+      - user_id
+      - tenant
+      - databases
+      properties:
+        databases:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        tenant:
+          type: string
+        user_id:
+          type: string
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-chroma-token

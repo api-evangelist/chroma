@@ -1,0 +1,148 @@
+openapi: 3.2.0
+info:
+  title: Chroma System API
+  version: 2.0.0
+  contact:
+    name: Chroma Support
+    url: https://docs.trychroma.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://www.trychroma.com/terms
+  description: 'Operations tagged System across 2 of this provider''s published API definitions: chroma-cloud-api-openapi.yml, chroma-server-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.trychroma.com
+  description: Chroma Cloud Production
+- url: http://localhost:8000
+  description: Local Chroma Server
+tags:
+- name: System
+  description: System-level endpoints for health checks, version information, and server diagnostics.
+paths:
+  /api/v2/heartbeat:
+    get:
+      operationId: heartbeat
+      summary: Check server heartbeat
+      description: Returns a heartbeat response indicating the server is alive and accepting requests.
+      tags:
+      - System
+      security: []
+      responses:
+        '200':
+          description: Server is alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nanosecond heartbeat:
+                    type: integer
+                    format: int64
+                    description: Current server time in nanoseconds
+    servers:
+    - url: https://api.trychroma.com
+      description: Chroma Cloud Production
+  /api/v2/version:
+    get:
+      operationId: getVersion
+      summary: Get server version
+      description: Returns the version string of the running Chroma Cloud server.
+      tags:
+      - System
+      security: []
+      responses:
+        '200':
+          description: Server version returned
+          content:
+            application/json:
+              schema:
+                type: string
+    servers:
+    - url: https://api.trychroma.com
+      description: Chroma Cloud Production
+  /api/v2/pre-flight-checks:
+    get:
+      operationId: preFlightChecks
+      summary: Run pre-flight checks
+      description: Returns the results of pre-flight checks that verify the server is properly configured and ready to accept requests.
+      tags:
+      - System
+      security: []
+      responses:
+        '200':
+          description: Pre-flight check results
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+    servers:
+    - url: http://localhost:8000
+      description: Local Chroma Server
+    - url: https://api.trychroma.com
+      description: Chroma Cloud
+  /api/v2/healthcheck:
+    get:
+      operationId: healthcheck
+      summary: Check server health
+      description: Returns the health status of the Chroma server. Used by load balancers and orchestration tools to determine if the server is healthy and ready to serve traffic.
+      tags:
+      - System
+      security: []
+      responses:
+        '200':
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Health status of the server
+    servers:
+    - url: http://localhost:8000
+      description: Local Chroma Server
+    - url: https://api.trychroma.com
+      description: Chroma Cloud
+  /api/v2/reset:
+    post:
+      operationId: reset
+      summary: Reset the server
+      description: Resets the Chroma server to its initial state, removing all data. This endpoint is typically only available in development or test configurations and may be disabled in production deployments.
+      tags:
+      - System
+      responses:
+        '200':
+          description: Server reset successfully
+          content:
+            application/json:
+              schema:
+                type: boolean
+                description: Whether the reset was successful
+      security:
+      - bearerAuth: []
+      - tokenAuth: []
+    servers:
+    - url: http://localhost:8000
+      description: Local Chroma Server
+    - url: https://api.trychroma.com
+      description: Chroma Cloud
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token authentication for Chroma Cloud. Obtain tokens from the Chroma Cloud dashboard.
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: X-Chroma-Token
+      description: Static token authentication via the X-Chroma-Token header.
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication using RFC 7617 with a user:password base64-encoded Authorization header.
+x-refined-from:
+- chroma-cloud-api-openapi.yml
+- chroma-server-api-openapi.yml

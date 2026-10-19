@@ -1,0 +1,411 @@
+openapi: 3.2.0
+info:
+  title: chroma-frontend Function API
+  description: ''
+  license:
+    name: ''
+  version: 1.0.0
+tags:
+- name: Function
+paths:
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/attached_functions/{name}/add_input:
+    post:
+      tags:
+      - Function
+      summary: Add attached function input
+      description: Adds a new input collection to an existing async attached function.
+      operationId: add_attached_function_input
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: name
+        in: path
+        description: Function name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddAttachedFunctionInputRequest'
+        required: true
+      responses:
+        '200':
+          description: Attached function input added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddAttachedFunctionInputResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/attached_functions/{name}/detach:
+    post:
+      tags:
+      - Function
+      summary: Detach function
+      description: Detaches a function from a collection.
+      operationId: detach_function
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: name
+        in: path
+        description: Function name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DetachFunctionRequest'
+        required: true
+      responses:
+        '200':
+          description: Function detached successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetachFunctionResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/functions/attach:
+    post:
+      tags:
+      - Function
+      summary: Attach function
+      description: Attaches a function to a collection.
+      operationId: attach_function
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      requestBody:
+        description: Function attachment request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachFunctionRequest'
+            example:
+              function_id: 1e30d217-3d78-4f8c-b244-79381dc6a254
+              name: my_function
+              output_collection: output_collection_name
+              params: {}
+        required: true
+      responses:
+        '200':
+          description: ' Function attached successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachFunctionResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/functions/{function_name}:
+    get:
+      tags:
+      - Function
+      summary: Get attached function
+      description: Returns an attached function by name.
+      operationId: get_attached_function
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: function_name
+        in: path
+        description: Function name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Attached function retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAttachedFunctionResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Attached function not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    AddAttachedFunctionInputRequest:
+      type: object
+      required:
+      - input_collection_id
+      properties:
+        input_collection_id:
+          $ref: '#/components/schemas/CollectionUuid'
+    AttachedFunctionUuid:
+      type: string
+      format: uuid
+      description: AttachedFunctionUuid is a wrapper around Uuid to provide a type for attached function identifiers.
+    CollectionUuid:
+      type: string
+      format: uuid
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    DetachFunctionRequest:
+      type: object
+      properties:
+        delete_output:
+          type: boolean
+          description: Whether to delete the output collection as well when detaching the function.
+    AttachFunctionResponse:
+      type: object
+      required:
+      - attached_function
+      - created
+      properties:
+        attached_function:
+          $ref: '#/components/schemas/AttachedFunctionInfo'
+        created:
+          type: boolean
+          description: True if newly created, false if already existed (idempotent request).
+    AddAttachedFunctionInputResponse:
+      type: object
+      required:
+      - attached_function
+      - created
+      properties:
+        attached_function:
+          $ref: '#/components/schemas/AttachedFunctionApiResponse'
+        created:
+          type: boolean
+    AttachFunctionRequest:
+      type: object
+      required:
+      - name
+      - function_id
+      - output_collection
+      properties:
+        function_id:
+          type: string
+        name:
+          type: string
+        output_collection:
+          type: string
+        params: {}
+    DetachFunctionResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+    AttachedFunctionApiResponse:
+      type: object
+      description: API response struct for attached function with function_name instead of function_id
+      required:
+      - id
+      - name
+      - function_name
+      - input_collection_id
+      - output_collection
+      - tenant_id
+      - database_id
+      - completion_offset
+      - min_records_for_invocation
+      properties:
+        completion_offset:
+          type: integer
+          format: int64
+          description: 'Completion offset: the WAL position up to which the attached function has processed records'
+          minimum: 0
+        database_id:
+          type: string
+          description: Database name this attached function belongs to
+        function_name:
+          type: string
+          description: Name of the function (e.g., "record_counter", "statistics")
+        id:
+          $ref: '#/components/schemas/AttachedFunctionUuid'
+          description: Unique identifier for the attached function
+        input_collection_id:
+          $ref: '#/components/schemas/CollectionUuid'
+          description: Source collection that triggers the attached function
+        min_records_for_invocation:
+          type: integer
+          format: int64
+          description: Minimum number of new records required before the attached function runs again
+          minimum: 0
+        name:
+          type: string
+          description: Human-readable name for the attached function instance
+        output_collection:
+          type: string
+          description: Name of target collection where attached function output is stored
+        output_collection_id:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/CollectionUuid'
+            description: ID of the output collection (lazily filled in after creation)
+        params:
+          type:
+          - string
+          - 'null'
+          description: Optional JSON parameters for the function
+        tenant_id:
+          type: string
+          description: Tenant name this attached function belongs to
+    GetAttachedFunctionResponse:
+      type: object
+      required:
+      - attached_function
+      properties:
+        attached_function:
+          $ref: '#/components/schemas/AttachedFunctionApiResponse'
+    AttachedFunctionInfo:
+      type: object
+      required:
+      - id
+      - name
+      - function_name
+      properties:
+        function_name:
+          type: string
+          description: Name of the function (e.g., "record_counter", "statistics").
+        id:
+          type: string
+          description: Unique identifier for the attached function.
+        name:
+          type: string
+          description: Human-readable name for the attached function instance.
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-chroma-token

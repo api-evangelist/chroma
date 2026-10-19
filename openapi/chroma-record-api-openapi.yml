@@ -1,0 +1,1656 @@
+openapi: 3.2.0
+info:
+  title: chroma-frontend Record API
+  description: ''
+  license:
+    name: ''
+  version: 1.0.0
+tags:
+- name: Record
+paths:
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/add:
+    post:
+      tags:
+      - Record
+      summary: Add records
+      description: Adds records to a collection.
+      operationId: collection_add
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCollectionRecordsPayload'
+        required: true
+      responses:
+        '201':
+          description: Collection added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddCollectionRecordsResponse'
+        '400':
+          description: Invalid data for collection addition
+      security:
+      - ApiKeyAuth: []
+      x-codeSamples:
+      - label: Add records
+        lang: typescript
+        source: 'await collection.add({ ids: [''id1'', ''id2''], embeddings: [[0.1, 0.2], [0.3, 0.4]], documents: [''doc1'', ''doc2''] });'
+      - label: Add records
+        lang: python
+        source: collection.add(ids=['id1', 'id2'], embeddings=[[0.1, 0.2], [0.3, 0.4]], documents=['doc1', 'doc2'])
+      - label: Add records
+        lang: rust
+        source: "collection.add(\n    vec![\"id1\".to_string(), \"id2\".to_string()],\n    vec![vec![0.1, 0.2], vec![0.3, 0.4]],\n    Some(vec![Some(\"doc1\".to_string()), Some(\"doc2\".to_string())]),\n    None,\n    None\n).await?;"
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/conditional/commit:
+    post:
+      tags:
+      - Record
+      summary: Conditional commit
+      description: Commits buffered writes as one conditional append using the transaction's OCC read token and read set.
+      operationId: collection_conditional_commit
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConditionalCommitPayload'
+        required: true
+      responses:
+        '200':
+          description: Conditional transaction committed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConditionalCommitResult'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Conditional write conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-hidden: true
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/conditional/get:
+    post:
+      tags:
+      - Record
+      summary: Conditional get
+      description: Returns records from a collection and includes the OCC read token for conditional transactions.
+      operationId: collection_conditional_get
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConditionalGetRequestPayload'
+        required: true
+      responses:
+        '200':
+          description: Records retrieved from the collection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConditionalGetResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-hidden: true
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/count:
+    get:
+      tags:
+      - Record
+      summary: Get number of records
+      description: Returns the number of records in a collection.
+      operationId: collection_count
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: read_level
+        in: query
+        description: Read level for consistency vs performance tradeoffs
+        required: false
+        schema:
+          $ref: '#/components/schemas/ReadLevel'
+      responses:
+        '200':
+          description: Number of records in the collection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/u32'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codeSamples:
+      - label: Count records
+        lang: typescript
+        source: const count = await collection.count();
+      - label: Count records
+        lang: python
+        source: count = collection.count()
+      - label: Count records
+        lang: rust
+        source: let count = collection.count().await?;
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/delete:
+    post:
+      tags:
+      - Record
+      summary: Delete records
+      description: Deletes records in a collection. Can filter by IDs or metadata.
+      operationId: collection_delete
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteCollectionRecordsPayload'
+        required: true
+      responses:
+        '200':
+          description: Records deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteCollectionRecordsResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codeSamples:
+      - label: Delete records by IDs
+        lang: typescript
+        source: 'await collection.delete({ ids: [''id1'', ''id2''] });'
+      - label: Delete records by metadata filter
+        lang: typescript
+        source: 'await collection.delete({ where: { category: ''old'' } });'
+      - label: Delete records by IDs
+        lang: python
+        source: collection.delete(ids=['id1', 'id2'])
+      - label: Delete records by metadata filter
+        lang: python
+        source: 'collection.delete(where={''category'': ''old''})'
+      - label: Delete records by IDs
+        lang: rust
+        source: collection.delete(Some(vec!["id1".to_string(), "id2".to_string()]), None).await?;
+      - label: Delete records by metadata filter
+        lang: rust
+        source: "use chroma_types::{Where, MetadataExpression, MetadataComparison, MetadataValue, PrimitiveOperator};\nlet where_clause = Where::Metadata(MetadataExpression {\n    key: \"category\".to_string(),\n    comparison: MetadataComparison::Primitive(PrimitiveOperator::Equal, MetadataValue::Str(\"old\".to_string())),\n});\ncollection.delete(None, Some(where_clause)).await?;"
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/get:
+    post:
+      tags:
+      - Record
+      summary: Get records
+      description: Returns records from a collection by ID or metadata filter.
+      operationId: collection_get
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetRequestPayload'
+        required: true
+      responses:
+        '200':
+          description: Records retrieved from the collection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetResponse'
+              example:
+                documents:
+                - Document 1
+                - Document 2
+                embeddings:
+                - - 0.1
+                  - 0.2
+                  - 0.3
+                - - 0.4
+                  - 0.5
+                  - 0.6
+                ids:
+                - record1
+                - record2
+                include:
+                - documents
+                - metadatas
+                - embeddings
+                metadatas:
+                - key: value
+                - key2: value2
+                uris: null
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codeSamples:
+      - label: Get records by IDs
+        lang: typescript
+        source: 'const results = await collection.get({ ids: [''id1'', ''id2''] });'
+      - label: Get records by metadata filter
+        lang: typescript
+        source: 'const results = await collection.get({ where: { category: ''science'' }, limit: 10 });'
+      - label: Get records by IDs
+        lang: python
+        source: results = collection.get(ids=['id1', 'id2'])
+      - label: Get records by metadata filter
+        lang: python
+        source: 'results = collection.get(where={''category'': ''science''}, limit=10)'
+      - label: Get records by IDs
+        lang: rust
+        source: "use chroma_types::IncludeList;\nlet response = collection.get(\n    Some(vec![\"id1\".to_string(), \"id2\".to_string()]),\n    None,\n    None,\n    None,\n    Some(IncludeList::default_get())\n).await?;"
+      - label: Get records by metadata filter
+        lang: rust
+        source: "use chroma_types::{Where, MetadataExpression, MetadataComparison, MetadataValue, PrimitiveOperator, IncludeList};\nlet where_clause = Where::Metadata(MetadataExpression {\n    key: \"category\".to_string(),\n    comparison: MetadataComparison::Primitive(PrimitiveOperator::Equal, MetadataValue::Str(\"science\".to_string())),\n});\nlet response = collection.get(None, Some(where_clause), Some(10), None, None).await?;"
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/indexing_status:
+    get:
+      tags:
+      - Record
+      summary: Get indexing status
+      description: Returns the indexing status of a collection.
+      operationId: indexing_status
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      responses:
+        '200':
+          description: Index status retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexStatusResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codeSamples:
+      - label: Get indexing status
+        lang: typescript
+        source: 'const status: IndexingStatus = await collection.getIndexingStatus();'
+      - label: Get indexing status
+        lang: python
+        source: status = collection.get_indexing_status()
+      - label: Get indexing status
+        lang: rust
+        source: let status = collection.get_indexing_status().await?;
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/query:
+    post:
+      tags:
+      - Record
+      summary: Query collection
+      description: Queries a collection using dense vector search with metadata and full-text search filtering.
+      operationId: collection_query
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: limit
+        in: query
+        description: Limit for pagination
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+        example: 10
+      - name: offset
+        in: query
+        description: Offset for pagination
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+        example: 0
+      requestBody:
+        description: Query request payload
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequestPayload'
+            example:
+              include:
+              - documents
+              - metadatas
+              - distances
+              n_results: 10
+              query_embeddings:
+              - - 0.1
+                - 0.2
+                - 0.3
+        required: true
+      responses:
+        '200':
+          description: Records matching the query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codeSamples:
+      - label: Query with embeddings
+        lang: typescript
+        source: 'const results = await collection.query({ queryEmbeddings: [[0.1, 0.2, 0.3]], nResults: 10 });'
+      - label: Query with text
+        lang: typescript
+        source: 'const results = await collection.query({ queryTexts: [''search text''], nResults: 10 });'
+      - label: Query with embeddings
+        lang: python
+        source: results = collection.query(query_embeddings=[[0.1, 0.2, 0.3]], n_results=10)
+      - label: Query with text
+        lang: python
+        source: results = collection.query(query_texts=['search text'], n_results=10)
+      - label: Query with embeddings
+        lang: rust
+        source: "let results = collection.query(\n    vec![vec![0.1, 0.2, 0.3]],\n    Some(10),\n    None,\n    None,\n    None\n).await?;"
+      - label: Query with metadata filter
+        lang: rust
+        source: "use chroma_types::{Where, MetadataExpression, MetadataComparison, MetadataValue, PrimitiveOperator};\nlet where_clause = Where::Metadata(MetadataExpression {\n    key: \"category\".to_string(),\n    comparison: MetadataComparison::Primitive(PrimitiveOperator::Equal, MetadataValue::Str(\"science\".to_string())),\n});\nlet results = collection.query(\n    vec![vec![0.1, 0.2, 0.3]],\n    Some(10),\n    Some(where_clause),\n    None,\n    None\n).await?;"
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/search:
+    post:
+      tags:
+      - Record
+      summary: Search records
+      description: Searches records from a collection with dense, sparse, or hybrid vector search.
+      operationId: collection_search
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      requestBody:
+        description: Search request payload
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequestPayload'
+            example:
+              read_level: IndexAndWal
+              searches:
+              - n_results: 10
+                query_embeddings:
+                - - 0.1
+                  - 0.2
+                  - 0.3
+        required: true
+      responses:
+        '200':
+          description: Records searched from the collection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codeSamples:
+      - label: Search with embeddings
+        lang: typescript
+        source: 'import { Search, K, Knn } from ''chromadb'';
+
+          const results = await collection.search(new Search().rank(Knn({ query: [0.1, 0.2, 0.3], limit: 10 })));'
+      - label: Search with embeddings
+        lang: python
+        source: 'from chromadb import Search, Knn
+
+          search = Search().rank(Knn(query=[0.1, 0.2, 0.3], limit=10))
+
+          results = collection.search(search)'
+      - label: Search with embeddings
+        lang: rust
+        source: "use chroma_types::plan::{SearchPayload, ReadLevel};\nuse chroma_types::operator::{RankExpr, QueryVector, Key};\nlet search = SearchPayload::default()\n    .rank(RankExpr::Knn {\n        query: QueryVector::Dense(vec![0.1, 0.2, 0.3]),\n        key: Key::Embedding,\n        limit: 10,\n        default: None,\n        return_rank: false,\n    })\n    .limit(Some(10), 0)\n    .select([Key::Document, Key::Score]);\nlet results = collection.search(vec![search]).await?;"
+      - label: Search with metadata filter
+        lang: rust
+        source: "use chroma_types::plan::{SearchPayload, ReadLevel};\nuse chroma_types::operator::{RankExpr, QueryVector, Key};\nlet search = SearchPayload::default()\n    .r#where(Key::field(\"category\").eq(\"science\"))\n    .rank(RankExpr::Knn {\n        query: QueryVector::Dense(vec![0.1, 0.2, 0.3]),\n        key: Key::Embedding,\n        limit: 100,\n        default: None,\n        return_rank: false,\n    })\n    .limit(Some(10), 0)\n    .select([Key::Document, Key::Score]);\nlet results = collection.search(vec![search]).await?;"
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/update:
+    post:
+      tags:
+      - Record
+      summary: Update records
+      description: Updates records in a collection by ID.
+      operationId: collection_update
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCollectionRecordsPayload'
+        required: true
+      responses:
+        '200':
+          description: Collection updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCollectionRecordsResponse'
+        '404':
+          description: Collection not found
+      security:
+      - ApiKeyAuth: []
+      x-codeSamples:
+      - label: Update records
+        lang: typescript
+        source: 'await collection.update({ ids: [''id1''], documents: [''updated doc''], metadatas: [{ key: ''value'' }] });'
+      - label: Update records
+        lang: python
+        source: 'collection.update(ids=[''id1''], documents=[''updated doc''], metadatas=[{''key'': ''value''}])'
+      - label: Update records
+        lang: rust
+        source: "use chroma_types::UpdateMetadata;\nlet mut metadata = UpdateMetadata::new();\nmetadata.insert(\"key\".to_string(), chroma_types::UpdateMetadataValue::Str(\"value\".to_string()));\ncollection.update(\n    vec![\"id1\".to_string()],\n    None,\n    Some(vec![Some(\"updated doc\".to_string())]),\n    None,\n    Some(vec![Some(metadata)])\n).await?;"
+  /api/v2/tenants/{tenant}/databases/{database}/collections/{collection_id}/upsert:
+    post:
+      tags:
+      - Record
+      summary: Upsert records
+      description: Upserts records in a collection (create if not exists, otherwise update).
+      operationId: collection_upsert
+      parameters:
+      - name: tenant
+        in: path
+        description: Tenant UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      - name: database
+        in: path
+        description: Database name
+        required: true
+        schema:
+          type: string
+      - name: collection_id
+        in: path
+        description: Collection UUID
+        required: true
+        schema:
+          type: string
+        example: 1e30d217-3d78-4f8c-b244-79381dc6a254
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertCollectionRecordsPayload'
+        required: true
+      responses:
+        '200':
+          description: Records upserted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpsertCollectionRecordsResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Collection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codeSamples:
+      - label: Upsert records
+        lang: typescript
+        source: 'await collection.upsert({ ids: [''id1'', ''id2''], embeddings: [[0.1, 0.2], [0.3, 0.4]], documents: [''doc1'', ''doc2''] });'
+      - label: Upsert records
+        lang: python
+        source: collection.upsert(ids=['id1', 'id2'], embeddings=[[0.1, 0.2], [0.3, 0.4]], documents=['doc1', 'doc2'])
+      - label: Upsert records
+        lang: rust
+        source: "collection.upsert(\n    vec![\"id1\".to_string(), \"id2\".to_string()],\n    vec![vec![0.1, 0.2], vec![0.3, 0.4]],\n    Some(vec![Some(\"doc1\".to_string()), Some(\"doc2\".to_string())]),\n    None,\n    None\n).await?;"
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    ConditionalTransactionOperationPayload:
+      oneOf:
+      - type: object
+        required:
+        - payload
+        - operation
+        properties:
+          operation:
+            type: string
+            enum:
+            - add
+          payload:
+            $ref: '#/components/schemas/AddCollectionRecordsPayload'
+      - type: object
+        required:
+        - payload
+        - operation
+        properties:
+          operation:
+            type: string
+            enum:
+            - update
+          payload:
+            $ref: '#/components/schemas/UpdateCollectionRecordsPayload'
+      - type: object
+        required:
+        - payload
+        - operation
+        properties:
+          operation:
+            type: string
+            enum:
+            - upsert
+          payload:
+            $ref: '#/components/schemas/UpsertCollectionRecordsPayload'
+      - type: object
+        required:
+        - payload
+        - operation
+        properties:
+          operation:
+            type: string
+            enum:
+            - delete
+          payload:
+            $ref: '#/components/schemas/DeleteCollectionRecordsPayload'
+    ConditionalGetRequestPayload:
+      allOf:
+      - $ref: '#/components/schemas/RawWhereFields'
+      - type: object
+        properties:
+          ids:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+          include:
+            $ref: '#/components/schemas/IncludeList'
+          limit:
+            type:
+            - integer
+            - 'null'
+            format: int32
+            minimum: 0
+          offset:
+            type:
+            - integer
+            - 'null'
+            format: int32
+            minimum: 0
+          read_token:
+            type:
+            - integer
+            - 'null'
+            format: int64
+            minimum: 0
+    GetRequestPayload:
+      allOf:
+      - $ref: '#/components/schemas/RawWhereFields'
+      - type: object
+        properties:
+          ids:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+          include:
+            $ref: '#/components/schemas/IncludeList'
+          limit:
+            type:
+            - integer
+            - 'null'
+            format: int32
+            minimum: 0
+          offset:
+            type:
+            - integer
+            - 'null'
+            format: int32
+            minimum: 0
+      description: 'Records can be retrieved by their IDs or by a metadata filter. At least one of `ids` or `where`
+
+        must be provided. Use `include` to specify which fields to return in the response.'
+    UpsertCollectionRecordsResponse:
+      type: object
+    ConditionalCommitPayload:
+      type: object
+      required:
+      - operations
+      properties:
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionalTransactionOperationPayload'
+        read_ids:
+          type: array
+          items:
+            type: string
+        read_token:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          minimum: 0
+    SearchPayload:
+      type: object
+      properties:
+        filter:
+          type: object
+          properties:
+            query_ids:
+              type: array
+              items:
+                type: string
+            where_clause:
+              type: object
+        group_by:
+          type: object
+          properties:
+            aggregate:
+              type: object
+            keys:
+              type: array
+              items:
+                type: string
+        limit:
+          type: object
+          properties:
+            limit:
+              type: integer
+            offset:
+              type: integer
+        rank:
+          type: object
+        select:
+          type: object
+          properties:
+            keys:
+              type: array
+              items:
+                type: string
+    IncludeList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Include'
+    AddCollectionRecordsPayload:
+      type: object
+      description: 'Payload for adding records to a collection.
+
+
+        Records are added in batches. All arrays must have the same length, with each index
+
+        representing a single record. For example, `ids[0]`, `embeddings[0]`, `documents[0]`, etc.
+
+        all belong to the same record.'
+      required:
+      - ids
+      - embeddings
+      properties:
+        documents:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        embeddings:
+          $ref: '#/components/schemas/EmbeddingsPayload'
+          description: Embeddings for each record. Can contain the raw f32 arrays or base64 encoded strings.
+        ids:
+          type: array
+          items:
+            type: string
+          description: Unique identifiers for each record.
+        metadatas:
+          type:
+          - array
+          - 'null'
+          items:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/HashMap'
+        uris:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+    Key:
+      oneOf:
+      - type: string
+        enum:
+        - Document
+      - type: string
+        enum:
+        - Embedding
+      - type: string
+        enum:
+        - Metadata
+      - type: string
+        enum:
+        - Score
+      - type: object
+        required:
+        - MetadataField
+        properties:
+          MetadataField:
+            type: string
+      description: "Represents a field key in search queries.\n\nUsed for both selecting fields to return and building filter expressions.\nPredefined keys access special fields, while custom keys access metadata.\n\n# Predefined Keys\n\n- `Key::Document` - Document text content (`#document`)\n- `Key::Embedding` - Vector embeddings (`#embedding`)\n- `Key::Metadata` - All metadata fields (`#metadata`)\n- `Key::Score` - Search scores (`#score`)\n\n# Custom Keys\n\nUse `Key::field()` or `Key::from()` to reference metadata fields:\n\n```\nuse chroma_types::operator::Key;\n\nlet key = Key::field(\"author\");\nlet key = Key::from(\"title\");\n```\n\n# Examples\n\n## Building filters\n\n```\nuse chroma_types::operator::Key;\n\n// Equality\nlet filter = Key::field(\"status\").eq(\"published\");\n\n// Comparisons\nlet filter = Key::field(\"year\").gte(2020);\nlet filter = Key::field(\"score\").lt(0.9);\n\n// Set operations\nlet filter = Key::field(\"category\").is_in(vec![\"tech\", \"science\"]);\nlet filter = Key::field(\"status\").not_in(vec![\"deleted\", \"archived\"]);\n\n// Document content\nlet filter = Key::Document.contains(\"machine learning\");\nlet filter = Key::Document.regex(r\"\\bAPI\\b\");\n\n// Combining filters\nlet filter = Key::field(\"status\").eq(\"published\")\n    & Key::field(\"year\").gte(2020);\n```\n\n## Selecting fields\n\n```\nuse chroma_types::plan::SearchPayload;\nuse chroma_types::operator::Key;\n\nlet search = SearchPayload::default()\n    .select([\n        Key::Document,\n        Key::Score,\n        Key::field(\"title\"),\n        Key::field(\"author\"),\n    ]);\n```"
+    UpdateEmbeddingsPayload:
+      oneOf:
+      - type: array
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            type: number
+            format: float
+      - type: array
+        items:
+          type:
+          - string
+          - 'null'
+    QueryRequestPayload:
+      allOf:
+      - $ref: '#/components/schemas/RawWhereFields'
+      - type: object
+        required:
+        - query_embeddings
+        properties:
+          ids:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+          include:
+            $ref: '#/components/schemas/IncludeList'
+          n_results:
+            type:
+            - integer
+            - 'null'
+            format: int32
+            minimum: 0
+          query_embeddings:
+            type: array
+            items:
+              type: array
+              items:
+                type: number
+                format: float
+    GetResponse:
+      type: object
+      description: 'All arrays have the same length, with each index representing a single record.
+
+        Only fields specified in the request''s `include` parameter are populated.'
+      required:
+      - ids
+      - include
+      properties:
+        documents:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        embeddings:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+        ids:
+          type: array
+          items:
+            type: string
+        include:
+          type: array
+          items:
+            $ref: '#/components/schemas/Include'
+          description: List of fields that were included in this response.
+        metadatas:
+          type:
+          - array
+          - 'null'
+          items:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/HashMap'
+        uris:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+    ConditionalCommitResult:
+      type: object
+      required:
+      - record_count
+      properties:
+        first_inserted_record_offset:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        record_count:
+          type: integer
+          minimum: 0
+    ConditionalGetResponse:
+      type: object
+      description: 'Response for a transactional get.
+
+
+        This mirrors `GetResponse`, but includes the OCC read token that pins all
+
+        later reads and the eventual commit to the same log snapshot.'
+      required:
+      - ids
+      - include
+      - read_token
+      properties:
+        documents:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        embeddings:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+        ids:
+          type: array
+          items:
+            type: string
+        include:
+          type: array
+          items:
+            $ref: '#/components/schemas/Include'
+        metadatas:
+          type:
+          - array
+          - 'null'
+          items:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/HashMap'
+        read_token:
+          type: integer
+          format: int64
+          minimum: 0
+        uris:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+    EmbeddingsPayload:
+      oneOf:
+      - type: array
+        items:
+          type: array
+          items:
+            type: number
+            format: float
+      - type: array
+        items:
+          type: string
+    DeleteCollectionRecordsPayload:
+      allOf:
+      - $ref: '#/components/schemas/RawWhereFields'
+      - type: object
+        properties:
+          ids:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+          limit:
+            type:
+            - integer
+            - 'null'
+            format: int32
+            minimum: 0
+      description: 'Payload for deleting records from a collection.
+
+
+        Records can be deleted by their IDs or by a metadata filter. At least one of `ids` or `where`
+
+        must be provided.'
+    UpdateCollectionRecordsResponse:
+      type: object
+    u32:
+      type: integer
+      format: int32
+      minimum: 0
+    DeleteCollectionRecordsResponse:
+      type: object
+      properties:
+        deleted:
+          type: integer
+          format: int32
+          minimum: 0
+    SparseVector:
+      type: object
+      description: 'Represents a sparse vector using parallel arrays for indices and values.
+
+
+        On deserialization: accepts both old format `{"indices": [...], "values": [...]}`
+
+        and new format `{"#type": "sparse_vector", "indices": [...], "values": [...]}`.
+
+
+        On serialization: always includes `#type` field with value `"sparse_vector"`.'
+      required:
+      - indices
+      - values
+      properties:
+        indices:
+          type: array
+          items:
+            type: integer
+            format: int32
+            minimum: 0
+          description: Dimension indices
+        tokens:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Tokens corresponding to each index
+        values:
+          type: array
+          items:
+            type: number
+            format: float
+          description: Values corresponding to each index
+    SearchResponse:
+      type: object
+      required:
+      - ids
+      - documents
+      - embeddings
+      - metadatas
+      - scores
+      - select
+      properties:
+        documents:
+          type: array
+          items:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+        embeddings:
+          type: array
+          items:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - array
+              - 'null'
+              items:
+                type: number
+                format: float
+        ids:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        metadatas:
+          type: array
+          items:
+            type:
+            - array
+            - 'null'
+            items:
+              oneOf:
+              - type: 'null'
+              - $ref: '#/components/schemas/HashMap'
+        scores:
+          type: array
+          items:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - number
+              - 'null'
+              format: float
+        select:
+          type: array
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/Key'
+    HashMap:
+      type: object
+      additionalProperties:
+        oneOf:
+        - type: boolean
+        - type: integer
+          format: int64
+        - type: number
+          format: double
+        - type: string
+        - $ref: '#/components/schemas/SparseVector'
+        - type: array
+          items:
+            type: boolean
+        - type: array
+          items:
+            type: integer
+            format: int64
+        - type: array
+          items:
+            type: number
+            format: double
+        - type: array
+          items:
+            type: string
+      propertyNames:
+        type: string
+    UpdateCollectionRecordsPayload:
+      type: object
+      description: 'Payload for updating existing records in a collection.
+
+
+        Records are added in batches. All arrays must have the same length, with each index
+
+        representing a single record. For example, `ids[0]`, `embeddings[0]`, `documents[0]`, etc.
+
+        all belong to the same record.'
+      required:
+      - ids
+      properties:
+        documents:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        embeddings:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UpdateEmbeddingsPayload'
+            description: Updated embeddings for each record. Can contain the raw f32 arrays or base64 encoded strings.
+        ids:
+          type: array
+          items:
+            type: string
+        metadatas:
+          type:
+          - array
+          - 'null'
+          items:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/HashMap'
+        uris:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+    QueryResponse:
+      type: object
+      required:
+      - ids
+      - include
+      properties:
+        distances:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type:
+              - number
+              - 'null'
+              format: float
+        documents:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type:
+              - string
+              - 'null'
+        embeddings:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type:
+              - array
+              - 'null'
+              items:
+                type: number
+                format: float
+        ids:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        include:
+          type: array
+          items:
+            $ref: '#/components/schemas/Include'
+        metadatas:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              oneOf:
+              - type: 'null'
+              - $ref: '#/components/schemas/HashMap'
+        uris:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type:
+              - string
+              - 'null'
+    IndexStatusResponse:
+      type: object
+      required:
+      - op_indexing_progress
+      - num_unindexed_ops
+      - num_indexed_ops
+      - total_ops
+      properties:
+        num_indexed_ops:
+          type: integer
+          format: int64
+          minimum: 0
+        num_unindexed_ops:
+          type: integer
+          format: int64
+          minimum: 0
+        op_indexing_progress:
+          type: number
+          format: float
+        total_ops:
+          type: integer
+          format: int64
+          minimum: 0
+    UpsertCollectionRecordsPayload:
+      type: object
+      description: 'Payload for upserting records in a collection.
+
+
+        Upsert creates records if they don''t exist, or updates them if they do.
+
+        Records are added in batches. All arrays must have the same length, with each index
+
+        representing a single record. For example, `ids[0]`, `embeddings[0]`, `documents[0]`, etc.
+
+        all belong to the same record.'
+      required:
+      - ids
+      - embeddings
+      properties:
+        documents:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        embeddings:
+          $ref: '#/components/schemas/EmbeddingsPayload'
+          description: Embeddings for each record. Can contain the raw f32 arrays or base64 encoded strings.
+        ids:
+          type: array
+          items:
+            type: string
+        metadatas:
+          type:
+          - array
+          - 'null'
+          items:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/HashMap'
+        uris:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+    ReadLevel:
+      type: string
+      enum:
+      - index_and_wal
+      - index_only
+      - index_and_bounded_wal
+    AddCollectionRecordsResponse:
+      type: object
+    Include:
+      type: string
+      description: Use this enum to specify which fields should be returned when retrieving records.
+      enum:
+      - distances
+      - documents
+      - embeddings
+      - metadatas
+      - uris
+    RawWhereFields:
+      type: object
+      properties:
+        where: {}
+        where_document: {}
+    SearchRequestPayload:
+      type: object
+      required:
+      - searches
+      properties:
+        read_level:
+          $ref: '#/components/schemas/ReadLevel'
+          description: Specifies whether to include unindexed data in the search results.
+        searches:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchPayload'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-chroma-token
