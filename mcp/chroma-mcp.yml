@@ -17,17 +17,43 @@ deployment:
 tools_count: 3
 tools:
 - name: package_search_grep
-  description: '## Description Executes a grep over the source code of a public package. This tool is
-    useful for deterministically finding code in a package using regex.  Use this tool before implementing
-    solutions that use external packages. The regex pa'
-- name: package_search_read_file
-  description: '## Description Reads exact lines from a source file of a public package. Useful for fetching
-    specific code regions by line range.  Required Args: "registry", "package_name", "filename_sha256",
-    "start_line", "end_line" Optional Args: "versi'
+  description: "## Description\nExecutes a grep over the source code of a public package. This tool is\
+    \ useful for deterministically finding code in a package using regex. \nUse this tool before implementing\
+    \ solutions that use external packages.\nThe regex pattern should be restrictive enough to only match\
+    \ code you're looking for, to limit overfetching.\n\nRequired Args: \"registry\", \"package_name\"\
+    , \"pattern\"\nOptional Args: \"version\", \"language\", \"filename_sha256\", \"a\", \"b\", \"c\"\
+    , \"head_limit\", \"output_mode\"\n\nBest for: Deterministic code search, finding specific code patterns,\
+    \ or exploring code structure."
 - name: package_search_hybrid
-  description: '## Description Searches package source code using semantic understanding AND optionally
-    regex patterns. This allows for hybrid search, allowing for prefiltering with regex, and semantic
-    ranking.  Required Args: "registry", "package_name",'
+  description: '## Description
+
+    Searches package source code using semantic understanding AND optionally regex patterns.
+
+    This allows for hybrid search, allowing for prefiltering with regex, and semantic ranking.
+
+
+    Required Args: "registry", "package_name", "semantic_queries"
+
+
+    Optional Args: "version", "filename_sha256", "pattern", "language"
+
+
+    Best for: Understanding how packages implement specific features, finding usage patterns, or exploring
+    code structure.'
+- name: package_search_read_file
+  description: '## Description
+
+    Reads exact lines from a source file of a public package. Useful for fetching specific code regions
+    by line range.
+
+
+    Required Args: "registry", "package_name", "filename_sha256", "start_line", "end_line"
+
+    Optional Args: "version"
+
+
+    Best for: Inspecting exact code snippets when you already know the file and line numbers. Max 200
+    lines.'
 tools_source: live tools/list via initialize handshake, 2026-09-11 (signals/audit_mcp_authorship.py --probe)
 authorship: provider
 descriptions_source: live tools/list (authorship probe or saved capture); filled by backfill-tools-from-authorship.py
