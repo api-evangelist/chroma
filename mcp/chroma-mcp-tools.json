@@ -1,0 +1,225 @@
+{
+  "endpoint": "https://mcp.trychroma.com/package-search/v1",
+  "captured": "2026-10-20",
+  "method": "initialize + tools/list (anonymous, no tool called; roadmap#992)",
+  "protocol_version": "2025-06-18",
+  "server_info": {
+    "name": "rmcp",
+    "version": "3.5.0"
+  },
+  "result": {
+    "tools": [
+      {
+        "name": "package_search_grep",
+        "description": "\n## Description\nExecutes a grep over the source code of a public package. This tool is useful for deterministically finding code in a package using regex. \nUse this tool before implementing solutions that use external packages.\nThe regex pattern should be restrictive enough to only match code you're looking for, to limit overfetching.\n\nRequired Args: \"registry\", \"package_name\", \"pattern\"\nOptional Args: \"version\", \"language\", \"filename_sha256\", \"a\", \"b\", \"c\", \"head_limit\", \"output_mode\"\n\nBest for: Deterministic code search, finding specific code patterns, or exploring code structure.\n",
+        "inputSchema": {
+          "$defs": {
+            "GrepOutputMode": {
+              "enum": [
+                "content",
+                "files_with_matches",
+                "count"
+              ],
+              "type": "string"
+            }
+          },
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "properties": {
+            "a": {
+              "description": "The number of lines after a grep match to include",
+              "format": "uint",
+              "minimum": 0,
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "b": {
+              "description": "The number of lines before a grep match to include",
+              "format": "uint",
+              "minimum": 0,
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "c": {
+              "description": "The number of lines before and after a grep match to include",
+              "format": "uint",
+              "minimum": 0,
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "filename_sha256": {
+              "description": "The sha256 hash of the file to filter for\"\n",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "head_limit": {
+              "description": "Limits number of results returned. \nIf the number of results returned is less than the head limit, all results have been returned.",
+              "format": "uint",
+              "minimum": 0,
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "languages": {
+              "description": "The languages to filter for. If not provided, all languages will be searched.\n    Valid options: \"Rust\", \"Go\", \"Python\", \"JavaScript\", \"JSX\", \"TypeScript\", \"TSX\", \"HTML\", \"Markdown\", \"YAML\", \"Bash\", \"SQL\", \"JSON\", \"Text\", \"Dockerfile\", \"HCL\", \"Protobuf\", \"Make\", \"Toml\", \"Jupyter Notebook\"\n",
+              "items": {
+                "type": "string"
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "output_mode": {
+              "$ref": "#/$defs/GrepOutputMode",
+              "default": "content",
+              "description": "Controls the shape of the grep output.\nAccepted values:\n- \"content\" (default): return content snippets with line ranges\n- \"files_with_matches\": return unique files (path and sha256) that match\n- \"count\": return files with the count of matches per file"
+            },
+            "package_name": {
+              "description": "The name of the requested package. Pass the name as it appears in the package manager. \nFor Go packages, use the GitHub organization and repository name in the format {org}/{repo}, if unsure check the GitHub URL for the package and use {org}/{repo} from that URL.\n        ",
+              "type": "string"
+            },
+            "pattern": {
+              "description": "The regex pattern for exact text matching in the codebase. Must be a valid regex.\n    Example: \"func\\\\s+(get_repository|getRepository)\\\\s*\\\\(.*?\\\\)\\\\s*\\\\{\"\n",
+              "type": "string"
+            },
+            "registry_name": {
+              "description": "The name of the registry containing the requested package. Must be one of: \"crates_io\", \"golang_proxy\", \"npm\", or \"py_pi\".\n",
+              "type": "string"
+            },
+            "version": {
+              "description": "Optionally, the specific version of the package whose source code to search.  \nIf provided, must be in semver format: {major}.{minor}.{patch}. \nOtherwise, the latest indexed version of the package available will be used.\n",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "registry_name",
+            "package_name",
+            "pattern"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "name": "package_search_hybrid",
+        "description": "\n## Description\nSearches package source code using semantic understanding AND optionally regex patterns.\nThis allows for hybrid search, allowing for prefiltering with regex, and semantic ranking.\n\nRequired Args: \"registry\", \"package_name\", \"semantic_queries\"\n\nOptional Args: \"version\", \"filename_sha256\", \"pattern\", \"language\"\n\nBest for: Understanding how packages implement specific features, finding usage patterns, or exploring code structure.\n",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "properties": {
+            "filename_sha256": {
+              "description": "The sha256 hash of the file to filter for\"\n",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "languages": {
+              "description": "The languages to filter for. If not provided, all languages will be searched.\n    Valid options: \"Rust\", \"Go\", \"Python\", \"JavaScript\", \"JSX\", \"TypeScript\", \"TSX\", \"HTML\", \"Markdown\", \"YAML\", \"Bash\", \"SQL\", \"JSON\", \"Text\", \"Dockerfile\", \"HCL\", \"Protobuf\", \"Make\", \"Toml\", \"Jupyter Notebook\"\n",
+              "items": {
+                "type": "string"
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "package_name": {
+              "description": "The name of the requested package. Pass the name as it appears in the package manager. \nFor Go packages, use the GitHub organization and repository name in the format {org}/{repo}, if unsure check the GitHub URL for the package and use {org}/{repo} from that URL.\n        ",
+              "type": "string"
+            },
+            "pattern": {
+              "description": "The regex pattern for exact text matching in the codebase. Must be a valid regex.\n    Example: \"func\\\\s+(get_repository|getRepository)\\\\s*\\\\(.*?\\\\)\\\\s*\\\\{\"\n",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "registry_name": {
+              "description": "The name of the registry containing the requested package. Must be one of: \"crates_io\", \"golang_proxy\", \"npm\", or \"py_pi\".\n",
+              "type": "string"
+            },
+            "semantic_queries": {
+              "description": "\nArray of 1-5 plain English questions about the codebase.\n    Example: [\"how is argmax implemented in numpy?\", \"what testing patterns does axum use?\"]\n",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "version": {
+              "description": "Optionally, the specific version of the package whose source code to search.  \nIf provided, must be in semver format: {major}.{minor}.{patch}. \nOtherwise, the latest indexed version of the package available will be used.\n",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "registry_name",
+            "package_name",
+            "semantic_queries"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "name": "package_search_read_file",
+        "description": "\n## Description\nReads exact lines from a source file of a public package. Useful for fetching specific code regions by line range.\n\nRequired Args: \"registry\", \"package_name\", \"filename_sha256\", \"start_line\", \"end_line\"\nOptional Args: \"version\"\n\nBest for: Inspecting exact code snippets when you already know the file and line numbers. Max 200 lines.\n",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "properties": {
+            "end_line": {
+              "description": "1-based inclusive end line to read",
+              "format": "uint",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "filename_sha256": {
+              "description": "The sha256 hash of the file to filter for\"\n",
+              "type": "string"
+            },
+            "package_name": {
+              "description": "The name of the requested package. Pass the name as it appears in the package manager. \nFor Go packages, use the GitHub organization and repository name in the format {org}/{repo}, if unsure check the GitHub URL for the package and use {org}/{repo} from that URL.\n        ",
+              "type": "string"
+            },
+            "registry_name": {
+              "description": "The name of the registry containing the requested package. Must be one of: \"crates_io\", \"golang_proxy\", \"npm\", or \"py_pi\".\n",
+              "type": "string"
+            },
+            "start_line": {
+              "description": "1-based inclusive start line to read",
+              "format": "uint",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "version": {
+              "description": "Optionally, the specific version of the package whose source code to search.  \nIf provided, must be in semver format: {major}.{minor}.{patch}. \nOtherwise, the latest indexed version of the package available will be used.\n",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "registry_name",
+            "package_name",
+            "filename_sha256",
+            "start_line",
+            "end_line"
+          ],
+          "type": "object"
+        }
+      }
+    ]
+  }
+}
