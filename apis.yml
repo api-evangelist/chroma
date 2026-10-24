@@ -58,9 +58,8 @@ tags:
 - Search
 - Serverless
 - TypeScript
-- Vector Database
-- Database
 - Vector Search
+- Database
 tags_raw:
 - AI
 - AI Native
@@ -103,6 +102,11 @@ apis:
   - Embeddings
   - Python
   - SDK
+  - Vector Search
+  tags_raw:
+  - Embeddings
+  - Python
+  - SDK
   - Vector Database
   properties:
   - type: Documentation
@@ -120,6 +124,12 @@ apis:
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.trychroma.com/reference/js/client
   tags:
+  - Embeddings
+  - JavaScript
+  - SDK
+  - TypeScript
+  - Vector Search
+  tags_raw:
   - Embeddings
   - JavaScript
   - SDK
@@ -310,6 +320,8 @@ apis:
   humanURL: https://docs.trychroma.com/reference/python/client
   baseURL: https://api.trychroma.com
   tags:
+  - Tenants
+  tags_raw:
   - Tenant
   properties:
   - type: OpenAPI
