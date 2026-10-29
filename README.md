@@ -1,4 +1,4 @@
-# Chroma (chroma)
+# Chroma
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,159 +66,174 @@
 
 Chroma (Chroma DB) is an open-source AI-native embedding database designed to make it easy to build LLM applications by providing storage, retrieval, and management for vector embeddings, full-text search, regex search, and multi-modal retrieval (text, image, audio). Distributed under the Apache 2.0 license, Chroma can be self-hosted (single-node Python or distributed Rust-based deployment) or consumed via Chroma Cloud, a managed serverless vector database service offering usage-based pricing. Chroma is the open-source data infrastructure for AI agents and RAG (Retrieval-Augmented Generation) applications, with first-party SDKs for Python and JavaScript/TypeScript and integrations with leading embedding providers (OpenAI, Cohere, Hugging Face, sentence-transformers).
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/chroma/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/chroma/refs/heads/main/apis.yml)
+**Areas:** Artificial Intelligence · AI-Native · Apache 2.0 · Cloud · Embeddings · Hybrid Search · JavaScript · LLM · Machine Learning · Multi-Modal · Open Source · Python
 
-## Scope
+## Chroma on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Chroma is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/chroma/](https://apis.io/providers/chroma/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (9)
 
-- AI
-- AI Native
-- Apache 2.0
-- Cloud
-- Embeddings
-- Hybrid Search
-- JavaScript
-- LLM
-- Machine Learning
-- Multi-Modal
-- Open Source
-- Python
-- RAG
-- Retrieval
-- SDK
-- Search
-- Serverless
-- TypeScript
-- Vector Database
+- [Chroma Python Client](https://apis.io/apis/chroma/python-client/) — The Chroma Python Client is a first-party SDK for interacting with both self-hosted Chroma servers and Chroma Cloud. It provides a simple,…
+- [Chroma JavaScript Client](https://apis.io/apis/chroma/javascript-client/) — The Chroma JavaScript and TypeScript Client is a first-party SDK for interacting with Chroma from JavaScript or TypeScript applications. The v3 rewrite…
+- [Chroma Collections API](https://apis.io/apis/chroma/chroma-collections-api/) — Collection management endpoints for creating, listing, retrieving, updating, and deleting collections within a database.
+- [Chroma Databases API](https://apis.io/apis/chroma/chroma-databases-api/) — Database management endpoints for creating, listing, retrieving, and deleting databases within a tenant.
+- [Chroma Records API](https://apis.io/apis/chroma/chroma-records-api/) — Record management endpoints for adding, getting, updating, upserting, deleting, and querying records within a collection.
+- [Chroma Search API](https://apis.io/apis/chroma/chroma-search-api/) — Advanced search endpoints available exclusively in Chroma Cloud. Provides a unified interface for hybrid search operations combining vector similarity…
+- [Chroma System API](https://apis.io/apis/chroma/chroma-system-api/) — System-level endpoints for health checks, version information, and server diagnostics.
+- [Chroma Tenants API](https://apis.io/apis/chroma/chroma-tenants-api/) — Tenant management endpoints for creating and retrieving tenants.
+- [Chroma Query API](https://apis.io/apis/chroma/chroma-query-api/) — Nearest-neighbor vector similarity search over a collection.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-03-07
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### GraphQL (1)
 
-### Chroma Server API
+GraphQL schemas.
 
-The Chroma Server API is a REST API that provides access to the Chroma open-source vector database. It enables developers to create and manage collections of embeddings, add documents with automatic tokenization and embedding, and perform vector similarity searches. The API supports metadata filtering, full-text search, and collection management operations. An OpenAPI specification is available at the server endpoint for client generation in various programming languages.
+- [Moved to /providers/chroma/](https://apis.io/graphqls/chroma/chroma-graphql/)
 
-- **Human URL:** [https://docs.trychroma.com/reference/chroma-reference](https://docs.trychroma.com/reference/chroma-reference)
-- **Base URL:** `https://api.trychroma.com`
+#### MCP servers (1)
 
-#### Tags
+Model Context Protocol servers that expose the API to agents.
 
-- AI
-- Embeddings
-- Machine Learning
-- Search
-- Vector Database
+- [chroma](https://apis.io/servers/chroma/chroma/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://docs.trychroma.com/reference/chroma-reference)
-- [OpenAPI](openapi/chroma-server-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/chroma-server-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/chroma-server-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Chroma Cloud API
+- [Chroma Agentic Access](https://apis.io/agentic-access/chroma/chroma-agentic-access/)
 
-Chroma Cloud is a managed, serverless vector database service that provides fast and scalable vector, full-text, and metadata search across terabytes of data. It is backed by Chroma's Apache 2.0 distributed database and offers usage-based pricing with starter and team plans. Developers can connect to Chroma Cloud using the Python or JavaScript client SDKs without needing to manage infrastructure.
+#### JSON Schema (2)
 
-- **Human URL:** [https://docs.trychroma.com/cloud/pricing](https://docs.trychroma.com/cloud/pricing)
-- **Base URL:** `https://api.trychroma.com`
+The data models the API reads and writes.
 
-#### Tags
+- [Chroma Collection](https://apis.io/schemas/chroma/chroma-collection/)
+- [Chroma Record](https://apis.io/schemas/chroma/chroma-record/)
 
-- AI
-- Cloud
-- Embeddings
-- Serverless
-- Vector Database
+#### JSON-LD (1)
 
-#### Properties
+Linked-data contexts for the provider's vocabulary.
 
-- [Documentation](https://docs.trychroma.com/cloud/sync/overview)
-- [OpenAPI](openapi/chroma-cloud-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/chroma-cloud-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/chroma-cloud-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Chroma Context](https://apis.io/jsonld/chroma/chroma-context/)
 
-### Chroma Python Client
+#### Collections (15)
 
-The Chroma Python Client is a first-party SDK for interacting with both self-hosted Chroma servers and Chroma Cloud. It provides a simple, developer-friendly interface with a core API of just four functions for managing collections, adding documents, and querying embeddings. The client handles automatic tokenization, embedding, and indexing of documents, making it straightforward to build AI applications that require vector similarity search.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://docs.trychroma.com/reference/python/client](https://docs.trychroma.com/reference/python/client)
+- [Chroma Cloud API](https://apis.io/collections/chroma/open-chroma-cloud-api/)
+- [Chroma Cloud Collections API](https://apis.io/collections/chroma/open-chroma-collections-api/)
+- [Chroma Cloud Collections Databases API](https://apis.io/collections/chroma/open-chroma-databases-api/)
+- [Chroma Server API (v2)](https://apis.io/collections/chroma/open-chroma-db/)
+- [Chroma Cloud Collections Records API](https://apis.io/collections/chroma/open-chroma-records-api/)
+- [Chroma Cloud Collections Search API](https://apis.io/collections/chroma/open-chroma-search-api/)
+- [Chroma Server API](https://apis.io/collections/chroma/open-chroma-server-api/)
+- [Chroma Cloud Collections System API](https://apis.io/collections/chroma/open-chroma-system-api/)
+- [Chroma Cloud Collections Tenants API](https://apis.io/collections/chroma/open-chroma-tenants-api/)
+- [Chroma Cloud Collections API](https://apis.io/collections/chroma/postman-chroma-collections-api/)
+- [Chroma Cloud Collections Databases API](https://apis.io/collections/chroma/postman-chroma-databases-api/)
+- [Chroma Cloud Collections Records API](https://apis.io/collections/chroma/postman-chroma-records-api/)
+- [Chroma Cloud Collections Search API](https://apis.io/collections/chroma/postman-chroma-search-api/)
+- [Chroma Cloud Collections System API](https://apis.io/collections/chroma/postman-chroma-system-api/)
+- [Chroma Cloud Collections Tenants API](https://apis.io/collections/chroma/postman-chroma-tenants-api/)
 
-#### Tags
+#### Governance rules (1)
 
-- Embeddings
-- Python
-- SDK
-- Vector Database
+Spectral rulesets for the provider's contracts.
 
-#### Properties
+- [Chroma — jsonschema rules](https://apis.io/rules/chroma/chroma-jsonschema-spectral-rules/)
 
-- [Documentation](https://docs.trychroma.com/reference/python/client)
-- [Source Code](https://github.com/chroma-core/chroma)
-- [Postman Collection](collections/chroma-cloud-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/chroma-cloud-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/chroma-server-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/chroma-server-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Security (4)
 
-### Chroma JavaScript Client
+Authentication, trust centre, and vulnerability disclosure.
 
-The Chroma JavaScript and TypeScript Client is a first-party SDK for interacting with Chroma from JavaScript or TypeScript applications. The v3 rewrite focused on reducing bundle size and improving developer experience, making it well-suited for deployment on serverless platforms like Vercel. It supports both self-hosted Chroma instances and Chroma Cloud via the CloudClient class, providing collection management, document ingestion, and vector similarity search capabilities.
+- [Chroma Authentication](https://apis.io/security/chroma/chroma-authentication/)
+- [Chroma Domain Security](https://apis.io/security/chroma/chroma-domain-security/)
+- [Chroma Trust Center](https://apis.io/security/chroma/chroma-trust-center/)
+- [Chroma Vulnerability Disclosure](https://apis.io/security/chroma/chroma-vulnerability-disclosure/)
 
-- **Human URL:** [https://docs.trychroma.com/reference/js/client](https://docs.trychroma.com/reference/js/client)
+#### Plans and pricing (1)
 
-#### Tags
+Published plans, tiers and prices.
 
-- Embeddings
-- JavaScript
-- SDK
-- TypeScript
-- Vector Database
+- [Chroma Plans Pricing](https://apis.io/plans/chroma/chroma-plans-pricing/)
 
-#### Properties
+#### Rate limits (1)
 
-- [Documentation](https://docs.trychroma.com/reference/js/client)
-- [Source Code](https://github.com/chroma-core/chroma-js)
-- [Postman Collection](collections/chroma-cloud-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/chroma-cloud-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/chroma-server-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/chroma-server-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Published request limits.
 
-## Common Properties
+- [Chroma Rate Limits](https://apis.io/rate-limits/chroma/chroma-rate-limits/)
 
-- [LinkedIn](https://www.linkedin.com/company/trychroma)
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Chroma Finops](https://apis.io/finops/chroma/chroma-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.trychroma.com/)
 - [Documentation](https://docs.trychroma.com/docs/overview/introduction)
-- [Portal](https://docs.trychroma.com/)
-- [Login](https://cloud.trychroma.com/)
 - [Pricing](https://docs.trychroma.com/cloud/pricing)
 - [Blog](https://www.trychroma.com/blog)
-- [Git Hub Org](https://github.com/chroma-core)
-- [Source Code](https://github.com/chroma-core/chroma)
-- [Discord](https://discord.gg/MMeYNTmh3x)
-- [Twitter](https://twitter.com/trychroma)
-- [License](https://github.com/chroma-core/chroma/blob/main/LICENSE)
-- [Terms of Service](https://www.trychroma.com/tos)
-- [Privacy Policy](https://www.trychroma.com/privacy)
-- [J S O N L D Context](json-ld/chroma-context.jsonld)
-- [JSON Schema](json-schema/chroma-collection-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/chroma-record-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [Spectral Rules](spectral/chroma-spectral.yml) — [Spectral](https://docs.stoplight.io/docs/spectral)
-- [Features](undefined)
-- [Embedding Providers](undefined)
-- [Use Cases](undefined)
-- [Standards](undefined)
-- [L L Ms Txt](https://docs.trychroma.com/llms.txt)
+- [Terms of service](https://www.trychroma.com/tos)
+- [Privacy policy](https://www.trychroma.com/privacy)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 52.4** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.7 |
+| Contract quality | 51.2 |
+| Contract governance | 9.8 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 46.4 |
+| Access clarity | 67.1 |
+
+**Agent readiness 38.7** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 29.1** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/chroma/](https://apis.io/providers/chroma/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Chroma: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/chroma/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
